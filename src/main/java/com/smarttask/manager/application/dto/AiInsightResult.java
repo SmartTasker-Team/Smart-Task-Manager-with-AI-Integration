@@ -7,7 +7,7 @@ package com.smarttask.manager.application.dto;
  * parsing natural language or analyzing productivity patterns.
  * </p>
  *
- * @see com.smarttask.manager.infrastructure.external.ai.OpenAIAdapter
+ * @see com.smarttask.manager.infrastructure.external.ai.GeminiAdapter
  */
 public class AiInsightResult {
 }

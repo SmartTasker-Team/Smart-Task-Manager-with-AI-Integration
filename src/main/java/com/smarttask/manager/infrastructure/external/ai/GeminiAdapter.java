@@ -7,5 +7,5 @@ package com.smarttask.manager.infrastructure.external.ai;
  * and productivity insights.
  * </p>
  */
-public class OpenAIAdapter {
+public class GeminiAdapter {
 }

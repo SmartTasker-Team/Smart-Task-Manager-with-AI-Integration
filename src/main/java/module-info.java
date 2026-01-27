@@ -23,6 +23,12 @@ module com.smarttask.manager {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
 
+
+    exports com.smarttask.manager;
+    exports com.smarttask.manager.presentation.controllers;
+    exports com.smarttask.manager.presentation.views;
     opens com.smarttask.manager.presentation.controllers to javafx.fxml;
     exports com.smarttask.manager.application.dto;
+    opens com.smarttask.manager.presentation.views to javafx.fxml;
+
 }
