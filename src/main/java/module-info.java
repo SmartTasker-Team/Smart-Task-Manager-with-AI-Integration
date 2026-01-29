@@ -22,6 +22,8 @@ module com.smarttask.manager {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
+    requires google.genai;
+    requires com.google.gson;
 
 
     exports com.smarttask.manager;
