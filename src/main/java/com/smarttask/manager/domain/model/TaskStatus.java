@@ -8,4 +8,8 @@ package com.smarttask.manager.domain.model;
  * </p>
  */
 public enum TaskStatus {
+    TODO,
+    IN_PROGRESS,
+    COMPLETED,
+    ARCHIVED
 }

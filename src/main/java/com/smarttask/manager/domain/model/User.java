@@ -7,5 +7,4 @@ package com.smarttask.manager.domain.model;
  * conflict resolution.
  * </p>
  */
-public class User {
-}
+public record User(Long id, String username, String email, String passwordHash) {}
