@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'Outfit';
+    src: url('../fonts/Outfit/Outfit-Regular.ttf');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-weight: bold;
+    src: url('../fonts/Outfit/Outfit-Bold.ttf');
+}
+.left-pane {
+    -fx-background-color: white;
+}
+.right-pane-visual {
+    -fx-background-color: #5AADFA;
+    -fx-border-color: white;
+    -fx-border-radius: 15;
+    -fx-background-radius: 22.5;
+    -fx-border-width: 12.5;
+}
+.huge-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: 800;
+    -fx-line-spacing: -10px;
+    -fx-font-family: 'Outfit';
+}
+.feature-subtext{
+    -fx-font-size: 14px;
+    -fx-font-family: 'Outfit';
+}
+.option-card {
+    -fx-background-color: white;
+    -fx-border-color: #EDEDED;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 12 18;
+    -fx-cursor: hand;
+    -fx-transition: 0.2s;
+}
+.option-card-selected {
+    -fx-border-color: #0D89FF !important;
+    -fx-background-color: #F0F7FF !important;
+    -fx-border-width: 1.5px;
+}
+.option-card:hover {
+    -fx-border-color: #0D89FF;
+    -fx-background-color: #F8FBFF;
+}
+.option-letter {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #888888;
+    -fx-padding: 5 10;
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 50;
+    -fx-font-family: 'Outfit';
+}
+.option-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #444444;
+    -fx-font-family: 'Outfit';
+}
+.primary-button {
+    -fx-background-color: #0D89FF;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-family: 'Outfit';
+}
+.primary-button:hover {
+    -fx-background-color: #1787F2;
+}

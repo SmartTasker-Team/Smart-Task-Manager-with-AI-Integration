@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane prefHeight="800" prefWidth="1000"
+           style="-fx-background-color: white;"
+           xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.smarttask.manager.presentation.controllers.onboarding.OnboardingStep1Controller">
+
+    <HBox fx:id="mainContainer"
+          maxWidth="900" maxHeight="600"
+          spacing="0"
+          style="-fx-background-color: white;">
+
+        <VBox alignment="CENTER_LEFT" spacing="30" HBox.hgrow="ALWAYS" styleClass="left-pane">
+            <padding>
+                <Insets top="50" right="60" bottom="50" left="60"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="30" preserveRatio="true">
+                    <Image url="@../../Images/logo_icon.png"/>
+                </ImageView>
+                <Label text="TaskIQ" styleClass="logo-text"/>
+            </HBox>
+
+            <VBox spacing="15">
+                <Label text="Bienvenue sur TaskIQ !" styleClass="main-title"/>
+
+                <VBox spacing="12" styleClass="feature-box">
+                    <Label text="TaskIQ peut vous aider à..." styleClass="feature-header"/>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <StackPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" prefWidth="18" prefHeight="18" alignment="CENTER">
+                            <SVGPath fill="#21D56D" stroke="#21D56D" strokeWidth="1.5"
+                                    content="M21 12C21 13.268 20.37 14.39 19.407 15.068 C19.5108 15.6608 19.4701 16.2698 19.2886 16.8436 C19.107 17.4173 18.7899 17.9388 18.364 18.364 C17.9388 18.7899 17.4173 19.107 16.8436 19.2886 C16.2698 19.4701 15.6608 19.5108 15.068 19.407 C14.7222 19.8995 14.2629 20.3014 13.7288 20.5787 C13.1948 20.856 12.6017 21.0005 12 21 C10.732 21 9.61 20.37 8.932 19.407 C8.33923 19.5107 7.73021 19.47 7.15649 19.2885 C6.58276 19.1069 6.06122 18.7898 5.636 18.364 C5.21013 17.9388 4.89298 17.4173 4.71142 16.8436 C4.52987 16.2698 4.48925 15.6608 4.593 15.068 C4.10052 14.7222 3.69862 14.2629 3.42133 13.7288 C3.14403 13.1948 2.99951 12.6017 3 12 C3 10.732 3.63 9.61 4.593 8.932 C4.48925 8.33923 4.52987 7.73019 4.71142 7.15645 C4.89298 6.58271 5.21013 6.06117 5.636 5.636 C6.06122 5.21019 6.58276 4.8931 7.15649 4.71154 C7.73021 4.52999 8.33923 4.48933 8.932 4.593 C9.27785 4.10058 9.73722 3.69873 10.2713 3.42144 C10.8053 3.14415 11.3983 2.99959 12 3 C13.268 3 14.39 3.63 15.068 4.593 C15.6608 4.48933 16.2698 4.52999 16.8435 4.71154 C17.4172 4.8931 17.9388 5.21019 18.364 5.636 C18.7898 6.06122 19.1069 6.58276 19.2885 7.15649 C19.47 7.73021 19.5107 8.33923 19.407 8.932 C19.8995 9.27779 20.3014 9.73715 20.5787 10.2712 C20.856 10.8052 21.0005 11.3983 21 12Z"
+                            />
+                            <SVGPath
+                                    content="M16 9L13.5 12.5L11 16L8 13" fill="transparent" stroke="white" strokeWidth="1.5" strokeLineCap="ROUND" strokeLineJoin="ROUND"
+                            />
+                        </StackPane>
+                        <Label text="Organiser le chaos quotidien" styleClass="feature-text-done"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <StackPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" prefWidth="18" prefHeight="18" alignment="CENTER">
+                            <SVGPath fill="#21D56D" stroke="#21D56D" strokeWidth="1.5"
+                                     content="M21 12C21 13.268 20.37 14.39 19.407 15.068 C19.5108 15.6608 19.4701 16.2698 19.2886 16.8436 C19.107 17.4173 18.7899 17.9388 18.364 18.364 C17.9388 18.7899 17.4173 19.107 16.8436 19.2886 C16.2698 19.4701 15.6608 19.5108 15.068 19.407 C14.7222 19.8995 14.2629 20.3014 13.7288 20.5787 C13.1948 20.856 12.6017 21.0005 12 21 C10.732 21 9.61 20.37 8.932 19.407 C8.33923 19.5107 7.73021 19.47 7.15649 19.2885 C6.58276 19.1069 6.06122 18.7898 5.636 18.364 C5.21013 17.9388 4.89298 17.4173 4.71142 16.8436 C4.52987 16.2698 4.48925 15.6608 4.593 15.068 C4.10052 14.7222 3.69862 14.2629 3.42133 13.7288 C3.14403 13.1948 2.99951 12.6017 3 12 C3 10.732 3.63 9.61 4.593 8.932 C4.48925 8.33923 4.52987 7.73019 4.71142 7.15645 C4.89298 6.58271 5.21013 6.06117 5.636 5.636 C6.06122 5.21019 6.58276 4.8931 7.15649 4.71154 C7.73021 4.52999 8.33923 4.48933 8.932 4.593 C9.27785 4.10058 9.73722 3.69873 10.2713 3.42144 C10.8053 3.14415 11.3983 2.99959 12 3 C13.268 3 14.39 3.63 15.068 4.593 C15.6608 4.48933 16.2698 4.52999 16.8435 4.71154 C17.4172 4.8931 17.9388 5.21019 18.364 5.636 C18.7898 6.06122 19.1069 6.58276 19.2885 7.15649 C19.47 7.73021 19.5107 8.33923 19.407 8.932 C19.8995 9.27779 20.3014 9.73715 20.5787 10.2712 C20.856 10.8052 21.0005 11.3983 21 12Z"
+                            />
+                            <SVGPath
+                                    content="M16 9L13.5 12.5L11 16L8 13" fill="transparent" stroke="white" strokeWidth="1.5" strokeLineCap="ROUND" strokeLineJoin="ROUND"
+                            />
+                        </StackPane>
+                        <Label text="Vous concentrer sur ce qui compte" styleClass="feature-text-done"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <StackPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" prefWidth="18" prefHeight="18" alignment="CENTER">
+                            <SVGPath fill="#21D56D" stroke="#21D56D" strokeWidth="1.5"
+                                     content="M21 12C21 13.268 20.37 14.39 19.407 15.068 C19.5108 15.6608 19.4701 16.2698 19.2886 16.8436 C19.107 17.4173 18.7899 17.9388 18.364 18.364 C17.9388 18.7899 17.4173 19.107 16.8436 19.2886 C16.2698 19.4701 15.6608 19.5108 15.068 19.407 C14.7222 19.8995 14.2629 20.3014 13.7288 20.5787 C13.1948 20.856 12.6017 21.0005 12 21 C10.732 21 9.61 20.37 8.932 19.407 C8.33923 19.5107 7.73021 19.47 7.15649 19.2885 C6.58276 19.1069 6.06122 18.7898 5.636 18.364 C5.21013 17.9388 4.89298 17.4173 4.71142 16.8436 C4.52987 16.2698 4.48925 15.6608 4.593 15.068 C4.10052 14.7222 3.69862 14.2629 3.42133 13.7288 C3.14403 13.1948 2.99951 12.6017 3 12 C3 10.732 3.63 9.61 4.593 8.932 C4.48925 8.33923 4.52987 7.73019 4.71142 7.15645 C4.89298 6.58271 5.21013 6.06117 5.636 5.636 C6.06122 5.21019 6.58276 4.8931 7.15649 4.71154 C7.73021 4.52999 8.33923 4.48933 8.932 4.593 C9.27785 4.10058 9.73722 3.69873 10.2713 3.42144 C10.8053 3.14415 11.3983 2.99959 12 3 C13.268 3 14.39 3.63 15.068 4.593 C15.6608 4.48933 16.2698 4.52999 16.8435 4.71154 C17.4172 4.8931 17.9388 5.21019 18.364 5.636 C18.7898 6.06122 19.1069 6.58276 19.2885 7.15649 C19.47 7.73021 19.5107 8.33923 19.407 8.932 C19.8995 9.27779 20.3014 9.73715 20.5787 10.2712 C20.856 10.8052 21.0005 11.3983 21 12Z"
+                            />
+                            <SVGPath
+                                    content="M16 9L13.5 12.5L11 16L8 13" fill="transparent" stroke="white" strokeWidth="1.5" strokeLineCap="ROUND" strokeLineJoin="ROUND"
+                            />
+                        </StackPane>
+                        <Label text="Atteindre vos objectifs et finir vos projets" styleClass="feature-text-done"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <StackPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" prefWidth="18" prefHeight="18" alignment="CENTER">
+                            <SVGPath fill="TRANSPARENT" stroke="#ccc" strokeWidth="1.5"
+                                     content="M21 12C21 13.268 20.37 14.39 19.407 15.068 C19.5108 15.6608 19.4701 16.2698 19.2886 16.8436 C19.107 17.4173 18.7899 17.9388 18.364 18.364 C17.9388 18.7899 17.4173 19.107 16.8436 19.2886 C16.2698 19.4701 15.6608 19.5108 15.068 19.407 C14.7222 19.8995 14.2629 20.3014 13.7288 20.5787 C13.1948 20.856 12.6017 21.0005 12 21 C10.732 21 9.61 20.37 8.932 19.407 C8.33923 19.5107 7.73021 19.47 7.15649 19.2885 C6.58276 19.1069 6.06122 18.7898 5.636 18.364 C5.21013 17.9388 4.89298 17.4173 4.71142 16.8436 C4.52987 16.2698 4.48925 15.6608 4.593 15.068 C4.10052 14.7222 3.69862 14.2629 3.42133 13.7288 C3.14403 13.1948 2.99951 12.6017 3 12 C3 10.732 3.63 9.61 4.593 8.932 C4.48925 8.33923 4.52987 7.73019 4.71142 7.15645 C4.89298 6.58271 5.21013 6.06117 5.636 5.636 C6.06122 5.21019 6.58276 4.8931 7.15649 4.71154 C7.73021 4.52999 8.33923 4.48933 8.932 4.593 C9.27785 4.10058 9.73722 3.69873 10.2713 3.42144 C10.8053 3.14415 11.3983 2.99959 12 3 C13.268 3 14.39 3.63 15.068 4.593 C15.6608 4.48933 16.2698 4.52999 16.8435 4.71154 C17.4172 4.8931 17.9388 5.21019 18.364 5.636 C18.7898 6.06122 19.1069 6.58276 19.2885 7.15649 C19.47 7.73021 19.5107 8.33923 19.407 8.932 C19.8995 9.27779 20.3014 9.73715 20.5787 10.2712 C20.856 10.8052 21.0005 11.3983 21 12Z"
+                            />
+                        </StackPane>
+                        <Label text="À votre tour ! ✨" styleClass="feature-text-active"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <Button text="C'est parti !" onAction="#onContinue" styleClass="primary-button" maxWidth="200" />
+        </VBox>
+    </HBox>
+</StackPane>

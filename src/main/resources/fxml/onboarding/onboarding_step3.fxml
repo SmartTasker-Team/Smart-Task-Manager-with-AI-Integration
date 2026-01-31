@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox prefHeight="800" prefWidth="1000"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.smarttask.manager.presentation.controllers.onboarding.OnboardingStep3Controller">
+
+    <VBox alignment="CENTER_LEFT" spacing="40" HBox.hgrow="ALWAYS" styleClass="left-pane">
+        <padding>
+            <Insets top="40" right="80" bottom="40" left="100"/>
+        </padding>
+
+        <VBox spacing="10">
+            <Label text="Comment gérez-vous" styleClass="huge-title"/>
+            <Label text="vos tâches actuellement ?" styleClass="huge-title"/>
+        </VBox>
+
+        <VBox spacing="12" maxWidth="450">
+            <Label text="Choisissez l'option que vous utilisez le plus." styleClass="feature-subtext"/>
+
+            <HBox fx:id="cardA" onMouseClicked="#handleOptionA" spacing="15" alignment="CENTER_LEFT" styleClass="option-card">
+                <Label text="A" styleClass="option-letter"/>
+                <Label text="Je les écris sur papier ou dans une note numérique" styleClass="option-text" wrapText="true"/>
+            </HBox>
+
+            <HBox fx:id="cardB" onMouseClicked="#handleOptionB" spacing="15" alignment="CENTER_LEFT" styleClass="option-card">
+                <Label text="B" styleClass="option-letter"/>
+                <Label text="J'utilise une autre application de gestion de tâches" styleClass="option-text" wrapText="true"/>
+            </HBox>
+
+            <HBox fx:id="cardC" onMouseClicked="#handleOptionC" spacing="15" alignment="CENTER_LEFT" styleClass="option-card">
+                <Label text="C" styleClass="option-letter"/>
+                <Label text="Je crée des événements dans mon agenda numérique" styleClass="option-text" wrapText="true"/>
+            </HBox>
+
+            <HBox fx:id="cardD" onMouseClicked="#handleOptionD" spacing="15" alignment="CENTER_LEFT" styleClass="option-card">
+                <Label text="D" styleClass="option-letter"/>
+                <Label text="J'essaie de m'en rappeler" styleClass="option-text" wrapText="true"/>
+            </HBox>
+        </VBox>
+
+        <Button text="Suivant" onAction="#onNext" styleClass="primary-button" prefWidth="175"/>
+    </VBox>
+
+    <StackPane HBox.hgrow="ALWAYS" styleClass="right-pane-visual">
+        <ImageView fitHeight="450" preserveRatio="true">
+            <Image url="@../../Images/illustration.png"/>
+        </ImageView>
+    </StackPane>
+
+</HBox>

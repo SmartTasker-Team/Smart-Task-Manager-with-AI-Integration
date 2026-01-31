@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'Outfit';
+    src: url('../fonts/Outfit/Outfit-Regular.ttf');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-weight: bold;
+    src: url('../fonts/Outfit/Outfit-Bold.ttf');
+}
+
+.root-pane {
+    -fx-background-color: white;
+}
+
+.main-card {
+    -fx-background-color: white;
+}
+
+.main-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: 800;
+    -fx-font-family: 'Outfit';
+}
+.feature-subtext{
+    -fx-font-size: 14px;
+    -fx-font-family: 'Outfit';
+}
+
+.input-container {
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 8;
+    -fx-padding: 10 16;
+}
+
+.input-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Outfit';
+}
+
+.modern-text-field {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Outfit';
+}
+
+.avatar-box {
+    -fx-border-color: #F1F5F9;
+    -fx-border-radius: 12;
+}
+
+.primary-button {
+    -fx-background-color: #0D89FF;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-family: 'Outfit';
+}
+.primary-button:hover {
+    -fx-background-color: #1787F2;
+}
+.secondary-button {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #374151;
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-font-family: 'Outfit';
+    -fx-padding: 7 14 7 14;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+.secondary-button:hover {
+    -fx-background-color: #E5E7EB;
+}
+.secondary-button:pressed {
+    -fx-background-color: #D1D5DB;
+}
+.text-button-danger {
+    -fx-background-color: transparent;
+    -fx-text-fill: #EF4444;
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-font-family: 'Outfit';
+    -fx-padding: 7 14 7 14;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #EF4444;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+}
+.text-button-danger:hover {
+    -fx-background-color: rgba(239, 68, 68, 0.08);
+}
+.text-button-danger:pressed {
+    -fx-background-color: rgba(239, 68, 68, 0.16);
+}

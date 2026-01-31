@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox prefHeight="800" prefWidth="1000"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.smarttask.manager.presentation.controllers.onboarding.OnboardingStep4Controller">
+
+    <VBox alignment="CENTER" spacing="40" prefWidth="650" styleClass="left-pane">
+        <padding>
+            <Insets top="40" right="80" bottom="40" left="100"/>
+        </padding>
+
+        <VBox spacing="10">
+            <Label text="Comment gérez-vous" styleClass="huge-title"/>
+            <Label text="les événements" styleClass="huge-title"/>
+        </VBox>
+
+        <HBox fx:id="googleCard" onMouseClicked="#handleToggleSelect"
+              spacing="20" alignment="CENTER" styleClass="option-card">
+            <StackPane minWidth="100" maxWidth="150" styleClass="google-calender-visual">
+                <ImageView fitHeight="75" preserveRatio="true">
+                    <Image url="@../../Images/googleCalender-logo.png"/>
+                </ImageView>
+            </StackPane>
+            <Label text="Connecter Google Calender" styleClass="option-text" wrapText="true"/>
+        </HBox>
+
+        <VBox spacing="10">
+            <Button fx:id="passerBtn" text="Passer" onAction="#onFinish"
+                    styleClass="secondary-button" maxWidth="Infinity"/>
+
+            <Button fx:id="connecterBtn" text="Connecter" visible="false" managed="false"
+                    styleClass="primary-button" maxWidth="Infinity"/>
+        </VBox>
+
+    </VBox>
+
+    <StackPane HBox.hgrow="ALWAYS" styleClass="right-pane-visual">
+        <ImageView fitHeight="325" preserveRatio="true">
+            <Image url="@../../Images/illustration4.png"/>
+        </ImageView>
+    </StackPane>
+
+</HBox>

@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'Outfit';
+    src: url('../fonts/Outfit/Outfit-Regular.ttf');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-weight: bold;
+    src: url('../fonts/Outfit/Outfit-Bold.ttf');
+}
+.root-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20;
+    -fx-font-family: Outfit;
+}
+.image-view {
+    -fx-image-rendering: crisp-edges;
+}
+.logo-text {
+    -fx-font-family: Outfit;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0D89FF;
+}
+.title {
+    -fx-font-family: Outfit;
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #202020;
+    -fx-padding: 10 0 0 0;
+}
+.description {
+    -fx-font-family: Outfit;
+    -fx-font-size: 15px;
+    -fx-text-fill: #555555;
+    -fx-line-spacing: 4;
+    -fx-max-width: 400;
+}
+.primary-button {
+    -fx-background-color: #0D89FF;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-transition: 0.5s;
+}
+.primary-button:hover {
+    -fx-background-color: #1787F2;
+}
+.link-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+    -fx-padding: 10 0 0 0;
+}
+.link {
+    -fx-font-size: 13px;
+    -fx-text-fill: #0D89FF;
+    -fx-padding: 10 0 0 0;
+    -fx-cursor: hand;
+}
+.link:hover {
+    -fx-font-weight: bold;
+}

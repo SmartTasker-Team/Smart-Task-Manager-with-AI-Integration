@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+
+<StackPane prefHeight="800" prefWidth="1000" styleClass="root-pane"
+           style="-fx-background-color: white;"
+           xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.smarttask.manager.presentation.controllers.onboarding.OnboardingStep2Controller">
+
+    <HBox fx:id="mainContainer"
+          maxWidth="900" maxHeight="600"
+          spacing="0"
+          style="-fx-background-color: white;">
+
+        <VBox alignment="CENTER_LEFT" spacing="30" HBox.hgrow="ALWAYS" styleClass="main-card">
+            <padding>
+                <Insets top="40" right="50" bottom="40" left="50"/>
+            </padding>
+
+
+            <VBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Quel est votre nom ?" styleClass="main-title"/>
+                <Label text="Complétez votre profil dès maintenant." styleClass="feature-subtext"/>
+            </VBox>
+
+            <VBox spacing="15" alignment="CENTER_LEFT">
+                <VBox spacing="5" styleClass="input-container">
+                    <Label text="Votre nom" styleClass="input-label"/>
+                    <TextField fx:id="usernameField" promptText="Entrez votre nom complet" styleClass="modern-text-field"/>
+                </VBox>
+
+                <HBox spacing="20" alignment="CENTER_LEFT" styleClass="avatar-box">
+                    <padding>
+                        <Insets top="15" right="15" bottom="15" left="15"/>
+                    </padding>
+
+                    <StackPane>
+                        <Circle radius="35" fill="#9b59b6" fx:id="avatarCircle"/>
+                        <Label fx:id="avatarInitial" text="A" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;"/>
+                    </StackPane>
+
+                    <VBox spacing="15">
+                        <HBox spacing="15">
+                            <Button text="Changer la photo" styleClass="secondary-button"/>
+                            <Button text="Supprimer la photo" styleClass="text-button-danger"/>
+                        </HBox>
+                        <Label text="Choisissez une photo de 4 Mo maximum. La photo de votre avatar sera publique." styleClass="feature-subtext"/>
+                        </VBox>
+                </HBox>
+            </VBox>
+
+            <Button text="Suivant" onAction="#onNext" styleClass="primary-button" prefWidth="175"/>
+        </VBox>
+    </HBox>
+</StackPane>

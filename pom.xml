@@ -94,10 +94,11 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.smarttask.manager/com.smarttask.manager.HelloApplication</mainClass>
+                            <mainClass>com.smarttask.manager/com.smarttask.manager.presentation.MainApp</mainClass>                            <options>
+                                <option>--enable-native-access=javafx.graphics</option>
+                            </options>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
