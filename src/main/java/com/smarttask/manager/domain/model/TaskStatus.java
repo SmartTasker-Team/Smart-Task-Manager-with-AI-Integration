@@ -7,9 +7,15 @@ package com.smarttask.manager.domain.model;
  * across the analytics dashboard and visual progress tracking.
  * </p>
  */
+
 public enum TaskStatus {
-    TODO,
-    IN_PROGRESS,
-    COMPLETED,
-    ARCHIVED
+    TODO, DOING, DONE, ARCHIVED;
+
+    public static TaskStatus fromString(String status) {
+        try {
+            return TaskStatus.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return TODO;
+        }
+    }
 }
