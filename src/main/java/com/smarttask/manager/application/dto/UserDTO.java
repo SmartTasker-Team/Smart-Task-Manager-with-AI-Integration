@@ -1,5 +1,7 @@
 package com.smarttask.manager.application.dto;
 
+import java.time.Instant;
+
 /**
  * Data Transfer Object representing a User in the local network.
  * <p>
@@ -7,5 +9,10 @@ package com.smarttask.manager.application.dto;
  * collaboration features.
  * </p>
  */
-public class UserDTO {
-}
+public record UserDTO(
+        String id,
+        String username,
+        String email,
+        Instant createdAt,
+        long versionNumber
+) {}
