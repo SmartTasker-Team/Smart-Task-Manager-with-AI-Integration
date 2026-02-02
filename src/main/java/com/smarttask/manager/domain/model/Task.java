@@ -157,10 +157,11 @@ public class Task {
         System.out.println(task1.getSubtasks());
 
         System.out.println(task1);
-        task1.setcategory("Sport");
+        task1.setCategory("Sport");
         System.out.println(task1);
-        System.out.println(task1.getcategory());
+        System.out.println(task1.getCategory());
     };
  */
+
 
 }

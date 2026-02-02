@@ -13,11 +13,10 @@ import java.util.Optional;
  * </p>
  */
 public interface TaskRepository {
-    Optional<Task> findById(Long id);
-    List<Task> findByOwnerId(Long ownerId);
-    Task save(Task task); // Used for both Create and Update
-    void delete(Long id);
-
-    // Specific for dual-database sync strategy
-    boolean updateIfVersionMatches(Task task, long expectedVersion);
+    void save(Task task);
+    Optional<Task> findById(String id);
+    List<Task> findAllByOwner(String ownerId);
+    List<Task> findAllByAssignedUser(String userId);
+    void delete(String id);
+    long getRemoteVersion(String taskId); // Pour la résolution de conflits
 }

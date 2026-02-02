@@ -1,5 +1,4 @@
 package com.smarttask.manager.domain.repository;
-
 import com.smarttask.manager.domain.model.User;
 
 import java.util.Optional;
@@ -11,6 +10,8 @@ import java.util.Optional;
  * </p>
  */
 public interface UserRepository {
-    Optional<User> findByUsername(String username);
-    User save(User user);
+    void save(User user);
+    Optional<User> findById(String id);
+    Optional<User> findByEmail(String email);
+    void delete(String id);
 }
