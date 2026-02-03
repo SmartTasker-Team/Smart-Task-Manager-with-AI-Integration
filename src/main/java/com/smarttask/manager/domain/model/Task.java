@@ -1,4 +1,6 @@
 package com.smarttask.manager.domain.model;
+import com.smarttask.manager.domain.service.DateTimeProvider;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +26,14 @@ public class Task {
     private String ownerId;
     private String parentTaskId;
     private long versionNumber;
+    private LocalDateTime createdAt;
     private List<Task> subtasks = new ArrayList<>();
 
-    public Task(String idTask, String title, String ownerId) {
+    public Task(String idTask, String title, String ownerId, LocalDateTime createdAt) {
         this.idTask = idTask;
         this.title = title;
         this.ownerId = ownerId;
+        this.createdAt = createdAt;
         this.priority = PriorityLevel.LOW;
         this.status = TaskStatus.TODO;
         this.versionNumber = 1;
@@ -151,8 +155,8 @@ public class Task {
     }
 
     public static void main(String[] args){
-        Task task1 = new Task("333333","hhhhhhhhh","3333333333");
-        Task task2 = new Task("222222","hhhhhhhhh","3333333333");
+        Task task1 = new Task("333333","hhhhhhhhh","3333333333",LocalDateTime.now());
+        Task task2 = new Task("222222","hhhhhhhhh","3333333333", LocalDateTime.now());
         task1.addSubtask(task2);
         System.out.println(task1.getSubtasks());
 
@@ -161,7 +165,6 @@ public class Task {
         System.out.println(task1);
         System.out.println(task1.getCategory());
     };
+
  */
-
-
 }
