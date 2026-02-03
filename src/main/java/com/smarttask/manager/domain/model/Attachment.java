@@ -1,6 +1,5 @@
 package com.smarttask.manager.domain.model;
 
-import java.util.UUID;
 
 /**
  * Entité du domaine représentant une pièce jointe.

@@ -9,12 +9,12 @@ public class Comment {
     private String taskId;
     private String userId;
 
-    public Comment(String idComment, String content, String taskId, String userId) {
+    public Comment(String idComment, String content, String taskId, String userId,LocalDateTime createdAt) {
         this.idComment = idComment;
         this.content = content;
         this.taskId = taskId;
         this.userId = userId;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = createdAt;
     }
 
     public String getIdComment(){ return idComment;};
@@ -38,7 +38,7 @@ public class Comment {
     }
 
     public static void main(String[] args){
-        Comment c1 = new Comment("33333","hhhhhhhhhhhhh","333333","3333333");
+        Comment c1 = new Comment("33333","hhhhhhhhhhhhh","333333","3333333",LocalDateTime.now());
         System.out.println(c1);
     };
 

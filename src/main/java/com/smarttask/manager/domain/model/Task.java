@@ -35,12 +35,12 @@ public class Task {
         this.versionNumber = 1;
     }
 
-    public boolean isOverdue() {
+    public boolean isOverdue(LocalDateTime referenceTime) {
         // Une tâche n'est pas en retard si elle est faite ou archivée
         if (status == TaskStatus.DONE || status == TaskStatus.ARCHIVED || dueDate == null) {
             return false;
         }
-        return dueDate.isBefore(LocalDateTime.now());
+        return dueDate.isBefore(referenceTime);
     }
 
     public void addSubtask(Task subtask) {

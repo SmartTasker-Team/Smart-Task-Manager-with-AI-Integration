@@ -1,7 +1,8 @@
 package com.smarttask.manager.domain.model;
 
-import java.time.LocalDateTime;
 import java.time.Duration;
+import java.time.LocalDateTime;
+
 
 public class TimeLog {
     private String idTimeLog;
@@ -10,15 +11,18 @@ public class TimeLog {
     private LocalDateTime endTime;
     private long durationSeconds;
 
-    public TimeLog(String idTimeLog, String taskId) {
+    public TimeLog(String idTimeLog, String taskId, LocalDateTime startTime ) {
         this.idTimeLog = idTimeLog;
         this.taskId = taskId;
-        this.startTime = LocalDateTime.now();
+        this.startTime = startTime;
         this.durationSeconds = 0;
     }
 
-    public void stopLog() {
-        this.endTime = LocalDateTime.now();
+    public void stopLog(LocalDateTime endTime) {
+        if (endTime.isBefore(this.startTime)) {
+            throw new IllegalArgumentException("End time cannot be before start time.");
+        }
+        this.endTime = endTime;
         this.durationSeconds = Duration.between(startTime, endTime).getSeconds();
     }
 
@@ -31,7 +35,7 @@ public class TimeLog {
         System.out.println("=== TEST DU TRACKING DE TEMPS ===");
 
         // 1. Instanciation (Le chrono démarre au constructeur)
-        TimeLog monLog = new TimeLog("LOG-001", "TASK-101");
+        TimeLog monLog = new TimeLog("LOG-001", "TASK-101",LocalDateTime.now());
         System.out.println("Démarrage à : " + monLog.getStartTime());
 
         try {
@@ -40,7 +44,7 @@ public class TimeLog {
             Thread.sleep(3000);
 
             // 3. Arrêt du chrono
-            monLog.stopLog();
+            monLog.stopLog(LocalDateTime.now());
 
             // 4. Vérification des résultats
             System.out.println("Fin à : " + monLog.getEndTime());
@@ -57,5 +61,7 @@ public class TimeLog {
             System.err.println("Le test a été interrompu.");
         }
     }
+    
      */
+
 }
