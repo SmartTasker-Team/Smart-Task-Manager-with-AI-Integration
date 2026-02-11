@@ -8,24 +8,6 @@ package com.smarttask.manager.domain.model;
  */
 
 public enum PriorityLevel {
-    LOW, MEDIUM, HIGH, URGENT;
-
-    public static PriorityLevel fromString(String priority) {
-        try {
-            return PriorityLevel.valueOf(priority.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return LOW; // Valeur par défaut
-        }
-    }
-}
-
-
-
-
-
-
-
-/* public enum PriorityLevel {
 
     URGENT_IMPORTANT(true, true),
     NOT_URGENT_IMPORTANT(false, true),
@@ -46,6 +28,21 @@ public enum PriorityLevel {
 
     public boolean isImportant() {
         return important;
+    }
+}
+
+
+
+
+/*public enum PriorityLevel {
+    LOW, MEDIUM, HIGH;
+
+    public static PriorityLevel fromString(String priority) {
+        try {
+            return PriorityLevel.valueOf(priority.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return LOW; // Valeur par défaut
+        }
     }
 }
 

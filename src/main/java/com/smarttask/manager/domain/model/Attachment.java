@@ -8,19 +8,19 @@ package com.smarttask.manager.domain.model;
 
 public class Attachment {
     private String idAttachment;
-    private String taskId;
+    private String commentId;
     private String storageUrl;
     private String fileType;
 
-    public Attachment(String idAttachment, String taskId, String storageUrl, String fileType) {
+    public Attachment(String idAttachment, String commentId, String storageUrl, String fileType) {
         this.idAttachment = idAttachment;
-        this.taskId = taskId;
+        this.commentId = commentId;
         this.storageUrl = storageUrl;
         this.fileType = fileType;
     }
 
     public String getIdAttachment() { return idAttachment; }
-    public String getTaskId() { return taskId; }
+    public String getCommentId() { return commentId; }
     public String getStorageUrl() { return storageUrl; }
     public String getFileType() { return fileType; }
 

@@ -4,6 +4,7 @@ import com.smarttask.manager.domain.service.DateTimeProvider;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The primary Entity representing a unit of work.
@@ -26,15 +27,18 @@ public class Task {
     private String ownerId;
     private String parentTaskId;
     private long versionNumber;
+    private String projectId;
     private LocalDateTime createdAt;
     private List<Task> subtasks = new ArrayList<>();
+    private List<Comment> comments;
+    private List<Attachment> attachments;
 
     public Task(String idTask, String title, String ownerId, LocalDateTime createdAt) {
         this.idTask = idTask;
         this.title = title;
         this.ownerId = ownerId;
         this.createdAt = createdAt;
-        this.priority = PriorityLevel.LOW;
+        this.priority = PriorityLevel.URGENT_NOT_IMPORTANT;
         this.status = TaskStatus.TODO;
         this.versionNumber = 1;
     }
@@ -100,6 +104,7 @@ public class Task {
     public String getRecurrenceRule() { return recurrenceRule; }
     public String getOwnerId() { return ownerId; }
     public String getParentTaskId() { return parentTaskId; }
+    public String getProjectIdId() { return projectId; }
     public long getVersionNumber() { return versionNumber; }
     public List<Task> getSubtasks() { return new ArrayList<>(subtasks); }
 
