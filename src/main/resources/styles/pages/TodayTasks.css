@@ -1,0 +1,32 @@
+.task-list-container{
+    -fx-padding: 25 0 15 0;
+}
+.lateTask-container{
+    -fx-padding: 0 0 25 0;
+}
+.lateTask-banner{
+    -fx-padding: 20 0 10 0;
+}
+.lateTask-title {
+    -fx-font-size: 15px;
+    -fx-text-fill: red;
+    -fx-font-weight: 800;
+}
+.todayTask-container{
+    -fx-padding: 0 0 25 0;
+}
+.todayTask-banner{
+    -fx-padding: 25 0 15 0;
+}
+.todayTask-title {
+    -fx-font-size: 15px;
+    -fx-text-fill: #0D89FF;
+    -fx-font-weight: 800;
+}
+.divider {
+    -fx-background-color: linear-gradient(
+        to right,
+        #f3f3f3,
+        transparent
+    );
+}

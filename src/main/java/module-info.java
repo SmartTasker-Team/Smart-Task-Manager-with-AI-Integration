@@ -28,6 +28,7 @@ module com.smarttask.manager {
     requires com.google.gson;
     requires vosk;
     requires java.desktop;
+    requires javafx.graphics;
 
     // Controllers opened for FXML
     opens com.smarttask.manager.presentation.controllers to javafx.fxml;

@@ -1,0 +1,89 @@
+.task-row:hover{
+    -fx-cursor: hand;
+}
+.task-row .icon-button-transparent {
+    -fx-opacity: 0;
+    -fx-cursor: hand;
+    -fx-padding: 5;
+}
+.task-row .icon-button-transparent:hover{
+    -fx-background-color: #0D89FF;
+}
+.task-row .icon-button-transparent:hover SVGPath {
+    -fx-stroke: white;
+}
+.task-row:hover .icon-button-transparent {
+    -fx-opacity: 1;
+}
+.task-row, .task-row-editing {
+    -fx-padding: 15 0;
+}
+.task-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #212529;
+}
+.task-date-red{
+    -fx-font-size: 13px;
+    -fx-text-fill: #db4c3f;
+}
+.task-date-orange {
+    -fx-font-size: 13px;
+    -fx-text-fill: #ff9a1f;
+}
+.task-date-purple {
+    -fx-font-size: 13px;
+    -fx-text-fill: #a842f5;
+}
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-padding: 3px;
+    -fx-pref-width: 19px;
+    -fx-pref-height: 19px;
+    -fx-cursor: hand;
+}
+.task-radio-orange .radio {
+    -fx-background-color: #FFCD90;
+    -fx-border-color: #ff9a1f;
+}
+.task-radio-orange:hover .radio .dot,
+.task-radio-orange:selected .radio .dot {
+    -fx-background-color: #ff9a1f;
+    -fx-shape: "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"; /* Checkmark path */
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
+    -fx-background-insets: 0;
+}
+.task-radio-purple .radio {
+    -fx-background-color: #DCAEFF;
+    -fx-border-color: #a842f5;
+}
+.task-radio-purple:hover .radio .dot,
+.task-radio-purple:selected .radio .dot {
+    -fx-background-color: #a842f5;
+    -fx-shape: "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"; /* Checkmark path */
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
+    -fx-background-insets: 0;
+}
+.task-radio-red .radio {
+    -fx-background-color: #FFCDD2;
+    -fx-border-color: #D32F2F;
+}
+.task-radio-red:hover .radio .dot,
+.task-radio-red:selected .radio .dot {
+    -fx-background-color: #D32F2F;
+    -fx-shape: "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"; /* Checkmark path */
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
+    -fx-background-insets: 0;
+}
+.divider {
+    -fx-background-color: linear-gradient(
+        to right,
+        #f3f3f3,
+        transparent
+    );
+}

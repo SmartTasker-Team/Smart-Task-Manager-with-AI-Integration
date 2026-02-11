@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<HBox stylesheets="@../styles/Dashboard.css" prefHeight="800" prefWidth="1000" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.DashboardController">
+    <fx:include source="components/Sidebar.fxml" />
+    <StackPane fx:id="contentArea" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+
+    </StackPane>
+</HBox>

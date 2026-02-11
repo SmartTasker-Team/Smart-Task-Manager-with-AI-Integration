@@ -19,7 +19,7 @@ public class OnboardingStep4Controller {
 
     @FXML
     private void handleToggleSelect() {
-        isSelected = !isSelected; // Toggle the state
+        isSelected = !isSelected;
 
         if (isSelected) {
             googleCard.getStyleClass().add("option-card-selected");
@@ -31,18 +31,16 @@ public class OnboardingStep4Controller {
     }
 
     private void showConnectButton(boolean showConnect) {
-        // Toggle 'Connecter' button
         connecterBtn.setVisible(showConnect);
         connecterBtn.setManaged(showConnect);
 
-        // Toggle 'Passer' button (opposite)
         passerBtn.setVisible(!showConnect);
         passerBtn.setManaged(!showConnect);
     }
 
     @FXML
     private void onFinish() {
-        Parent dashboard = viewFactory.loadWelcomeRoot();
+        Parent dashboard = viewFactory.dashboardView();
         SceneManager.getInstance().setRootWithFade(dashboard);
     }
 }

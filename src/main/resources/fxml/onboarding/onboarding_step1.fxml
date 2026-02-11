@@ -2,10 +2,14 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.paint.Color?>
 
 <StackPane prefHeight="800" prefWidth="1000"
            style="-fx-background-color: white;"
@@ -23,10 +27,159 @@
             </padding>
 
             <HBox alignment="CENTER_LEFT" spacing="10">
-                <ImageView fitHeight="30" preserveRatio="true">
-                    <Image url="@../../Images/logo_icon.png"/>
-                </ImageView>
-                <Label text="TaskIQ" styleClass="logo-text"/>
+                <Pane prefWidth="60" prefHeight="55" maxWidth="60" maxHeight="55">
+                    <Group scaleX="0.1125" scaleY="0.1125" translateX="-595" translateY="-105">
+                        <!-- Path 0 -->
+                        <SVGPath content="M298.993 144.32H273.028L273.131 144.906L293.718 263.275L246.633 207.806L246.249 207.354L245.868 207.808L199.294 263.246L220.366 144.908L220.472 144.32H194.002L246.252 74.8291L298.993 144.32Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 1 -->
+                        <SVGPath content="M180.108 7.5C94.9388 56.4418 86.2158 154.779 129.5 212.166V263.985L74.5 221.753V58.5H0.782227L24.3203 7.5H180.108Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 2 -->
+                        <SVGPath content="M248 0.5C321.178 0.5 380.5 59.8223 380.5 133C380.5 185.034 350.505 230.062 306.861 251.739L295.05 192.808C312.988 178.614 324.5 156.652 324.5 132C324.5 89.1979 289.802 54.5 247 54.5C204.198 54.5 169.5 89.1979 169.5 132C169.5 156.655 181.014 178.62 198.956 192.813L188.624 251.482C145.259 229.708 115.5 184.829 115.5 133C115.5 59.8223 174.822 0.5 248 0.5Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 3 -->
+                        <SVGPath content="M382.23 7.5L405.999 59H370.467C358.049 39.2294 340.041 21.3773 315.892 7.5H382.23Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 4 -->
+                        <SVGPath content="M1244.18 220.76C1232.07 220.76 1220.8 218.613 1210.37 214.32C1199.95 210.027 1190.82 204.047 1183 196.38C1175.34 188.713 1169.28 179.82 1164.83 169.7C1160.54 159.427 1158.39 148.387 1158.39 136.58C1158.39 124.62 1160.54 113.58 1164.83 103.46C1169.13 93.3399 1175.11 84.5232 1182.77 77.0099C1190.59 69.3432 1199.64 63.4399 1209.91 59.2999C1220.34 55.0065 1231.61 52.8599 1243.72 52.8599C1255.99 52.8599 1267.26 55.0065 1277.53 59.2999C1287.96 63.4399 1297.01 69.3432 1304.67 77.0099C1312.49 84.5232 1318.55 93.4165 1322.84 103.69C1327.14 113.81 1329.28 124.85 1329.28 136.81C1329.28 148.617 1327.14 159.657 1322.84 169.93C1318.55 180.05 1312.49 188.943 1304.67 196.61C1297.01 204.123 1288.04 210.027 1277.76 214.32C1267.49 218.613 1256.3 220.76 1244.18 220.76ZM1316.63 230.88L1240.73 154.98L1261.66 134.05L1337.56 209.95L1316.63 230.88ZM1243.72 187.87C1253.54 187.87 1262.05 185.723 1269.25 181.43C1276.46 177.137 1282.06 171.157 1286.04 163.49C1290.18 155.67 1292.25 146.7 1292.25 136.58C1292.25 128.913 1291.1 122.013 1288.8 115.88C1286.5 109.593 1283.21 104.227 1278.91 99.7799C1274.62 95.1799 1269.48 91.7299 1263.5 89.4299C1257.68 86.9765 1251.08 85.7499 1243.72 85.7499C1234.06 85.7499 1225.63 87.8965 1218.42 92.1899C1211.22 96.3299 1205.54 102.233 1201.4 109.9C1197.42 117.413 1195.42 126.307 1195.42 136.58C1195.42 144.247 1196.57 151.223 1198.87 157.51C1201.17 163.797 1204.47 169.24 1208.76 173.84C1213.06 178.287 1218.12 181.737 1223.94 184.19C1229.92 186.643 1236.52 187.87 1243.72 187.87Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 5 -->
+                        <SVGPath content="M1099.29 218V55.6201H1135.4V218H1099.29Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 6 -->
+                        <SVGPath content="M998.245 218L959.145 160.04L998.015 106.22H1037.34L990.425 166.71L991.575 152.22L1039.64 218H998.245ZM926.715 218V51.02H961.905V218H926.715Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 7 -->
+                        <SVGPath content="M862.083 220.76C855.49 220.76 848.973 219.917 842.533 218.23C836.246 216.543 830.343 214.167 824.823 211.1C819.456 207.88 814.856 204.2 811.023 200.06L831.033 179.82C834.713 183.807 839.083 186.95 844.143 189.25C849.203 191.397 854.723 192.47 860.703 192.47C864.843 192.47 867.986 191.857 870.133 190.63C872.433 189.403 873.583 187.717 873.583 185.57C873.583 182.81 872.203 180.74 869.443 179.36C866.836 177.827 863.463 176.523 859.323 175.45C855.183 174.223 850.813 172.92 846.213 171.54C841.613 170.16 837.243 168.243 833.103 165.79C828.963 163.337 825.59 159.963 822.983 155.67C820.376 151.223 819.073 145.627 819.073 138.88C819.073 131.673 820.913 125.463 824.593 120.25C828.273 114.883 833.486 110.667 840.233 107.6C846.98 104.533 854.876 103 863.923 103C873.43 103 882.17 104.687 890.143 108.06C898.27 111.28 904.863 116.11 909.923 122.55L889.913 142.79C886.386 138.65 882.4 135.737 877.953 134.05C873.66 132.363 869.443 131.52 865.303 131.52C861.316 131.52 858.326 132.133 856.333 133.36C854.34 134.433 853.343 136.043 853.343 138.19C853.343 140.49 854.646 142.33 857.253 143.71C859.86 145.09 863.233 146.317 867.373 147.39C871.513 148.463 875.883 149.767 880.483 151.3C885.083 152.833 889.453 154.903 893.593 157.51C897.733 160.117 901.106 163.643 903.713 168.09C906.32 172.383 907.623 178.057 907.623 185.11C907.623 195.997 903.483 204.66 895.203 211.1C887.076 217.54 876.036 220.76 862.083 220.76Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 8 -->
+                        <SVGPath content="M731.276 220.3C721.003 220.3 711.803 217.77 703.676 212.71C695.703 207.65 689.339 200.75 684.586 192.01C679.986 183.27 677.686 173.303 677.686 162.11C677.686 150.917 679.986 140.95 684.586 132.21C689.339 123.47 695.703 116.57 703.676 111.51C711.803 106.45 721.003 103.92 731.276 103.92C738.789 103.92 745.536 105.377 751.516 108.29C757.649 111.203 762.633 115.267 766.466 120.48C770.299 125.54 772.446 131.367 772.906 137.96V186.26C772.446 192.853 770.299 198.757 766.466 203.97C762.786 209.03 757.879 213.017 751.746 215.93C745.613 218.843 738.789 220.3 731.276 220.3ZM738.406 188.56C745.919 188.56 751.976 186.107 756.576 181.2C761.176 176.14 763.476 169.777 763.476 162.11C763.476 156.897 762.403 152.297 760.256 148.31C758.263 144.323 755.349 141.257 751.516 139.11C747.836 136.81 743.543 135.66 738.636 135.66C733.729 135.66 729.359 136.81 725.526 139.11C721.846 141.257 718.856 144.323 716.556 148.31C714.409 152.297 713.336 156.897 713.336 162.11C713.336 167.17 714.409 171.693 716.556 175.68C718.703 179.667 721.693 182.81 725.526 185.11C729.359 187.41 733.653 188.56 738.406 188.56ZM762.096 218V187.87L767.386 160.73L762.096 133.59V106.22H796.596V218H762.096Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+
+                        <!-- Path 9 -->
+                        <SVGPath content="M607.43 218V57.9201H643.54V218H607.43ZM556.6 87.1301V55.6201H694.37V87.1301H556.6Z">
+                            <fill>
+                                <LinearGradient startX="0" startY="0" endX="0" endY="1" proportional="true">
+                                    <stops>
+                                        <Stop offset="0" color="#0D89FF"/>
+                                        <Stop offset="1" color="#190DFF"/>
+                                    </stops>
+                                </LinearGradient>
+                            </fill>
+                            <stroke>
+                                <Color fx:value="#1787F2"/>
+                            </stroke>
+                        </SVGPath>
+                    </Group>
+                </Pane>
             </HBox>
 
             <VBox spacing="15">

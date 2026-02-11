@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<VBox stylesheets="@../../styles/components/TaskList.css" styleClass="task-list" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.TaskListController">
+    <VBox styleClass="task-row">
+        <HBox alignment="CENTER_RIGHT" spacing="12">
+            <RadioButton styleClass="task-radio-orange"/>
+            <VBox spacing="3">
+                <Label text="Call mom" styleClass="task-title"/>
+                <HBox spacing="2" alignment="CENTER_LEFT">
+                    <Label text="Demain" styleClass="task-date-orange"/>
+                    <Label text="7 AM" styleClass="task-date-orange"/>
+                    <SVGPath
+                            content="M5 4 H19 A2 2 0 0 1 21 6 V20 A2 2 0 0 1 19 22 H5 A2 2 0 0 1 3 20 V6 A2 2 0 0 1 5 4 Z M16 2 V6 M8 2 V6 M3 10 H21"
+                            fill="transparent"
+                            stroke="#ff9a1f"
+                            scaleX="0.6" scaleY="0.6"
+                            strokeWidth="2"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"
+                    />
+                    <SVGPath
+                            content="M14.857 17.082 a23.848 23.848 0 0 0 5.454 -1.31 A8.967 8.967 0 0 1 18 9.75 V9 A6 6 0 0 0 6 9 v0.75 a8.967 8.967 0 0 1 -2.312 6.022 c1.733 0.64 3.56 1.085 5.455 1.31 m5.714 0 a24.255 24.255 0 0 1 -5.714 0 m5.714 0 a3 3 0 1 1 -5.714 0 M3.124 7.5 A8.969 8.969 0 0 1 5.292 3 m13.416 0 a8.969 8.969 0 0 1 2.168 4.5"
+                            fill="transparent"
+                            stroke="#495057"
+                            scaleX="0.6" scaleY="0.6"
+                            strokeWidth="2"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </HBox>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M12 20h9 M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.75" scaleY="0.75"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.85" scaleY="0.85"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+    <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
+    <VBox styleClass="task-row">
+        <HBox alignment="CENTER_RIGHT" spacing="12">
+            <RadioButton styleClass="task-radio-red"/>
+            <VBox spacing="3">
+                <Label text="Call mom" styleClass="task-title"/>
+                <HBox spacing="2" alignment="CENTER_LEFT">
+                    <Label text="Demain" styleClass="task-date-red"/>
+                    <Label text="8 AM" styleClass="task-date-red"/>
+                    <SVGPath
+                            content="M5 4 H19 A2 2 0 0 1 21 6 V20 A2 2 0 0 1 19 22 H5 A2 2 0 0 1 3 20 V6 A2 2 0 0 1 5 4 Z M16 2 V6 M8 2 V6 M3 10 H21"
+                            fill="transparent"
+                            stroke="#db4c3f"
+                            scaleX="0.6" scaleY="0.6"
+                            strokeWidth="2"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"
+                    />
+                    <SVGPath
+                            content="M14.857 17.082 a23.848 23.848 0 0 0 5.454 -1.31 A8.967 8.967 0 0 1 18 9.75 V9 A6 6 0 0 0 6 9 v0.75 a8.967 8.967 0 0 1 -2.312 6.022 c1.733 0.64 3.56 1.085 5.455 1.31 m5.714 0 a24.255 24.255 0 0 1 -5.714 0 m5.714 0 a3 3 0 1 1 -5.714 0 M3.124 7.5 A8.969 8.969 0 0 1 5.292 3 m13.416 0 a8.969 8.969 0 0 1 2.168 4.5"
+                            fill="transparent"
+                            stroke="#495057"
+                            scaleX="0.6" scaleY="0.6"
+                            strokeWidth="2"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </HBox>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M12 20h9 M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.75" scaleY="0.75"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.85" scaleY="0.85"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+    <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
+    <VBox styleClass="task-row">
+        <HBox alignment="CENTER_RIGHT" spacing="12">
+            <RadioButton styleClass="task-radio-purple"/>
+            <VBox spacing="3">
+                <Label text="Push changes to GitHub" styleClass="task-title"/>
+                <HBox spacing="2" alignment="CENTER_LEFT">
+                    <Label text="Vendredi" styleClass="task-date-purple"/>
+                    <Label text="5 AM" styleClass="task-date-purple"/>
+                    <SVGPath
+                            content="M5 4 H19 A2 2 0 0 1 21 6 V20 A2 2 0 0 1 19 22 H5 A2 2 0 0 1 3 20 V6 A2 2 0 0 1 5 4 Z M16 2 V6 M8 2 V6 M3 10 H21"
+                            fill="transparent"
+                            stroke="#a842f5"
+                            scaleX="0.6" scaleY="0.6"
+                            strokeWidth="2"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"
+                    />
+                    <SVGPath
+                            content="M16.023 9.348h4.992v-.001 M2.985 19.644v-4.992 m0 0h4.992 m-4.993 0 3.181 3.183 a8.25 8.25 0 0 0 13.803-3.7 M4.031 9.865 a8.25 8.25 0 0 1 13.803-3.7 l3.181 3.182 m0-4.991v4.99"
+                            fill="transparent"
+                            stroke="#a842f5"
+                            scaleX="0.6" scaleY="0.6"
+                            strokeWidth="2"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                    <SVGPath
+                            content="M14.857 17.082 a23.848 23.848 0 0 0 5.454 -1.31 A8.967 8.967 0 0 1 18 9.75 V9 A6 6 0 0 0 6 9 v0.75 a8.967 8.967 0 0 1 -2.312 6.022 c1.733 0.64 3.56 1.085 5.455 1.31 m5.714 0 a24.255 24.255 0 0 1 -5.714 0 m5.714 0 a3 3 0 1 1 -5.714 0 M3.124 7.5 A8.969 8.969 0 0 1 5.292 3 m13.416 0 a8.969 8.969 0 0 1 2.168 4.5"
+                            fill="transparent"
+                            stroke="#495057"
+                            scaleX="0.6" scaleY="0.6"
+                            strokeWidth="2"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+
+                </HBox>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M12 20h9 M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.75" scaleY="0.75"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.85" scaleY="0.85"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+    <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
+</VBox>

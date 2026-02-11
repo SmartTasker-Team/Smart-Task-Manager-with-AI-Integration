@@ -6,6 +6,7 @@
 <?import javafx.geometry.Insets?>
 
 <HBox prefHeight="800" prefWidth="1000"
+      style="-fx-background-color: white;"
       xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.smarttask.manager.presentation.controllers.onboarding.OnboardingStep3Controller">
 

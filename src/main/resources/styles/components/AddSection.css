@@ -1,0 +1,56 @@
+.add-section{
+    -fx-padding: 15 0;
+    -fx-opacity: 0;
+    -fx-cursor: hand;
+}
+.add-section:hover{
+    -fx-opacity: 1;
+}
+.add-section-label {
+    -fx-text-fill: #0D89FF;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-padding: 0 10;
+}
+.add-section-separator .line {
+    -fx-border-color: #0D89FF4D;
+    -fx-border-width: 2px 0 0 0;
+    -fx-background-color: transparent;
+    -fx-border-style: solid;
+}
+.add-section-form{
+    -fx-padding: 15 0;
+}
+.add-section-input {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+.add-section-input:focused {
+    -fx-border-color: #0D89FF4D;
+}
+.btn-cancel {
+    -fx-background-color: #0D89FF4D;
+    -fx-text-fill: #495057;
+    -fx-font-weight: 600;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 14;
+    -fx-font-size: 13px;
+}
+.btn-add {
+    -fx-background-color: #0D89FF;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 14;
+    -fx-font-size: 13px;
+}
+.btn-add:hover {
+    -fx-background-color: #1787F2;
+}

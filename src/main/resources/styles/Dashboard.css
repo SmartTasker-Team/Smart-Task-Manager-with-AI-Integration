@@ -1,0 +1,75 @@
+@font-face {
+    font-family: 'Outfit';
+    src: url('../fonts/Outfit/Outfit-Regular.ttf');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-weight: bold;
+    src: url('../fonts/Outfit/Outfit-Bold.ttf');
+}
+* {
+    -fx-font-family: 'Outfit'
+}
+.icon-button-transparent {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5;
+}
+.icon-button-transparent:hover{
+    -fx-background-color: #0D89FF;
+}
+.icon-button-transparent:hover SVGPath {
+    -fx-stroke: white;
+}
+.clean-scroll {
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.clean-scroll > .viewport {
+    -fx-background-color: white;
+}
+.main-content {
+    -fx-background-color: white;
+}
+.page-title {
+    -fx-font-size: 25px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #202020;
+}
+
+/* scroll bar design */
+
+.clean-scroll {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+.clean-scroll > .viewport {
+    -fx-background-color: white;
+}
+.clean-scroll .scroll-bar {
+    -fx-background-color: white;
+}
+.clean-scroll .scroll-bar:vertical .track,
+.clean-scroll .scroll-bar:horizontal .track {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+}
+.clean-scroll .scroll-bar:vertical .thumb,
+.clean-scroll .scroll-bar:horizontal .thumb {
+    -fx-background-color: #0D89FF;
+    -fx-background-radius: 20;
+}
+.clean-scroll .scroll-bar:vertical {
+    -fx-pref-width: 10px;
+}
+.clean-scroll .scroll-bar:horizontal {
+    -fx-pref-height: 10px;
+}
+.clean-scroll .increment-button,
+.clean-scroll .decrement-button {
+    -fx-padding: 0;
+    -fx-opacity: 0;
+    -fx-background-color: transparent;
+}

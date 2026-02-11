@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/TodayTasks.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.TodayTaskController">
+    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+        <padding>
+            <Insets top="35" right="100" bottom="35" left="100"/>
+        </padding>
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="Aujourd'hui" styleClass="page-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <VBox styleClass="task-list-container">
+            <VBox styleClass="lateTask-container">
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="lateTask-banner">
+                    <Button onAction="#onToggleSection" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                        <graphic>
+                            <SVGPath
+                                    fx:id="toggleIcon"
+                                    content="m19.5 8.25-7.5 7.5-7.5-7.5"
+                                    fill="transparent"
+                                    stroke="red"
+                                    strokeWidth="1.75"
+                                    scaleX="0.65" scaleY="0.65"
+                                    strokeLineCap="ROUND"
+                                    strokeLineJoin="ROUND"/>
+                        </graphic>
+                    </Button>
+                    <Label text="En retard" styleClass="lateTask-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
+                <VBox styleClass="lateTask-layout" fx:id="sectionContent">
+                    <fx:include source="../components/TaskList.fxml" />
+                </VBox>
+            </VBox>
+            <VBox styleClass="todayTask-container">
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="todayTask-banner">
+                    <Label text="Fév 4 ‧ Aujourd'hui ‧ Mercredi" styleClass="todayTask-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
+                <VBox styleClass="todayTask-layout">
+                    <fx:include source="../components/TaskList.fxml" />
+                    <fx:include source="../components/AddTask.fxml" />
+                </VBox>
+            </VBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

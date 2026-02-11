@@ -1,0 +1,15 @@
+.section-banner{
+    -fx-padding: 20 0 10 0;
+}
+.section-task-title {
+    -fx-font-size: 15px;
+    -fx-text-fill: #212529;
+    -fx-font-weight: 600;
+}
+.divider {
+    -fx-background-color: linear-gradient(
+        to right,
+        #f3f3f3,
+        transparent
+    );
+}

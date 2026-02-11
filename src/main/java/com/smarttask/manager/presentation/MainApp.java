@@ -1,11 +1,11 @@
 package com.smarttask.manager.presentation;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import com.smarttask.manager.presentation.views.ViewFactory;
+import com.smarttask.manager.models.Model;
 import com.smarttask.manager.presentation.navigation.SceneManager;
+import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
@@ -20,21 +20,30 @@ public class MainApp extends Application {
         );
 
         SceneManager manager = SceneManager.getInstance();
-        ViewFactory factory = new ViewFactory();
 
-        stage.setScene(manager.getScene());
-        stage.setTitle("TaskIQ");
-        stage.show();
+        boolean isLoggedIn = Model.getInstance().isUserLoggedIn();
 
-        TaskIQIntro intro = new TaskIQIntro();
-        Parent introRoot = intro.createRoot();
+        if (isLoggedIn) {
+            manager.setRoot(Model.getInstance().getViewFactory().dashboardView());
+            stage.setScene(manager.getScene());
+            stage.setTitle("TaskIQ - Dashboard");
+            stage.show();
 
-        intro.setOnFinished(() -> {
-            Parent welcome = factory.loadWelcomeRoot();
-            manager.setRootWithFade(welcome);
-        });
+        } else {
+            stage.setScene(manager.getScene());
+            stage.setTitle("TaskIQ");
+            stage.show();
 
-        manager.setRoot(introRoot);
+            TaskIQIntro intro = new TaskIQIntro();
+            Parent introRoot = intro.createRoot();
+
+            intro.setOnFinished(() -> {
+                Parent welcome = Model.getInstance().getViewFactory().loadWelcomeRoot();
+                manager.setRootWithFade(welcome);
+            });
+
+            manager.setRoot(introRoot);
+        }
     }
 
     public static void main(String[] args) {

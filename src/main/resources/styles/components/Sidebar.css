@@ -1,0 +1,117 @@
+.sidebar {
+    -fx-background-color: #FDFDFD;
+    -fx-border-color: transparent #FDFDFD transparent transparent;
+}
+.user-profile .icon-button-transparent:hover{
+    -fx-background-color: transparent;
+}
+.icon-button-transparent:focused:hover {
+    -fx-background-color: #0D89FF;
+}
+.icon-button-transparent:hover{
+    -fx-background-color: #0D89FF;
+}
+.icon-button-transparent:hover SVGPath {
+    -fx-stroke: white;
+}
+.nav-item {
+    -fx-padding: 8 10;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+.nav-item:hover {
+    -fx-background-color: #0D89FF4D;
+}
+.nav-item-selected:hover {
+    -fx-background-color: #0D89FF;
+}
+.nav-item-selected {
+    -fx-padding: 8 10;
+    -fx-background-radius: 5;
+    -fx-background-color: #0D89FF;
+    -fx-cursor: hand;
+}
+.nav-item-selected SVGPath {
+    -fx-stroke: white;
+}
+.nav-item-selected .nav-label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+.nav-item-selected .badge-count {
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+}
+.nav-label {
+    -fx-text-fill: #495057;
+    -fx-font-size: 14px;
+}
+.nav-label-bold {
+    -fx-text-fill: #0D89FF;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+.badge-count {
+    -fx-text-fill: #808080;
+    -fx-font-size: 11px;
+}
+.projects-header {
+    -fx-padding: 20 0 5 0;
+}
+.section-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #212529;
+    -fx-font-size: 14px;
+}
+.equipe-header {
+    -fx-padding: 20 0 5 0;
+}
+.user-profile-row {
+    -fx-padding: 10 0 0 0;
+}
+.user-profile {
+    -fx-padding: 10 5 10 7.5;
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+}
+.user-profile:hover {
+    -fx-background-color: #0D89FF4D;
+    -fx-cursor: hand;
+}
+.user-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: #495057;
+}
+.user-status {
+    -fx-font-size: 12px;
+    -fx-text-fill: #495057;
+}
+
+
+.context-menu {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 8px 8px;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 4);
+}
+
+.menu-item {
+    -fx-padding: 8px 15px;
+    -fx-background-radius: 6px;
+    -fx-background-color: transparent;
+}
+
+.menu-item .label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+}
+.menu-item:focused {
+    -fx-background-color: #0D89FF4D;
+    -fx-cursor: hand;
+}
+.context-menu .scroll-pane {
+    -fx-background-color: transparent;
+}

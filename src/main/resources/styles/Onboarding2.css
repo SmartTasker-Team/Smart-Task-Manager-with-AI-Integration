@@ -7,15 +7,12 @@
     font-weight: bold;
     src: url('../fonts/Outfit/Outfit-Bold.ttf');
 }
-
 .root-pane {
     -fx-background-color: white;
 }
-
 .main-card {
     -fx-background-color: white;
 }
-
 .main-title {
     -fx-font-size: 32px;
     -fx-font-weight: 800;
@@ -25,31 +22,26 @@
     -fx-font-size: 14px;
     -fx-font-family: 'Outfit';
 }
-
 .input-container {
     -fx-border-color: #E2E8F0;
     -fx-border-radius: 8;
     -fx-padding: 10 16;
 }
-
 .input-label {
     -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-font-family: 'Outfit';
 }
-
 .modern-text-field {
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-font-size: 15px;
     -fx-font-family: 'Outfit';
 }
-
 .avatar-box {
     -fx-border-color: #F1F5F9;
     -fx-border-radius: 12;
 }
-
 .primary-button {
     -fx-background-color: #0D89FF;
     -fx-text-fill: white;

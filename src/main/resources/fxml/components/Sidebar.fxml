@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<HBox stylesheets="@../../styles/components/Sidebar.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.SidebarController">
+    <VBox fx:id="collapsedSidebar" visible="false" managed="false" prefWidth="60" minWidth="60">
+        <padding>
+            <Insets top="30" left="15"/>
+        </padding>
+        <Button onAction="#onToggleSidebar" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+            <graphic>
+                <Group scaleX="0.85" scaleY="0.85">
+                    <SVGPath
+                            content="M3 3h18v18H3z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.5"
+                            strokeLineJoin="ROUND"/>
+                    <SVGPath
+                            content="M9 3V21"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.5"
+                            strokeLineCap="ROUND"/>
+                </Group>
+            </graphic>
+        </Button>
+    </VBox>
+    <VBox fx:id="expandedSidebar" prefWidth="305" maxWidth="305" minWidth="305" styleClass="sidebar">
+        <padding>
+            <Insets top="15" right="20" bottom="15" left="20"/>
+        </padding>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Pane prefWidth="60" prefHeight="55" maxWidth="60" maxHeight="55">
+                <Group scaleX="0.1125" scaleY="0.1125" translateX="-180" translateY="-105">
+                    <SVGPath content="M298.993 144.32H273.028L273.131 144.906L293.718 263.275L246.633 207.806L246.249 207.354L245.868 207.808L199.294 263.246L220.366 144.908L220.472 144.32H194.002L246.252 74.8291L298.993 144.32Z">
+                        <fill>
+                            <LinearGradient endX="0">
+                                <stops>
+                                    <Stop color="#0D89FF"/>
+                                    <Stop offset="1" color="#190DFF"/>
+                                </stops>
+                            </LinearGradient>
+                        </fill>
+                        <stroke>
+                            <LinearGradient endX="0">
+                                <stops>
+                                    <Stop color="#0D89FF"/>
+                                    <Stop offset="1" color="#190DFF"/>
+                                </stops>
+                            </LinearGradient>
+                        </stroke>
+                    </SVGPath>
+                    <SVGPath content="M180.108 7.5C94.9388 56.4418 86.2158 154.779 129.5 212.166V263.985L74.5 221.753V58.5H0.782227L24.3203 7.5H180.108Z">
+                        <fill>
+                            <LinearGradient endX="0">
+                                <stops>
+                                    <Stop color="#0D89FF"/>
+                                    <Stop offset="1" color="#190DFF"/>
+                                </stops>
+                            </LinearGradient>
+                        </fill>
+                        <stroke>
+                            <LinearGradient endX="0">
+                                <stops>
+                                    <Stop color="#0D89FF"/>
+                                    <Stop offset="1" color="#190DFF"/>
+                                </stops>
+                            </LinearGradient>
+                        </stroke>
+                    </SVGPath>
+                    <SVGPath content="M248 0.5C321.178 0.5 380.5 59.8223 380.5 133C380.5 185.034 350.505 230.062 306.861 251.739L295.05 192.808C312.988 178.614 324.5 156.652 324.5 132C324.5 89.1979 289.802 54.5 247 54.5C204.198 54.5 169.5 89.1979 169.5 132C169.5 156.655 181.014 178.62 198.956 192.813L188.624 251.482C145.259 229.708 115.5 184.829 115.5 133C115.5 59.8223 174.822 0.5 248 0.5Z">
+                        <fill>
+                            <LinearGradient endX="0">
+                                <stops>
+                                    <Stop color="#0D89FF"/>
+                                    <Stop offset="1" color="#190DFF"/>
+                                </stops>
+                            </LinearGradient>
+                        </fill>
+                        <stroke>
+                            <LinearGradient endX="0">
+                                <stops>
+                                    <Stop color="#0D89FF"/>
+                                    <Stop offset="1" color="#190DFF"/>
+                                </stops>
+                            </LinearGradient>
+                        </stroke>
+                    </SVGPath>
+                    <SVGPath content="M382.23 7.5L405.999 59H370.467C358.049 39.2294 340.041 21.3773 315.892 7.5H382.23Z">
+                        <fill>
+                            <LinearGradient endX="0">
+                                <stops>
+                                    <Stop color="#0D89FF"/>
+                                    <Stop offset="1" color="#190DFF"/>
+                                </stops>
+                            </LinearGradient>
+                        </fill>
+                        <stroke>
+                            <LinearGradient endX="0">
+                                <stops>
+                                    <Stop color="#0D89FF"/>
+                                    <Stop offset="1" color="#190DFF"/>
+                                </stops>
+                            </LinearGradient>
+                        </stroke>
+                    </SVGPath>
+                </Group>
+            </Pane>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30" fx:id="notificationBtn" onAction="#onNotification">
+                <graphic>
+                    <SVGPath
+                            content="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.5"
+                            scaleX="0.85" scaleY="0.85"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+            <Button onAction="#onToggleSidebar" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <Group scaleX="0.85" scaleY="0.85">
+                        <SVGPath
+                                content="M3 3h18v18H3z"
+                                fill="transparent"
+                                stroke="#939595"
+                                strokeWidth="1.5"
+                                strokeLineJoin="ROUND"/>
+
+                        <SVGPath
+                                content="M9 3V21"
+                                fill="transparent"
+                                stroke="#939595"
+                                strokeWidth="1.5"
+                                strokeLineCap="ROUND"/>
+                    </Group>
+                </graphic>
+            </Button>
+        </HBox>
+        <VBox spacing="4" styleClass="nav-list">
+            <padding><Insets top="20"/></padding>
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+                <StackPane>
+                    <Circle radius="10" fill="#0D89FF"/>
+                    <SVGPath content="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="white" scaleX="0.85" scaleY="0.85"/>
+                </StackPane>
+                <Label text="Ajouter une tâche" styleClass="nav-label-bold"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <SVGPath
+                        content="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"
+                        fill="transparent"
+                        stroke="#0D89FF"
+                        strokeWidth="1.5"
+                        scaleX="0.8" scaleY="0.8"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+                <SVGPath
+                        content="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                        fill="transparent"
+                        stroke="#939595"
+                        strokeWidth="1.5"
+                        scaleX="0.8" scaleY="0.8"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+                <Label text="Recherche" styleClass="nav-label"/>
+            </HBox>
+            <HBox fx:id="inboxItem" onMouseClicked="#onInbox" spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+                <SVGPath
+                        content="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3"
+                        fill="transparent"
+                        stroke="#939595"
+                        strokeWidth="1.5"
+                        scaleX="0.8" scaleY="0.8"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+                <Label text="Boîte de réception" styleClass="nav-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="1" styleClass="badge-count"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item" fx:id="todayItem" onMouseClicked="#onToday">
+                <SVGPath
+                        content="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+                        fill="transparent"
+                        stroke="#939595"
+                        strokeWidth="1.5"
+                        scaleX="0.8" scaleY="0.8"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+                <Label text="Aujourd'hui" styleClass="nav-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="2" styleClass="badge-count"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+                <SVGPath
+                        content="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+                        fill="transparent"
+                        stroke="#939595"
+                        strokeWidth="1.5"
+                        scaleX="0.8" scaleY="0.8"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+                <Label text="Prochainement" styleClass="nav-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="3" styleClass="badge-count"/>
+            </HBox>
+        </VBox>
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="projects-header">
+            <Label text="Mes projets" styleClass="section-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="addBtn" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.7" scaleY="0.7"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+            <Button onAction="#onToggleProjects" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            fx:id="projectsIcon"
+                            content="m19.5 8.25-7.5 7.5-7.5-7.5"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.7" scaleY="0.7"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+        <VBox styleClass="projects-list" fx:id="projectsContent">
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+                <Label text="#" style="-fx-text-fill: green; -fx-font-size:16px;"/>
+                <Label text="Smart task manager" styleClass="nav-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="15" styleClass="badge-count"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+                <Label text="#" style="-fx-text-fill: #0D89FF; -fx-font-size:16px;"/>
+                <Label text="Smart task manager" styleClass="nav-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="15" styleClass="badge-count"/>
+            </HBox>
+        </VBox>
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="equipe-header">
+            <Label text="Task IQ" styleClass="section-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.7" scaleY="0.7"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+            <Button onAction="#onToggleTeam" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            fx:id="teamIcon"
+                            content="m19.5 8.25-7.5 7.5-7.5-7.5"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.7" scaleY="0.7"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+        <VBox fx:id="teamContent" styleClass="equipe-projects-list">
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+                <Label text="#" style="-fx-text-fill: #0D89FF; -fx-font-size:16px;"/>
+                <Label text="Smart task manager" styleClass="nav-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="15" styleClass="badge-count"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+                <Label text="#" style="-fx-text-fill: red; -fx-font-size:16px;"/>
+                <Label text="Smart task manager" styleClass="nav-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="15" styleClass="badge-count"/>
+            </HBox>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
+            <SVGPath
+                    content="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+                    fill="transparent"
+                    stroke="#939595"
+                    strokeWidth="1.5"
+                    scaleX="0.8" scaleY="0.8"
+                    strokeLineCap="ROUND"
+                    strokeLineJoin="ROUND"/>
+            <Label text="Ajouter une équipe" styleClass="nav-label"/>
+        </HBox>
+        <HBox styleClass="user-profile-row">
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="user-profile">
+                <StackPane>
+                    <Circle radius="14" fill="#0D89FF"/>
+                    <Text text="A" style="-fx-font-weight:bold; -fx-fill: #FDFDFD;"/>
+                </StackPane>
+                <VBox spacing="2">
+                    <Label text="elmakaouiachraf" styleClass="user-name"/>
+                    <Label text="elmakaouiachraf@gmail.com" styleClass="user-status"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                    <graphic>
+                        <SVGPath
+                                content="m19.5 8.25-7.5 7.5-7.5-7.5"
+                                fill="transparent"
+                                stroke="#939595"
+                                strokeWidth="1.75"
+                                scaleX="0.7" scaleY="0.7"
+                                strokeLineCap="ROUND"
+                                strokeLineJoin="ROUND"/>
+                    </graphic>
+                </Button>
+            </HBox>
+        </HBox>
+    </VBox>
+</HBox>

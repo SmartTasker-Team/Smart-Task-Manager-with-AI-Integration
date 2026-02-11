@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/Inbox.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.InboxController">
+    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+        <padding><Insets top="35" right="100" bottom="35" left="100"/></padding>
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="Boîte de réception" styleClass="page-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M6 13.5V3.75 m0 9.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 3.75V16.5 M18 13.5V3.75 m0 9.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 3.75V16.5 M12 7.5V3.75 m0 3.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 9.75V10.5"
+                            fill="transparent"
+                            stroke="#212529"
+                            strokeWidth="1.75"
+                            scaleX="0.9" scaleY="0.9"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+        <VBox styleClass="task-list-container">
+            <fx:include source="../components/TaskList.fxml" />
+            <fx:include source="../components/AddTask.fxml" />
+            <fx:include source="../components/SectionTaskList.fxml" />
+            <fx:include source="../components/AddSection.fxml" />
+        </VBox>
+    </VBox>
+</ScrollPane>

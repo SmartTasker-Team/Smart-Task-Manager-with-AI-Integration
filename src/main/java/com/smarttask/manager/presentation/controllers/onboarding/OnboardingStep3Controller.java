@@ -16,11 +16,6 @@ public class OnboardingStep3Controller {
     private String selectedOption = "";
 
     @FXML
-    public void initialize() {
-        // No longer using RadioButtons or ToggleGroups here
-    }
-
-    @FXML
     private void handleOptionA() { selectOption(cardA, "Paper/Note"); }
     @FXML
     private void handleOptionB() { selectOption(cardB, "Other Apps"); }
@@ -30,13 +25,11 @@ public class OnboardingStep3Controller {
     private void handleOptionD() { selectOption(cardD, "Memory"); }
 
     private void selectOption(HBox selectedHB, String value) {
-        // Reset all cards to default style
         cardA.getStyleClass().remove("option-card-selected");
         cardB.getStyleClass().remove("option-card-selected");
         cardC.getStyleClass().remove("option-card-selected");
         cardD.getStyleClass().remove("option-card-selected");
 
-        // Highlight the selected one
         selectedHB.getStyleClass().add("option-card-selected");
         this.selectedOption = value;
     }
