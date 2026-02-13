@@ -11,7 +11,8 @@ import java.util.Optional;
  */
 public interface UserRepository {
     void save(User user);
-    Optional<User> findById(String id);
+    boolean update(User user); // Returns false if version conflict
+    void delete(String idUser);
+    Optional<User> findById(String idUser);
     Optional<User> findByEmail(String email);
-    void delete(String id);
 }

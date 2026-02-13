@@ -1,0 +1,94 @@
+CREATE TABLE tasks (
+    id VARCHAR(50) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    category VARCHAR(100),
+    priority VARCHAR(50),
+    status VARCHAR(50),
+    due_date TIMESTAMP,
+    completed_at TIMESTAMP,
+    owner_id VARCHAR(50),
+    parent_task_id VARCHAR(50),
+    version_number BIGINT DEFAULT 1,
+    project_id VARCHAR(50),
+    created_at TIMESTAMP NOT NULL,
+    is_recurring BOOLEAN DEFAULT FALSE,
+    recurrence_type VARCHAR(50)
+);
+CREATE INDEX idx_tasks_completed_at ON tasks(completed_at);
+
+CREATE TABLE users (
+    id VARCHAR(50) PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    version_number BIGINT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_users_email ON users(email);
+
+CREATE TABLE teams (
+    id VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    owner_id VARCHAR(50) NOT NULL,
+    version_number BIGINT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_teams_owner FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+
+CREATE TABLE team_members (
+    team_id VARCHAR(50) NOT NULL,
+    user_id VARCHAR(50) NOT NULL,
+    joined_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (team_id, user_id),
+    CONSTRAINT fk_tm_team FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
+    CONSTRAINT fk_tm_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE projects (
+    id VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    owner_id VARCHAR(50) NOT NULL,
+    team_id VARCHAR(50),
+    version_number BIGINT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_projects_owner FOREIGN KEY (owner_id) REFERENCES users(id),
+    CONSTRAINT fk_projects_team FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE SET NULL
+);
+CREATE INDEX idx_tm_user ON team_members(user_id);
+CREATE INDEX idx_projects_team ON projects(team_id);
+
+CREATE TABLE comments (
+    id VARCHAR(50) PRIMARY KEY,
+    task_id VARCHAR(50) NOT NULL,
+    author_id VARCHAR(50) NOT NULL,
+    content TEXT NOT NULL,
+    version_number BIGINT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_comment_task FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE,
+    CONSTRAINT fk_comment_author FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE attachments (
+    id VARCHAR(50) PRIMARY KEY,
+    comment_id VARCHAR(50), -- Can be null if attached directly to a task (optional logic)
+    storage_url TEXT NOT NULL,
+    file_type VARCHAR(50),
+    version_number BIGINT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_attachment_comment FOREIGN KEY (comment_id) REFERENCES comments(id) ON DELETE CASCADE
+);
+CREATE INDEX idx_comments_task ON comments(task_id);
+
+CREATE TABLE time_logs (
+    id VARCHAR(50) PRIMARY KEY,
+    task_id VARCHAR(50) NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP,
+    duration_seconds BIGINT DEFAULT 0,
+    version_number BIGINT NOT NULL DEFAULT 1,
+
+    CONSTRAINT fk_timelog_task FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE
+);
+CREATE INDEX idx_timelogs_task ON time_logs(task_id);

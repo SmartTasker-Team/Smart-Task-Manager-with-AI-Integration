@@ -6,8 +6,9 @@ import java.util.Optional;
 
 public interface ProjectRepository {
     void save(Project project);
-    Optional<Project> findById(String id);
-    Optional<Project> findByName(String name);
-    List<Project> findAllByTeam(String teamId);
-    void delete(String id);
+    boolean update(Project project); // Returns false if version conflict
+    void delete(String projectId);
+    Optional<Project> findById(String projectId);
+    List<Project> findByOwner(String ownerId);
+    List<Project> findByTeam(String teamId);
 }

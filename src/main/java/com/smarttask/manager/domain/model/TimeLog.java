@@ -1,67 +1,53 @@
 package com.smarttask.manager.domain.model;
 
+import com.smarttask.manager.domain.exception.DomainException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-
+import java.util.Objects;
 
 public class TimeLog {
-    private String idTimeLog;
-    private String taskId;
-    private LocalDateTime startTime;
+    private final String idTimeLog;
+    private final String taskId;
+    private final LocalDateTime startTime;
+
     private LocalDateTime endTime;
     private long durationSeconds;
+    private long versionNumber;
 
-    public TimeLog(String idTimeLog, String taskId, LocalDateTime startTime ) {
-        this.idTimeLog = idTimeLog;
-        this.taskId = taskId;
-        this.startTime = startTime;
+    public TimeLog(String idTimeLog, String taskId, LocalDateTime startTime) {
+        this.idTimeLog = Objects.requireNonNull(idTimeLog);
+        this.taskId = Objects.requireNonNull(taskId);
+        this.startTime = Objects.requireNonNull(startTime);
         this.durationSeconds = 0;
+        this.versionNumber = 1;
     }
 
+    /**
+     * Business Logic: Stops the timer and calculates duration.
+     */
     public void stopLog(LocalDateTime endTime) {
-        if (endTime.isBefore(this.startTime)) {
-            throw new IllegalArgumentException("End time cannot be before start time.");
+        if (this.endTime != null) {
+            throw new DomainException("TimeLog is already stopped.");
         }
+        if (endTime.isBefore(this.startTime)) {
+            throw new DomainException("End time cannot be before start time.");
+        }
+
         this.endTime = endTime;
         this.durationSeconds = Duration.between(startTime, endTime).getSeconds();
+        this.versionNumber++;
     }
 
+    // --- INFRASTRUCTURE HOOKS ---
+    public void loadVersion(long version) { this.versionNumber = version; }
+    public void setDurationSeconds(long seconds) { this.durationSeconds = seconds; }
+    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
+
+    // --- GETTERS ---
     public String getIdTimeLog() { return idTimeLog; }
+    public String getTaskId() { return taskId; }
     public LocalDateTime getStartTime() { return startTime; }
     public LocalDateTime getEndTime() { return endTime; }
     public long getDurationSeconds() { return durationSeconds; }
-
-    /*public static void main(String[] args) {
-        System.out.println("=== TEST DU TRACKING DE TEMPS ===");
-
-        // 1. Instanciation (Le chrono démarre au constructeur)
-        TimeLog monLog = new TimeLog("LOG-001", "TASK-101",LocalDateTime.now());
-        System.out.println("Démarrage à : " + monLog.getStartTime());
-
-        try {
-            // 2. Simulation d'un travail de 3 secondes
-            System.out.println("Travail en cours... (pause de 3 secondes)");
-            Thread.sleep(3000);
-
-            // 3. Arrêt du chrono
-            monLog.stopLog(LocalDateTime.now());
-
-            // 4. Vérification des résultats
-            System.out.println("Fin à : " + monLog.getEndTime());
-            System.out.println("Durée totale calculée : " + monLog.getDurationSeconds() + " secondes");
-
-            // Test logique simple
-            if (monLog.getDurationSeconds() >= 3) {
-                System.out.println(" TEST RÉUSSI : Le calcul de la durée est correct.");
-            } else {
-                System.out.println(" TEST ÉCHOUÉ : La durée est incorrecte.");
-            }
-
-        } catch (InterruptedException e) {
-            System.err.println("Le test a été interrompu.");
-        }
-    }
-    
-     */
-
+    public long getVersionNumber() { return versionNumber; }
 }

@@ -1,98 +1,111 @@
 package com.smarttask.manager.domain.model;
-import com.smarttask.manager.domain.service.DateTimeProvider;
 
+import com.smarttask.manager.domain.exception.DomainException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
-
-/**
- * The primary Entity representing a unit of work.
- * <p>
- * Encapsulates state and behavior, including subtasks, dependencies, recurring schedules,
- * and priority levels. This entity ensures business invariants are maintained.
- * </p>
- */
+import java.util.Objects;
 
 public class Task {
-    private String idTask;
+    // Identity & Metadata (Final)
+    private final String idTask;
+    private final String ownerId;
+    private final LocalDateTime createdAt;
+
+    // State Attributes
     private String title;
     private String description;
     private String category;
     private PriorityLevel priority;
     private TaskStatus status;
     private LocalDateTime dueDate;
+    private LocalDateTime completedAt; // NEW ATTRIBUTE
     private boolean isRecurring;
-    private String recurrenceRule;
-    private String ownerId;
+    private RecurrenceType recurrenceType;
     private String parentTaskId;
     private long versionNumber;
     private String projectId;
-    private LocalDateTime createdAt;
-    private List<Task> subtasks = new ArrayList<>();
-    private List<Comment> comments;
-    private List<Attachment> attachments;
 
+    // Aggregate Relationships
+    private final List<Task> subtasks = new ArrayList<>();
+
+    /**
+     * Constructor for creating a NEW task.
+     */
     public Task(String idTask, String title, String ownerId, LocalDateTime createdAt) {
-        this.idTask = idTask;
-        this.title = title;
-        this.ownerId = ownerId;
+        this.idTask = Objects.requireNonNull(idTask);
+        this.title = Objects.requireNonNull(title);
+        this.ownerId = Objects.requireNonNull(ownerId);
         this.createdAt = createdAt;
-        this.priority = PriorityLevel.URGENT_NOT_IMPORTANT;
         this.status = TaskStatus.TODO;
-        this.versionNumber = 1;
+        this.priority = PriorityLevel.URGENT_NOT_IMPORTANT;
+        this.versionNumber = 1; // Initial version
     }
 
+    // --- Business Logic Methods ---
+
     public boolean isOverdue(LocalDateTime referenceTime) {
-        // Une tâche n'est pas en retard si elle est faite ou archivée
         if (status == TaskStatus.DONE || status == TaskStatus.ARCHIVED || dueDate == null) {
             return false;
         }
         return dueDate.isBefore(referenceTime);
     }
 
+    public void complete() {
+        if (hasActiveSubtasks()) {
+            throw new DomainException("Cannot complete: Subtasks are still active.");
+        }
+        if (this.status != TaskStatus.DONE) {
+            this.status = TaskStatus.DONE;
+            this.completedAt = LocalDateTime.now(); // SET AUTOMATICALLY
+            this.versionNumber++;
+        }
+    }
+    /**
+     * Logic: If a task is reopened, the completion date must be cleared.
+     */
+    public void reopen() {
+        if (this.status == TaskStatus.DONE) {
+            this.status = TaskStatus.TODO;
+            this.completedAt = null; // CLEAR AUTOMATICALLY
+            this.versionNumber++;
+        }
+    }
+
+    private boolean hasActiveSubtasks() {
+        return subtasks.stream().anyMatch(s -> s.getStatus() != TaskStatus.DONE && s.getStatus() != TaskStatus.ARCHIVED);
+    }
+
     public void addSubtask(Task subtask) {
-        if (subtask.getIdTask().equals(this.idTask)) throw new IllegalArgumentException("Une tâche ne peut pas être sa propre sous-tâche");
+        if (subtask.getIdTask().equals(this.idTask)) throw new DomainException("Self-dependency error.");
         subtask.parentTaskId = this.idTask;
         this.subtasks.add(subtask);
         this.versionNumber++;
     }
 
-    public void removeSubtask(Task subtask) {
-        if (this.subtasks.remove(subtask)) {
-            subtask.parentTaskId = null;
-            this.versionNumber++;
-        }
-    }
-
-    public void archive() {
-        this.status = TaskStatus.ARCHIVED;
+    /**
+     * Updates details and increments version for synchronization logic.
+     */
+    public void updateDetails(String title, String description, String category,
+                              PriorityLevel priority, LocalDateTime dueDate,
+                              boolean isRecurring, RecurrenceType recurrenceType, String projectId) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.priority = priority;
+        this.dueDate = dueDate;
+        this.isRecurring = isRecurring;
+        this.recurrenceType = recurrenceType;
+        this.projectId = projectId;
         this.versionNumber++;
     }
 
+    public void setCompletedAt(LocalDateTime completedAt) { this.completedAt = completedAt; }
+    public void loadVersion(long version) { this.versionNumber = version; }
+    public void setStatus(TaskStatus status) { this.status = status; }
 
-    private boolean hasActiveSubtasksRecursively(Task task) {
-        for (Task subtask : task.subtasks) {
-            // Si une sous-tâche n'est ni faite ni archivée
-            if (subtask.getStatus() != TaskStatus.DONE && subtask.getStatus() != TaskStatus.ARCHIVED) {
-                return true;
-            }
-            // Appel récursif pour vérifier les niveaux inférieurs
-            if (hasActiveSubtasksRecursively(subtask)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public void complete() {
-        if (hasActiveSubtasksRecursively(this)) {
-            throw new IllegalStateException("Impossible de terminer : certaines sous-tâches (ou leurs propres sous-tâches) ne sont pas finies ou archivées.");
-        }
-        this.status = TaskStatus.DONE;
-        this.versionNumber++;
-    }
-
-
+    // --- Getters ---
     public String getIdTask() { return idTask; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
@@ -100,76 +113,13 @@ public class Task {
     public PriorityLevel getPriority() { return priority; }
     public TaskStatus getStatus() { return status; }
     public LocalDateTime getDueDate() { return dueDate; }
-    public boolean getIsRecurring() { return isRecurring; }
-    public String getRecurrenceRule() { return recurrenceRule; }
-    public String getOwnerId() { return ownerId; }
+    public LocalDateTime getCompletedAt() { return completedAt; }
+    public boolean isRecurring() { return isRecurring; }
+    public RecurrenceType getRecurrenceType() { return recurrenceType; }
     public String getParentTaskId() { return parentTaskId; }
-    public String getProjectIdId() { return projectId; }
     public long getVersionNumber() { return versionNumber; }
-    public List<Task> getSubtasks() { return new ArrayList<>(subtasks); }
-
-
-    public void setTitle(String title){
-        this.title = title;
-        this.versionNumber++;
-    }
-    public void setDescription(String description){
-        this.description = description;
-        this.versionNumber++;
-    }
-    public void setCategory(String category){
-        this.category = category;
-        this.versionNumber++;
-    }
-    public void setPriority(PriorityLevel priority){
-        this.priority = priority;
-        this.versionNumber++;
-    }
-    public void setDueDate(LocalDateTime dueDate){
-        this.dueDate = dueDate;
-        this.versionNumber++;
-    }
-    public void setIsRecurring(boolean isRecurring){
-        this.isRecurring = isRecurring;
-        this.versionNumber++;
-    }
-    public void setRecurrenceRule(String recurrenceRule){
-        this.recurrenceRule = recurrenceRule;
-        this.versionNumber++;
-    }
-    public void setOwnerId(String ownerId){
-        this.ownerId = ownerId;
-        this.versionNumber++;
-    }
-
-/*@Override
-    public String toString() {
-        return "Task{" +
-                "idTask='" + idTask + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
-                ", priority=" + priority +
-                ", status=" + status +
-                ", dueDate=" + dueDate +
-                ", IsRecurring=" + isRecurring +
-                ", recurrenceRule='" + recurrenceRule + '\'' +
-                ", ownerId='" + ownerId + '\'' +
-                ", parentTaskId='" + parentTaskId + '\'' +
-                '}';
-    }
-
-    public static void main(String[] args){
-        Task task1 = new Task("333333","hhhhhhhhh","3333333333",LocalDateTime.now());
-        Task task2 = new Task("222222","hhhhhhhhh","3333333333", LocalDateTime.now());
-        task1.addSubtask(task2);
-        System.out.println(task1.getSubtasks());
-
-        System.out.println(task1);
-        task1.setCategory("Sport");
-        System.out.println(task1);
-        System.out.println(task1.getCategory());
-    };
-
- */
+    public String getOwnerId() { return ownerId; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public String getProjectId() { return projectId; }
+    public List<Task> getSubtasks() { return Collections.unmodifiableList(subtasks); }
 }
