@@ -32,8 +32,7 @@ public class NLPParserImpl {
     }
 
     public AiInsightResult parseNaturalLanguage(String text) {
-        // 1. Get the text directly from the SDK Adapter
-        // (The SDK handles the complex "candidates" extraction for us now!)
+
         String rawResponse = adapter.fetchRawJsonFromGemini(text);
 
         if (rawResponse == null || rawResponse.isEmpty()) {
@@ -41,17 +40,15 @@ public class NLPParserImpl {
         }
 
         try {
-            // 2. Clean up Markdown (Gemini often adds ```json ... ``` wrappers)
+            // Clean up Markdown
             String cleanJson = rawResponse.replace("```json", "")
                     .replace("```", "")
                     .trim();
 
-            // 3. Convert the clean JSON string directly to our Java Object
             return gson.fromJson(cleanJson, AiInsightResult.class);
 
         } catch (Exception e) {
             System.err.println("Error parsing AI response: " + e.getMessage());
-            // Optional: Print the raw text to see what went wrong
             System.err.println("Raw Text was: " + rawResponse);
             return null;
         }
