@@ -10,9 +10,5 @@ import java.time.Instant;
  * </p>
  */
 public record UserDTO(
-        String id,
-        String username,
-        String email,
-        Instant createdAt,
-        long versionNumber
+        String username, String email, String password
 ) {}

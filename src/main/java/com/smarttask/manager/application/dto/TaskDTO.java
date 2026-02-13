@@ -1,5 +1,8 @@
 package com.smarttask.manager.application.dto;
 
+import com.smarttask.manager.domain.model.PriorityLevel;
+import com.smarttask.manager.domain.model.RecurrenceType;
+
 import java.time.LocalDateTime;
 import java.util.List;
 /**
@@ -10,17 +13,12 @@ import java.util.List;
  * </p>
  */
 public record TaskDTO(
-        String id,
-        String title,
-        String description,
-        String category,
-        String priority,
-        String status,
-        LocalDateTime dueDate,
-        boolean isRecurring,
-        String recurrenceRule,
-        String ownerId,
-        String parentTaskId,
-        long versionNumber,
-        List<TaskDTO> subtasks // On permet une structure récursive pour l'affichage en arbre
+        String title, String description, String category,
+        PriorityLevel priority, LocalDateTime dueDate,
+        boolean isRecurring, RecurrenceType recurrenceType,
+        String ownerId, String projectId
 ) {}
+
+
+
+
