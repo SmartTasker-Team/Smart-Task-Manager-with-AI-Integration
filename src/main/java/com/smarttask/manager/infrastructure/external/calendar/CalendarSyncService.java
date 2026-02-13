@@ -32,7 +32,7 @@ public class CalendarSyncService {
 
                 if (task.getDueDate() == null) {
                     System.out.println("Skipping Calendar Sync: Task '" + task.getTitle() + "' has no due date.");
-                    return; 
+                    return;
                 }
 
                 Event event = new Event()
