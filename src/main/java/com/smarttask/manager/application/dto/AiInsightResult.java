@@ -1,5 +1,6 @@
 package com.smarttask.manager.application.dto;
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 
 /**
  * Data Transfer Object representing the result of an AI analysis operation.
@@ -10,14 +11,14 @@ import java.time.LocalDate;
  */
 public class AiInsightResult {
     public String title;
-    public LocalDate date;
+    public LocalDateTime date;
     public String priority; // "HIGH", "MEDIUM", "LOW"
     public String category;
 
     // Empty constructor for JSON parsers
     public AiInsightResult() {}
 
-    public AiInsightResult(String title, LocalDate date, String priority, String category) {
+    public AiInsightResult(String title, LocalDateTime date, String priority, String category) {
         this.title = title;
         this.date = date;
         this.priority = priority;

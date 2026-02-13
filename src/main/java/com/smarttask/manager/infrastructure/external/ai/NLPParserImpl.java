@@ -3,7 +3,7 @@ package com.smarttask.manager.infrastructure.external.ai;
 import com.smarttask.manager.application.dto.AiInsightResult;
 import com.google.gson.*; // Import Gson, GsonBuilder, JsonDeserializer, etc.
 import java.lang.reflect.Type;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -22,10 +22,10 @@ public class NLPParserImpl {
         this.adapter = new GeminiAdapter();
 
         this.gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
-                    public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                        return LocalDate.parse(json.getAsString()); // Converts "2026-02-06" -> Java LocalDate
+                    public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_DATE_TIME);
                     }
                 })
                 .create();

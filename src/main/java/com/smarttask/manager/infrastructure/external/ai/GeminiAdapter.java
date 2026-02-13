@@ -18,52 +18,42 @@ import java.time.LocalDate;
 public class GeminiAdapter {
 
     private final Client client;
-    // We use the model you specified (or gemini-3-flash-preview which is standard)
     private static final String MODEL_NAME = "gemini-3-flash-preview";
 
     public GeminiAdapter() {
-        // The SDK automatically looks for the GOOGLE_API_KEY or GEMINI_API_KEY env variable.
-        // Or you can pass the key directly: new Client("YOUR_KEY");
         this.client = new Client();
     }
 
-    /**
-     * Sends the text to Gemini and asks for a structured JSON response.
-     * @param userText The natural language text (e.g. "Buy milk tomorrow")
-     * @return The raw JSON string response from AI.
-     */
+
     public String fetchRawJsonFromGemini(String userText) {
         LocalDate today = LocalDate.now();
 
-        // 1. Define the System Instruction (The "Brain" rules)
-        // We replace "You are a cat" with the JSON Extractor logic.
+        //  Define the System Instruction
         String systemRules = String.format("""
-            You are a strict JSON extractor. 
-            Context: Today is %s.
-            
-            Task: Extract fields from the user input:
-            1. title (String): Clean task name.
-            2. date (String): YYYY-MM-DD. Calculate relative dates.
-            3. priority (String): HIGH, MEDIUM, or LOW.
-            4. category (String): Work, Personal, Study, Finance, or Health.
-            
-            Output: Return ONLY raw JSON. No Markdown.
-            """, today);
+    You are a strict JSON extractor. 
+    Context: Today is %s.
+    
+    Task: Extract fields from the user input:
+    1. title (String): Clean task name (remove date/time words like "tomorrow at 5pm").
+    2. date (String): ISO 8601 format (YYYY-MM-DDTHH:MM:SS). If user specifies time (e.g., "at 5pm"), include it. If no time is specified, default to T09:00:00.
+    3. priority (String): Urgent,HIGH, MEDIUM, or LOW (infer from words like "urgent").
+    4. category (String): Work, Personal, Study, Finance, or Health... based on task intent.
+    
+    Output: Return ONLY raw JSON. No Markdown.
+    """, today);
 
-        // 2. Configure the Request
+        // Configure the Request
         GenerateContentConfig config = GenerateContentConfig.builder()
                 .systemInstruction(Content.fromParts(Part.fromText(systemRules)))
                 .build();
 
         try {
-            // 3. Call the API
             GenerateContentResponse response = client.models.generateContent(
                     MODEL_NAME,
                     userText,
                     config
             );
 
-            // 4. Return the text result
             return response.text();
 
         } catch (Exception e) {
@@ -72,4 +62,39 @@ public class GeminiAdapter {
             return null;
         }
     }
+
+    public String analyzeProductivity(String taskHistorySummary) {
+
+        String prompt = String.format("""
+        You are a strict Productivity Analyst.
+        Analyze this user's recent task history:
+        "%s"
+        
+        Return a JSON object with:
+        - score (0-100 based on completion rate)
+        - summary (1 sentence observation)
+        - suggestion (1 actionable tip)
+        
+        NO Markdown. JUST JSON.
+        """, taskHistorySummary);
+
+        GenerateContentConfig config = GenerateContentConfig.builder()
+                .systemInstruction(Content.fromParts(Part.fromText(prompt)))
+                .build();
+
+
+        try {
+            GenerateContentResponse response = client.models.generateContent(
+                    MODEL_NAME,
+                    taskHistorySummary,
+                    config
+            );
+
+            return response.text();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
 }
