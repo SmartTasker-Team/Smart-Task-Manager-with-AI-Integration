@@ -53,4 +53,10 @@ module com.smarttask.manager {
     exports com.smarttask.manager.presentation.controllers;
     exports com.smarttask.manager.presentation.views;
     exports com.smarttask.manager.application.dto;
+    exports com.smarttask.manager.presentation.controllers.components.modalDialog;
+    opens com.smarttask.manager.presentation.controllers.components.modalDialog to javafx.fxml;
+    exports com.smarttask.manager.presentation.controllers.pages;
+    opens com.smarttask.manager.presentation.controllers.pages to javafx.fxml;
+    exports com.smarttask.manager.presentation.controllers.components;
+    opens com.smarttask.manager.presentation.controllers.components to javafx.fxml;
 }

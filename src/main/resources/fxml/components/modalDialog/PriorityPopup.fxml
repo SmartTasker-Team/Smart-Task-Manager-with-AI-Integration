@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.smarttask.manager.presentation.controllers.components.modalDialog.PriorityPopupController"
+      styleClass="priority-popup" spacing="15" stylesheets="@../../../styles/components/modalDialog/PriorityPopup.css">
+
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <VBox alignment="CENTER_LEFT" spacing="5">
+        <Button onAction="#setUrgent" graphicTextGap="10" alignment="CENTER_LEFT" text="Urgent" styleClass="priority-level-btn" maxWidth="Infinity">
+            <graphic>
+                <SVGPath
+                        content="M3 3v1.5 M3 21v-6 m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5 M3 15V4.5"
+                        fill="transparent"
+                        stroke="#db4c3f"
+                        strokeWidth="1.5"
+                        scaleX="0.7" scaleY="0.7"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+            </graphic>
+        </Button>
+        <Button onAction="#setHigh" graphicTextGap="10" alignment="CENTER_LEFT" text="High" styleClass="priority-level-btn" maxWidth="Infinity">
+            <graphic>
+                <SVGPath
+                        content="M3 3v1.5 M3 21v-6 m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5 M3 15V4.5"
+                        fill="transparent"
+                        stroke="#eb8909"
+                        strokeWidth="1.5"
+                        scaleX="0.7" scaleY="0.7"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+            </graphic>
+        </Button>
+        <Button onAction="#setMedium" graphicTextGap="10" alignment="CENTER_LEFT" text="Medium" styleClass="priority-level-btn" maxWidth="Infinity">
+            <graphic>
+                <SVGPath
+                        content="M3 3v1.5 M3 21v-6 m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5 M3 15V4.5"
+                        fill="transparent"
+                        stroke="#0D89FF"
+                        strokeWidth="1.5"
+                        scaleX="0.7" scaleY="0.7"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+            </graphic>
+        </Button>
+        <Button onAction="#setLow" graphicTextGap="10" alignment="CENTER_LEFT" text="Low" styleClass="priority-level-btn" maxWidth="Infinity">
+            <graphic>
+                <SVGPath
+                        content="M3 3v1.5 M3 21v-6 m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5 M3 15V4.5"
+                        fill="transparent"
+                        stroke="#25b84c"
+                        strokeWidth="1.5"
+                        scaleX="0.7" scaleY="0.7"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+            </graphic>
+        </Button>
+    </VBox>
+</VBox>

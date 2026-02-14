@@ -1,8 +1,11 @@
+*{
+    -fx-font-family: 'Outfit';
+}
 .sidebar {
     -fx-background-color: #FDFDFD;
     -fx-border-color: transparent #FDFDFD transparent transparent;
 }
-.user-profile .icon-button-transparent:hover{
+.icon-button-transparent:hover{
     -fx-background-color: transparent;
 }
 .icon-button-transparent:focused:hover {
@@ -70,13 +73,8 @@
     -fx-padding: 10 0 0 0;
 }
 .user-profile {
-    -fx-padding: 10 5 10 7.5;
+    -fx-padding: 10 0 10 0;
     -fx-background-color: transparent;
-    -fx-background-radius: 5px;
-}
-.user-profile:hover {
-    -fx-background-color: #0D89FF4D;
-    -fx-cursor: hand;
 }
 .user-name {
     -fx-font-weight: bold;
@@ -88,7 +86,6 @@
     -fx-text-fill: #495057;
 }
 
-
 .context-menu {
     -fx-background-color: white;
     -fx-background-radius: 8px;
@@ -97,13 +94,11 @@
 
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 4);
 }
-
 .menu-item {
     -fx-padding: 8px 15px;
     -fx-background-radius: 6px;
     -fx-background-color: transparent;
 }
-
 .menu-item .label {
     -fx-text-fill: #333333;
     -fx-font-size: 14px;

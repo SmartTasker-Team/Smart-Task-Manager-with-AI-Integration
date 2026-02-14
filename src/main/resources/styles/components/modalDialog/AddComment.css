@@ -1,0 +1,64 @@
+*{
+    -fx-font-family: 'Outfit';
+}
+.comment-box-container {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+    -fx-min-height: 120px;
+}
+.comment-input-area {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 15px;
+    -fx-text-fill: #495057;
+    -fx-font-weight: 600;
+}
+.comment-input-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.comment-input-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+.comment-input-area .content {
+    -fx-background-color: transparent;
+}
+.comment-input-area:focused .content {
+    -fx-background-color: transparent;
+}
+.btn-cancel {
+    -fx-background-color: #0D89FF4D;
+    -fx-text-fill: #495057;
+    -fx-font-weight: 600;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 14;
+    -fx-font-size: 13px;
+}
+.btn-submit {
+    -fx-background-color: #0D89FF;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 14;
+    -fx-font-size: 13px;
+}
+.btn-submit:hover {
+    -fx-background-color: #1787F2;
+}
+.icon-button-transparent {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5;
+}
+.icon-button-transparent:hover{
+    -fx-background-color: #0D89FF;
+}
+.icon-button-transparent:hover SVGPath {
+    -fx-stroke: white;
+}

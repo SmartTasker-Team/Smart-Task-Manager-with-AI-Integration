@@ -1,3 +1,6 @@
+*{
+    -fx-font-family: 'Outfit';
+}
 .task-list-container{
     -fx-padding: 25 0 15 0;
 }

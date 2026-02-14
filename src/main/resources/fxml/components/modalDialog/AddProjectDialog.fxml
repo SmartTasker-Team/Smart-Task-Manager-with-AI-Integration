@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.shape.SVGPath?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.smarttask.manager.presentation.controllers.components.modalDialog.AddProjectController"
+      spacing="15" alignment="CENTER" fillWidth="false" stylesheets="@../../../styles/components/modalDialog/AddProjectDialog.css" style="-fx-background-color: #00000082;">
+
+    <VBox styleClass="dialog-container" prefWidth="450.0" spacing="15">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+        <HBox alignment="CENTER_LEFT">
+            <Label text="Ajouter un projet" styleClass="dialog-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
+        <VBox spacing="5">
+            <Label text="Nom" styleClass="field-label"/>
+            <TextField fx:id="nameField" promptText="Ex: Refonte du site web..."/>
+        </VBox>
+        <VBox spacing="5">
+            <Label text="Espace" styleClass="field-label"/>
+            <HBox styleClass="static-field-container" alignment="CENTER_LEFT" spacing="10">
+                <Label text="Mes projets" style="-fx-text-fill: #333; -fx-font-size: 14px;"/>
+                <Region HBox.hgrow="ALWAYS" />
+                <SVGPath
+                    content="m19.5 8.25-7.5 7.5-7.5-7.5"
+                    fill="transparent"
+                    stroke="#939595"
+                    strokeWidth="1.75"
+                    scaleX="0.7" scaleY="0.7"
+                    strokeLineCap="ROUND"
+                    strokeLineJoin="ROUND"/>
+            </HBox>
+        </VBox>
+        <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Annuler" fx:id="btnCancel" onAction="#handleCancel" styleClass="btn-secondary"/>
+            <Button text="Ajouter un projet" fx:id="btnAdd" onAction="#handleAdd" styleClass="btn-primary"/>
+        </HBox>
+    </VBox>
+</VBox>

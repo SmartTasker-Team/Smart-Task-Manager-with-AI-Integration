@@ -13,7 +13,7 @@ public class CaptureVoiceCommandUseCase {
 
     public String execute() {
         // Listen for exactly 5 seconds
-        String text = voiceService.listen(5);
+        String text = voiceService.listen(8);
 
         if (text == null || text.trim().isEmpty()) {
             return null;

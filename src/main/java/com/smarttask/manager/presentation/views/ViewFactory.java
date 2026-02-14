@@ -71,6 +71,9 @@ public class ViewFactory {
     public Parent getTodayTasksView() {
         return load("/fxml/pages/TodayTasks.fxml", null);
     }
+    public Parent getAnalyticsView() {
+        return load("/fxml/pages/Analytics.fxml", null);
+    }
 
     private Parent load(String fxml, String css) {
         try {

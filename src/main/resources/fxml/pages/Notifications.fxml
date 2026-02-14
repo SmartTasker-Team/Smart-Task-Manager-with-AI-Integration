@@ -8,7 +8,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
-<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/Notifications.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.NotificationController">
+<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/Notifications.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.pages.NotificationController">
     <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
         <padding>
             <Insets top="35" right="100" bottom="35" left="100"/>

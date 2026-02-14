@@ -6,6 +6,7 @@ import com.smarttask.manager.domain.repository.TaskRepository;
 import com.smarttask.manager.domain.exception.DomainException;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.List;
 
 public class TaskUseCase {
     private final TaskRepository repository;
@@ -34,5 +35,9 @@ public class TaskUseCase {
 
     public void delete(String id) {
         repository.delete(id);
+    }
+
+    public List<Task> getTasksByOwner(String ownerId) {
+        return repository.findByOwner(ownerId);
     }
 }

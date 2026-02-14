@@ -22,7 +22,13 @@ public class MainApp extends Application {
         SceneManager manager = SceneManager.getInstance();
 
         boolean isLoggedIn = Model.getInstance().isUserLoggedIn();
+        
+        stage.setScene(manager.getScene());
 
+        manager.getScene().getStylesheets().add(
+                getClass().getResource("/styles/Dashboard.css").toExternalForm()
+        );
+        
         if (isLoggedIn) {
             manager.setRoot(Model.getInstance().getViewFactory().dashboardView());
             stage.setScene(manager.getScene());

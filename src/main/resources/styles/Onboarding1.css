@@ -1,12 +1,4 @@
-@font-face {
-    font-family: 'Outfit';
-    src: url('../fonts/Outfit/Outfit-Regular.ttf');
-}
-@font-face {
-    font-family: 'Outfit';
-    font-weight: bold;
-    src: url('../fonts/Outfit/Outfit-Bold.ttf');
-}
+
 .root {
     -fx-background-color: white;
 }

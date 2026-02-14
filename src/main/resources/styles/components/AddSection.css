@@ -1,3 +1,6 @@
+*{
+    -fx-font-family: 'Outfit';
+}
 .add-section{
     -fx-padding: 15 0;
     -fx-opacity: 0;

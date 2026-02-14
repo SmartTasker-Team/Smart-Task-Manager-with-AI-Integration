@@ -22,9 +22,9 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
     // UPDATED: Use localhost and your actual database name/user
-    private static final String URL = "jdbc:postgresql://localhost:5433/smarttask";
+    private static final String URL = "jdbc:postgresql://localhost:5432/smarttask";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "123";
 
     public static Connection getConnection() throws SQLException {
         try {

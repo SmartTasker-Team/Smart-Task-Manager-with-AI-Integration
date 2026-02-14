@@ -1,14 +1,16 @@
-package com.smarttask.manager.presentation.controllers;
+package com.smarttask.manager.presentation.controllers.components;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddTaskController implements Initializable{
-    @FXML private VBox addTaskContainer;
-    @FXML private VBox taskEditorContainer;
+public class AddSubTaskController implements Initializable {
+    @FXML
+    private VBox addSubTaskContainer;
+    @FXML private VBox subTaskEditorContainer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -26,11 +28,11 @@ public class AddTaskController implements Initializable{
     }
 
     private void showEditor(boolean show) {
-        taskEditorContainer.setVisible(show);
-        taskEditorContainer.setManaged(show);
+        subTaskEditorContainer.setVisible(show);
+        subTaskEditorContainer.setManaged(show);
 
-        addTaskContainer.setVisible(!show);
-        addTaskContainer.setManaged(!show);
+        addSubTaskContainer.setVisible(!show);
+        addSubTaskContainer.setManaged(!show);
 
     }
 }

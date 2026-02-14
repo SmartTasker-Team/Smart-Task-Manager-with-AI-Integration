@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.smarttask.manager.presentation.controllers.components.modalDialog.ReccurringTaskPopupController"
+      styleClass="reccurring-task-popup" spacing="15" stylesheets="@../../../styles/components/modalDialog/ReccurringTaskPopup.css">
+
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <VBox alignment="CENTER_LEFT" spacing="5">
+        <Button onAction="#setDaily" graphicTextGap="10" alignment="CENTER_LEFT" text="Daily" styleClass="reccurring-task-level-btn" maxWidth="Infinity">
+            <graphic>
+                <SVGPath
+                        content="M16.023 9.348 H21.015 V9.347 M2.985 19.644 V14.652 M2.985 14.652 H7.977 M2.984 14.652 L6.165 17.835 A8.25 8.25 0 0 0 19.968 14.135 M4.031 9.865 A8.25 8.25 0 0 1 17.834 6.165 L21.015 9.347 M21.015 4.356 V9.346"
+                        fill="transparent"
+                        stroke="#25b84c"
+                        strokeWidth="1.5"
+                        scaleX="0.7" scaleY="0.7"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+
+            </graphic>
+        </Button>
+        <Button onAction="#setWeekly" graphicTextGap="10" alignment="CENTER_LEFT" text="Weekly" styleClass="reccurring-task-level-btn" maxWidth="Infinity">
+            <graphic>
+                <SVGPath
+                        content="M16.023 9.348 H21.015 V9.347 M2.985 19.644 V14.652 M2.985 14.652 H7.977 M2.984 14.652 L6.165 17.835 A8.25 8.25 0 0 0 19.968 14.135 M4.031 9.865 A8.25 8.25 0 0 1 17.834 6.165 L21.015 9.347 M21.015 4.356 V9.346"
+                        fill="transparent"
+                        stroke="#0D89FF"
+                        strokeWidth="1.5"
+                        scaleX="0.7" scaleY="0.7"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+            </graphic>
+        </Button>
+        <Button onAction="#setMonthly" graphicTextGap="10" alignment="CENTER_LEFT" text="Monthly" styleClass="reccurring-task-level-btn" maxWidth="Infinity">
+            <graphic>
+                <SVGPath
+                        content="M16.023 9.348 H21.015 V9.347 M2.985 19.644 V14.652 M2.985 14.652 H7.977 M2.984 14.652 L6.165 17.835 A8.25 8.25 0 0 0 19.968 14.135 M4.031 9.865 A8.25 8.25 0 0 1 17.834 6.165 L21.015 9.347 M21.015 4.356 V9.346"
+                        fill="transparent"
+                        stroke="#eb8909"
+                        strokeWidth="1.5"
+                        scaleX="0.7" scaleY="0.7"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+            </graphic>
+        </Button>
+        <Button onAction="#setYearly" graphicTextGap="10" alignment="CENTER_LEFT" text="Yearly" styleClass="reccurring-task-level-btn" maxWidth="Infinity">
+            <graphic>
+                <SVGPath
+                        content="M16.023 9.348 H21.015 V9.347 M2.985 19.644 V14.652 M2.985 14.652 H7.977 M2.984 14.652 L6.165 17.835 A8.25 8.25 0 0 0 19.968 14.135 M4.031 9.865 A8.25 8.25 0 0 1 17.834 6.165 L21.015 9.347 M21.015 4.356 V9.346"
+                        fill="transparent"
+                        stroke="#db4c3f"
+                        strokeWidth="1.5"
+                        scaleX="0.7" scaleY="0.7"
+                        strokeLineCap="ROUND"
+                        strokeLineJoin="ROUND"/>
+            </graphic>
+        </Button>
+    </VBox>
+</VBox>

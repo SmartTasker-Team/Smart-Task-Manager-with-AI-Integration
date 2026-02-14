@@ -1,3 +1,6 @@
+*{
+    -fx-font-family: 'Outfit';
+}
 .add-task{
     -fx-padding: 15 0;
     -fx-cursor: hand;
@@ -112,4 +115,57 @@
         #ddd,
         transparent
     );
+}
+
+/* 1. The Menu Container (Floating Card) */
+.priority-menu {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 4);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 5px 0;
+    -fx-min-width: 150px;
+}
+
+/* Hide the weird default border of ContextMenu */
+.priority-menu .context-menu {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* 2. The Menu Items */
+.priority-item {
+    -fx-background-color: transparent;
+    -fx-padding: 8px 15px;
+    -fx-cursor: hand;
+}
+
+/* Text Styling */
+.priority-item .label {
+    -fx-text-fill: #333;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* Hover Effect */
+.priority-item:focused, .priority-item:hover {
+    -fx-background-color: #f5f5f5; /* Light grey hover */
+}
+
+.priority-urgent {
+    -fx-text-fill: #db4c3f;
+    -fx-background-color: #fce8e6;
+}
+.priority-high {
+    -fx-text-fill: #eb8909;
+    -fx-background-color: #fff8e1;
+}
+/* Medium (Blue) */
+.priority-medium {
+    -fx-text-fill: #0D89FF;
+    -fx-background-color: #e5f4ff;
+}
+.priority-low {
+    -fx-text-fill: #25b84c;
+    -fx-background-color: #e5f9e7;
 }

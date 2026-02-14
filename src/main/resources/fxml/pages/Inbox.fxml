@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.geometry.Insets?>
 
-<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/Inbox.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.InboxController">
+<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/Inbox.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.pages.InboxController">
     <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
         <padding><Insets top="35" right="100" bottom="35" left="100"/></padding>
         <HBox alignment="CENTER_LEFT" spacing="15">
@@ -14,7 +14,7 @@
             <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
                 <graphic>
                     <SVGPath
-                            content="M6 13.5V3.75 m0 9.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 3.75V16.5 M18 13.5V3.75 m0 9.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 3.75V16.5 M12 7.5V3.75 m0 3.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 9.75V10.5"
+                            content="M19.5 14.25 V11.625 A3.375 3.375 0 0 0 16.125 8.25 H14.625 A1.125 1.125 0 0 1 13.5 7.125 V5.625 A3.375 3.375 0 0 0 10.125 2.25 H8.25 M9 16.5 V17.25 M12 13.5 V16.5 M15 12 V17.25 M10.5 2.25 H5.625 A1.125 1.125 0 0 0 4.5 3.375 V20.625 A1.125 1.125 0 0 0 5.625 21.75 H18.375 A1.125 1.125 0 0 0 19.5 20.625 V11.25 A9 9 0 0 0 10.5 2.25 Z"
                             fill="transparent"
                             stroke="#212529"
                             strokeWidth="1.75"
@@ -27,8 +27,6 @@
         <VBox styleClass="task-list-container">
             <fx:include source="../components/TaskList.fxml" />
             <fx:include source="../components/AddTask.fxml" />
-            <fx:include source="../components/SectionTaskList.fxml" />
-            <fx:include source="../components/AddSection.fxml" />
         </VBox>
     </VBox>
 </ScrollPane>

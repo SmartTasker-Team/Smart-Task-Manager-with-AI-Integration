@@ -1,4 +1,4 @@
-package com.smarttask.manager.presentation.controllers;
+package com.smarttask.manager.presentation.controllers.pages;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

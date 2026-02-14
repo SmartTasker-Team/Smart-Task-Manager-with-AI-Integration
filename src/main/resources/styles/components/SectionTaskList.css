@@ -1,3 +1,6 @@
+*{
+    -fx-font-family: 'Outfit';
+}
 .section-banner{
     -fx-padding: 20 0 10 0;
 }

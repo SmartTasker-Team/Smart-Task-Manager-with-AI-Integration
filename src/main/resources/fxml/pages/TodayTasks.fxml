@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.geometry.Insets?>
 
-<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/TodayTasks.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.TodayTaskController">
+<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/TodayTasks.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.pages.TodayTaskController">
     <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
         <padding>
             <Insets top="35" right="100" bottom="35" left="100"/>

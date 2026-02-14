@@ -28,7 +28,8 @@ public class GoogleAuthService {
 
     private static final List<String> LOGIN_SCOPES = Arrays.asList(
             "https://www.googleapis.com/auth/userinfo.profile",
-            "https://www.googleapis.com/auth/userinfo.email"
+            "https://www.googleapis.com/auth/userinfo.email",
+            CalendarScopes.CALENDAR
     );
 
     private static final List<String> CALENDAR_SCOPES = Arrays.asList(

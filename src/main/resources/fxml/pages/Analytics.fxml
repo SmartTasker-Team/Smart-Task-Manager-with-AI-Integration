@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.chart.*?>
+
+<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/Analytics.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.pages.AnalyticsController">
+    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+        <padding><Insets top="35" right="100" bottom="35" left="100"/></padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="Analytics" styleClass="page-title" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #111;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath content="M6 13.5V3.75 m0 9.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 3.75V16.5 M18 13.5V3.75 m0 9.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 3.75V16.5 M12 7.5V3.75 m0 3.75a1.5 1.5 0 0 1 0 3 m0-3a1.5 1.5 0 0 0 0 3 m0 9.75V10.5" fill="transparent" stroke="#212529" strokeWidth="1.75" scaleX="0.9" scaleY="0.9" strokeLineCap="ROUND" strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+
+        <VBox alignment="CENTER_LEFT" spacing="25" style="-fx-padding: 20px 0 0 0;">
+
+            <VBox styleClass="chart-card" VBox.vgrow="ALWAYS">
+                <Label text="Productivity Trend (Last 7 Days)" styleClass="chart-title"/>
+                <LineChart fx:id="trendLineChart" legendVisible="false" prefHeight="250">
+                    <xAxis><CategoryAxis side="BOTTOM" tickLabelFill="#888"/></xAxis>
+                    <yAxis><NumberAxis side="LEFT" tickLabelFill="#888"/></yAxis>
+                </LineChart>
+            </VBox>
+
+            <HBox spacing="25">
+                <VBox styleClass="chart-card" HBox.hgrow="ALWAYS" prefWidth="500">
+                    <Label text="Tasks per Category" styleClass="chart-title"/>
+                    <BarChart fx:id="categoryBarChart" legendVisible="false" prefHeight="250" animated="false">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM" tickLabelFill="#888" animated="false"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis side="LEFT" tickLabelFill="#888" animated="false"/>
+                        </yAxis>
+                    </BarChart>
+                </VBox>
+
+                <VBox styleClass="chart-card" HBox.hgrow="ALWAYS" prefWidth="500">
+                    <Label text="Tasks by Status" styleClass="chart-title"/>
+                    <PieChart fx:id="statusPieChart" legendVisible="true" labelsVisible="false" prefHeight="250"/>
+                </VBox>
+            </HBox>
+
+        </VBox>
+    </VBox>
+</ScrollPane>

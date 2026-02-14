@@ -1,14 +1,5 @@
-@font-face {
-    font-family: 'Outfit';
-    src: url('../fonts/Outfit/Outfit-Regular.ttf');
-}
-@font-face {
-    font-family: 'Outfit';
-    font-weight: bold;
-    src: url('../fonts/Outfit/Outfit-Bold.ttf');
-}
-* {
-    -fx-font-family: 'Outfit'
+*{
+    -fx-font-family: 'Outfit';
 }
 .icon-button-transparent {
     -fx-focus-color: transparent;

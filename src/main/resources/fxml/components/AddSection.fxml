@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox stylesheets="@../../styles/components/AddSection.css" styleClass="add-section-container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.AddSectionController">
+<VBox stylesheets="@../../styles/components/AddSection.css" styleClass="add-section-container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.components.AddSectionController">
     <VBox HBox.hgrow="ALWAYS" styleClass="add-section" fx:id="addSectionContainer" onMouseClicked="#onShowSectionForm">
         <HBox alignment="CENTER" spacing="10">
             <Separator styleClass="add-section-separator" HBox.hgrow="ALWAYS" />
