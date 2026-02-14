@@ -17,7 +17,6 @@ public class PriorityPopupController {
         this.onSelectCallback = callback;
     }
 
-    // These methods just pass the name string
     @FXML void setUrgent() { select("Urgent"); }
     @FXML void setHigh()   { select("High"); }
     @FXML void setMedium() { select("Medium"); }

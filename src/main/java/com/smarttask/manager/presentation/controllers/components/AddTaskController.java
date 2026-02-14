@@ -40,39 +40,32 @@ import java.util.ResourceBundle;
 
 public class AddTaskController implements Initializable {
 
-    // =========================================================================
-    // 1. FXML UI ELEMENTS
-    // =========================================================================
     @FXML private TextField titleField;
-    @FXML private TextField descField; // Linked to your FXML
+    @FXML private TextField descField;
     @FXML private Button btnDate;
     @FXML private Button btnPriority;
     @FXML private Button btnStatus;
     @FXML private Button btnReccurring;
     @FXML private Button btnMic;
 
-    // =========================================================================
-    // 2. STATE VARIABLES (Data to be saved)
-    // =========================================================================
+    private Runnable refreshCallback;
+
+    public void setOnTaskAdded(Runnable callback) {
+        this.refreshCallback = callback;
+    }
+
     private LocalDateTime taskDeadline;
     private String selectedPriority = "Low";
     private String selectedStatus = "Todo";
     private String selectedReccurring = null;
-    private String selectedCategory = "General"; // Default category
+    private String selectedCategory = "General";
 
-    // =========================================================================
-    // 3. BACKEND SERVICES & USE CASES
-    // =========================================================================
     private NLPParserImpl aiParser;
     private final CaptureVoiceCommandUseCase voiceUseCase = new CaptureVoiceCommandUseCase();
     private TaskUseCase taskUseCase;
 
-    // 👇 NEW: Calendar Service
     private final CalendarSyncService calendarService = new CalendarSyncService();
 
-    // =========================================================================
-    // 4. INITIALIZATION
-    // =========================================================================
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // AI Initialization
@@ -83,7 +76,6 @@ public class AddTaskController implements Initializable {
             this.aiParser = null;
         }
 
-        // Database & Use Case Initialization
         try {
             var connection = DatabaseConnection.getConnection();
             var repository = new PostgresTaskRepository(connection);
@@ -93,9 +85,6 @@ public class AddTaskController implements Initializable {
         }
     }
 
-    // =========================================================================
-    // 5. POPUP HANDLERS
-    // =========================================================================
 
     @FXML
     private void onOpenDatePick(ActionEvent event) {
@@ -174,9 +163,6 @@ public class AddTaskController implements Initializable {
         }
     }
 
-    // =========================================================================
-    // 6. ACTION HANDLERS (AI & Voice)
-    // =========================================================================
 
     @FXML
     public void onSmartAdd() {
@@ -207,12 +193,11 @@ public class AddTaskController implements Initializable {
                 updatePriorityUI(capitalize(result.priority));
             }
 
-            // --- NEW: Handle Categories from AI ---
             if (result.category != null && !result.category.isEmpty()) {
                 this.selectedCategory = capitalize(result.category);
                 System.out.println("🏷️ AI detected category: " + this.selectedCategory);
             } else {
-                this.selectedCategory = "General"; // Default if AI finds nothing
+                this.selectedCategory = "General";
             }
 
         } else {
@@ -245,10 +230,6 @@ public class AddTaskController implements Initializable {
             });
         }).start();
     }
-
-    // =========================================================================
-    // 7. SAVE TASK HANDLER (Main Logic)
-    // =========================================================================
 
     @FXML
     public void onSaveTask(ActionEvent event) {
@@ -287,27 +268,26 @@ public class AddTaskController implements Initializable {
                     priority,
                     status,
                     taskDeadline,
+                    null,
                     isRecurring,
                     recurrence,
                     currentUserId,
-                    null                 // Project ID (null for Inbox)
+                    null
             );
 
             String newTaskId = taskUseCase.create(newTaskDto);
             System.out.println("✅ Task successfully saved! DB ID: " + newTaskId);
 
-            // 2. 👇 SYNC TO GOOGLE CALENDAR
             if (taskDeadline != null) {
                 System.out.println("🔄 Syncing to Google Calendar...");
 
                 Task taskForSync = new Task(
-                        newTaskId,          // ID
-                        title,              // Titre
-                        currentUserId,  // ✅ UTILISATION DE L'ID RÉEL ICI AUSSI
-                        LocalDateTime.now() // Date de création
+                        newTaskId,
+                        title,
+                        currentUserId,
+                        LocalDateTime.now()
                 );
 
-                // B. Remplir les détails via la méthode officielle du domaine ✅
                 taskForSync.updateDetails(
                         title,
                         finalDescription,
@@ -315,12 +295,12 @@ public class AddTaskController implements Initializable {
                         priority,
                         status,
                         taskDeadline,
-                        isRecurring, // boolean
+                        null,
+                        isRecurring,
                         recurrence,
-                        null // ProjectID
+                        null
                 );
 
-                // C. Envoyer au service Google
                 new Thread(() -> {
                     try {
                         calendarService.syncTask(taskForSync);
@@ -331,7 +311,10 @@ public class AddTaskController implements Initializable {
                 }).start();
             }
 
-            // 6. Reset Form
+            if (refreshCallback != null) {
+                refreshCallback.run();
+            }
+
             resetForm();
 
         } catch (Exception e) {
@@ -339,10 +322,6 @@ public class AddTaskController implements Initializable {
             showAlert("Erreur", "Impossible de sauvegarder : " + e.getMessage());
         }
     }
-
-    // =========================================================================
-    // 8. UI HELPER METHODS
-    // =========================================================================
 
     private void updatePriorityUI(String priorityName) {
         this.selectedPriority = priorityName;
@@ -465,18 +444,15 @@ public class AddTaskController implements Initializable {
         titleField.setText("");
         titleField.setPromptText("Nom de la tâche");
 
-        // Reset Description Field
         descField.setText("");
         descField.setPromptText("Description");
 
-        // Reset Variables
         taskDeadline = null;
         selectedPriority = "Low";
         selectedStatus = "Todo";
         selectedReccurring = null;
-        selectedCategory = "General"; // Reset to default
+        selectedCategory = "General";
 
-        // Reset Buttons
         resetButtonStyle(btnDate, "Date");
         resetButtonStyle(btnPriority, "Priorité");
         resetButtonStyle(btnStatus, "Status");

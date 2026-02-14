@@ -15,9 +15,6 @@ public class StatusPopupController {
         this.onSelectCallback = callback;
     }
 
-    // These methods just pass the name string
-    @FXML void setArchived() { select("Archived"); }
-    @FXML void setDone()   { select("Done"); }
     @FXML void setDoing() { select("Doing"); }
     @FXML void setTodo()    { select("Todo"); }
 

@@ -23,9 +23,9 @@ public class PostgresProjectFullTest {
             ProjectUseCase projectUseCase = new ProjectUseCase(projectRepo);
 
             // 1. Création du propriétaire
-            String userId = UUID.randomUUID().toString();
-            User owner = new User(userId, "Manager", "manager@task.com", "HASHED_Secure123");
-            userRepo.save(owner);
+            String userId = "114148943823363952988";
+//            User owner = new User(userId, "Manager", "manager@task.com", "HASHED_Secure123");
+//            userRepo.save(owner);
 
             // 2. CRÉATION DE L'ÉQUIPE VIA LE USE CASE
             // C'est ici que team_members sera rempli !

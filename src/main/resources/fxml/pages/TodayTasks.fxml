@@ -35,18 +35,17 @@
                 </HBox>
                 <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
                 <VBox styleClass="lateTask-layout" fx:id="sectionContent">
-                    <fx:include source="../components/TaskList.fxml" />
+                    <fx:include fx:id="lateTaskList" source="../components/TaskList.fxml" />
                 </VBox>
             </VBox>
             <VBox styleClass="todayTask-container">
                 <HBox alignment="CENTER_LEFT" spacing="15" styleClass="todayTask-banner">
-                    <Label text="Fév 4 ‧ Aujourd'hui ‧ Mercredi" styleClass="todayTask-title"/>
+                    <Label fx:id="dateHeaderLabel" text="Chargement..." styleClass="todayTask-title"/>
                     <Region HBox.hgrow="ALWAYS"/>
                 </HBox>
                 <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
                 <VBox styleClass="todayTask-layout">
-                    <fx:include source="../components/TaskList.fxml" />
-                    <fx:include source="../components/AddTask.fxml" />
+                    <fx:include fx:id="todayTaskList" source="../components/TaskList.fxml" />
                 </VBox>
             </VBox>
         </VBox>

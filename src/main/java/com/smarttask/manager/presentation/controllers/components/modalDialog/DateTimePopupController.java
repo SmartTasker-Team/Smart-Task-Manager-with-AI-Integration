@@ -23,17 +23,15 @@ public class DateTimePopupController {
 
     @FXML
     public void initialize() {
-        // 1. Fill Hours (00 - 23)
         for (int i = 0; i < 24; i++) {
             hourBox.getItems().add(String.format("%02d", i));
         }
 
-        // 2. Fill Minutes (00 - 59) -> CHANGED HERE
-        for (int i = 0; i < 60; i++) { // i++ means every minute
+
+        for (int i = 0; i < 60; i++) {
             minuteBox.getItems().add(String.format("%02d", i));
         }
 
-        // 3. Set Default to NOW
         LocalTime now = LocalTime.now();
         hourBox.setValue(String.format("%02d", now.getHour()));
         minuteBox.setValue(String.format("%02d", now.getMinute()));
@@ -60,10 +58,9 @@ public class DateTimePopupController {
         LocalDate date = datePicker.getValue();
         if (date == null) date = LocalDate.now();
 
-        // Get current time for fallback
+
         LocalTime now = LocalTime.now();
 
-        // Use selected value OR fallback to 'now'
         String hh = hourBox.getValue() != null ? hourBox.getValue() : String.format("%02d", now.getHour());
         String mm = minuteBox.getValue() != null ? minuteBox.getValue() : String.format("%02d", now.getMinute());
 

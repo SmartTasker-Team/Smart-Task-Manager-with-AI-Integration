@@ -42,7 +42,8 @@ public class PostgresTaskCreationTest {
                     "Development",                        // category
                     PriorityLevel.URGENT_IMPORTANT,      // priority (Enum)
                     TaskStatus.DONE,      // priority (Enum)
-                    deadline,                             // dueDate (Timestamp)
+                    deadline, //
+                    null,
                     true,                                 // isRecurring (Boolean)
                     RecurrenceType.WEEKLY,                // recurrenceType (Enum)
                     projectId                             // projectId (Foreign Key)

@@ -30,6 +30,10 @@ public class SidebarController implements Initializable {
     @FXML private HBox inboxItem;
     @FXML private HBox analyticsItem;
     @FXML private HBox todayItem;
+    @FXML private HBox doneTasksItem;
+    @FXML private HBox calendarItem;
+
+
     @FXML private Button notificationBtn;
 
     @FXML private VBox projectsContent;
@@ -51,7 +55,7 @@ public class SidebarController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         updateSidebarState();
 
-        allNavItems = Arrays.asList(inboxItem, todayItem, notificationBtn);
+        allNavItems = Arrays.asList(inboxItem,analyticsItem, todayItem, doneTasksItem, calendarItem, notificationBtn);
 
         setActivePage("Inbox");
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Inbox");
@@ -95,6 +99,16 @@ public class SidebarController implements Initializable {
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Today");
     }
     @FXML
+    private void onDoneTasks() {
+        setActivePage("DoneTasks");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("DoneTasks");
+    }
+    @FXML
+    private void onCalendar() {
+        setActivePage("Calendar");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Calendar");
+    }
+    @FXML
     private void onNotification() {
         setActivePage("Notification");
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Notification");
@@ -113,6 +127,12 @@ public class SidebarController implements Initializable {
             inboxItem.getStyleClass().add("nav-item-selected");
         } else if (pageName.equals("Today") && todayItem != null) {
             todayItem.getStyleClass().add("nav-item-selected");
+        } else if (pageName.equals("Analytics") && analyticsItem != null) {
+            analyticsItem.getStyleClass().add("nav-item-selected");
+        } else if (pageName.equals("DoneTasks") && doneTasksItem != null) {
+            doneTasksItem.getStyleClass().add("nav-item-selected");
+        } else if (pageName.equals("Calendar") && calendarItem != null) {
+            calendarItem.getStyleClass().add("nav-item-selected");
         } else if (pageName.equals("Notification") && notificationBtn != null) {
             notificationBtn.getStyleClass().add("nav-item-selected");
         }
@@ -132,7 +152,6 @@ public class SidebarController implements Initializable {
             collapsedSidebar.setVisible(false);
             collapsedSidebar.setManaged(false);
         } else {
-            // HIDE Expanded, SHOW Collapsed
             expandedSidebar.setVisible(false);
             expandedSidebar.setManaged(false);
 
@@ -149,23 +168,16 @@ public class SidebarController implements Initializable {
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
 
-            // 1. Get the Main Window (The "Owner")
+
             Stage ownerStage = (Stage) projectModalBtn.getScene().getWindow();
             stage.initOwner(ownerStage);
 
-            // 2. IMPORTANT: Use WINDOW_MODAL
-            // This blocks input to YOUR app, but lets you click other apps/taskbar
             stage.initModality(Modality.WINDOW_MODAL);
 
-            // 3. Match the size and position of the Main Window exactly
-            // This makes the "dimmed background" cover only your app
             stage.setX(ownerStage.getX());
             stage.setY(ownerStage.getY());
             stage.setWidth(ownerStage.getWidth());
             stage.setHeight(ownerStage.getHeight());
-
-            // 4. (Optional) Sync them so if you move the main app, the popup follows
-            // Since it's a modal, you can't move the main app anyway, so step 3 is usually enough.
 
             Scene scene = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
@@ -187,23 +199,15 @@ public class SidebarController implements Initializable {
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
 
-            // 1. Get the Main Window (The "Owner")
             Stage ownerStage = (Stage) teamProjectModalBtn.getScene().getWindow();
             stage.initOwner(ownerStage);
 
-            // 2. IMPORTANT: Use WINDOW_MODAL
-            // This blocks input to YOUR app, but lets you click other apps/taskbar
             stage.initModality(Modality.WINDOW_MODAL);
 
-            // 3. Match the size and position of the Main Window exactly
-            // This makes the "dimmed background" cover only your app
             stage.setX(ownerStage.getX());
             stage.setY(ownerStage.getY());
             stage.setWidth(ownerStage.getWidth());
             stage.setHeight(ownerStage.getHeight());
-
-            // 4. (Optional) Sync them so if you move the main app, the popup follows
-            // Since it's a modal, you can't move the main app anyway, so step 3 is usually enough.
 
             Scene scene = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
@@ -217,7 +221,7 @@ public class SidebarController implements Initializable {
     }
 
     @FXML
-    private void openAddTeamDialog(MouseEvent event) { // Change argument to MouseEvent (optional but good practice)
+    private void openAddTeamDialog(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/components/modalDialog/AddTeamDialog.fxml"));
             Parent root = loader.load();
@@ -225,8 +229,6 @@ public class SidebarController implements Initializable {
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
 
-            // 2. USE THE HBOX TO GET THE WINDOW
-            // We use 'addTeamBox' here because 'teamModalBtn' no longer exists
             Stage ownerStage = (Stage) addTeamBox.getScene().getWindow();
 
             stage.initOwner(ownerStage);

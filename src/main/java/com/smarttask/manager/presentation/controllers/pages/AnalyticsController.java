@@ -16,15 +16,13 @@ public class AnalyticsController {
     @FXML private BarChart<String, Number> categoryBarChart;
     @FXML private PieChart statusPieChart;
 
-    // ⚠️ CHANGEMENT ICI : On retire 'final' et l'initialisation directe
     private GetAnalyticsDataUseCase analyticsService;
 
     @FXML
     public void initialize() {
         CategoryAxis xAxis = (CategoryAxis) categoryBarChart.getXAxis();
 
-        // Force the labels to remain centered under the ticks
-        xAxis.setTickLabelRotation(45); // Keep your rotation
+        xAxis.setTickLabelRotation(45);
         xAxis.setTickMarkVisible(true);
 
         loadAnalyticsData();
@@ -36,21 +34,17 @@ public class AnalyticsController {
                 this.analyticsService = new GetAnalyticsDataUseCase();
             }
 
-            // 1. Get Current User (Using the ID that actually works in your test)
             String currentUserId = "user123";
             if (UserSession.getInstance().getUser() != null) {
                 currentUserId = UserSession.getInstance().getUser().id();
             }
 
 
-            // 2. Fetch Data
             final AnalyticsSummary summary = analyticsService.execute(currentUserId);
 
-            // DEBUG: Check this in your console!
             System.out.println("📊 UI Loading data for: " + currentUserId);
             System.out.println("📊 Status items found: " + summary.tasksByStatus.size());
 
-            // 3. Populate Charts on the UI Thread
             javafx.application.Platform.runLater(() -> {
                 populateStatusChart(summary);
                 populateCategoryChart(summary);
@@ -63,7 +57,6 @@ public class AnalyticsController {
         }
     }
 
-    // ... (Le reste des méthodes populate reste identique) ...
 
     private void populateStatusChart(AnalyticsSummary summary) {
         ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
@@ -81,17 +74,15 @@ public class AnalyticsController {
         CategoryAxis xAxis = (CategoryAxis) categoryBarChart.getXAxis();
         xAxis.getCategories().clear();
 
-        // 👇 AJOUTEZ CES LIGNES POUR CORRIGER L'ALIGNEMENT
-        xAxis.setTickLabelRotation(0); // Remettre à 0 pour tester, ou 45 si nécessaire
-        xAxis.setTickLabelGap(10);     // Espace entre la barre et le texte
-        xAxis.setAutoRanging(true);    // Important pour que toutes les catégories s'affichent
+        xAxis.setTickLabelRotation(0);
+        xAxis.setTickLabelGap(10);
+        xAxis.setAutoRanging(true);
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Tasks");
 
         if (summary.tasksByCategory != null) {
             summary.tasksByCategory.forEach((category, count) -> {
-                // Add the category name to the axis explicitly
                 xAxis.getCategories().add(category);
                 series.getData().add(new XYChart.Data<>(category, count));
             });
@@ -99,7 +90,6 @@ public class AnalyticsController {
 
         categoryBarChart.getData().add(series);
 
-        // Adjust spacing so bars aren't too wide or too thin
         categoryBarChart.setCategoryGap(50);
     }
 

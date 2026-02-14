@@ -49,6 +49,12 @@ public class DashboardController implements Initializable {
             case "Analytics":
                 contentArea.getChildren().setAll(Model.getInstance().getViewFactory().getAnalyticsView());
                 break;
+            case "DoneTasks":
+                contentArea.getChildren().setAll(Model.getInstance().getViewFactory().getDoneTasksView());
+                break;
+            case "Calendar":
+                contentArea.getChildren().setAll(Model.getInstance().getViewFactory().getCalenderView());
+                break;
             default:
                 System.out.println("Unknown view: " + viewName);
                 break;

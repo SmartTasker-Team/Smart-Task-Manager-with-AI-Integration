@@ -15,7 +15,7 @@ import java.util.List;
  */
 public record TaskDTO(
         String title, String description, String category,
-        PriorityLevel priority, TaskStatus status, LocalDateTime dueDate,
+        PriorityLevel priority, TaskStatus status, LocalDateTime dueDate, LocalDateTime completed_at,
         boolean isRecurring, RecurrenceType recurrenceType,
         String ownerId, String projectId
 ) {}
