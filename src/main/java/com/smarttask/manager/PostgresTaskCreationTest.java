@@ -41,6 +41,7 @@ public class PostgresTaskCreationTest {
                     "Detailed description of all fields", // description
                     "Development",                        // category
                     PriorityLevel.URGENT_IMPORTANT,      // priority (Enum)
+                    TaskStatus.DONE,      // priority (Enum)
                     deadline,                             // dueDate (Timestamp)
                     true,                                 // isRecurring (Boolean)
                     RecurrenceType.WEEKLY,                // recurrenceType (Enum)

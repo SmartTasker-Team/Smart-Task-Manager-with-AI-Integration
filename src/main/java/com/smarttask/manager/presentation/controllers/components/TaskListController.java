@@ -5,7 +5,8 @@ import com.smarttask.manager.domain.model.PriorityLevel;
 import com.smarttask.manager.domain.model.Task;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
-import javafx.event.ActionEvent;
+import com.smarttask.manager.infrastructure.session.UserSession;
+import com.smarttask.manager.presentation.controllers.components.modalDialog.EditTaskPopupController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -34,11 +34,8 @@ import java.util.ResourceBundle;
 public class TaskListController implements Initializable{
 
     @FXML private VBox openTaskDetails;
-
-    @FXML private VBox taskListContainer; // Make sure your root VBox in FXML has fx:id="taskListContainer"
-
+    @FXML private VBox taskListContainer;
     private TaskUseCase taskUseCase;
-    private final String CURRENT_USER = "user123";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -97,8 +94,8 @@ public class TaskListController implements Initializable{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/components/modalDialog/EditTaskPopup.fxml"));
             Parent root = loader.load();
 
-            // EditTaskPopupController controller = loader.getController();
-            // controller.setTask(task);
+            EditTaskPopupController controller = loader.getController();
+            controller.setTask(task);
 
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
@@ -132,7 +129,17 @@ public class TaskListController implements Initializable{
     public void loadTasks() {
         if (taskUseCase == null || taskListContainer == null) return;
 
-        List<Task> tasks = taskUseCase.getTasksByOwner(CURRENT_USER);
+        // 👇 2. GET REAL USER ID FROM SESSION
+        String currentUserId;
+        if (UserSession.getInstance().getUser() != null) {
+            currentUserId = UserSession.getInstance().getUser().id();
+        } else {
+            System.err.println("❌ TaskList Error: No user logged in.");
+            return; // Stop if no user
+        }
+
+        // Use the real ID here
+        List<Task> tasks = taskUseCase.getTasksByOwner(currentUserId);
         taskListContainer.getChildren().clear();
 
         for (Task task : tasks) {
@@ -270,6 +277,17 @@ public class TaskListController implements Initializable{
         return btn;
     }
     private void deleteTask(Task task) {
-        System.out.println("Delete task: " + task.getTitle());
+        try {
+            // 1. Delete immediately from database
+            taskUseCase.delete(task.getIdTask());
+            System.out.println("🗑️ Task deleted: " + task.getTitle());
+
+            // 2. Refresh the list to remove it from the screen
+            loadTasks();
+
+        } catch (Exception e) {
+            System.err.println("Error deleting task: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

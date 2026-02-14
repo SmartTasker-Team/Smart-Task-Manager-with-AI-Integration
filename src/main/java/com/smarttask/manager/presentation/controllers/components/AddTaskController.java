@@ -2,6 +2,7 @@ package com.smarttask.manager.presentation.controllers.components;
 
 import com.smarttask.manager.application.dto.AiInsightResult;
 import com.smarttask.manager.application.usecase.voice.CaptureVoiceCommandUseCase;
+import com.smarttask.manager.domain.model.TaskStatus;
 import com.smarttask.manager.infrastructure.external.ai.NLPParserImpl;
 import com.smarttask.manager.infrastructure.external.calendar.CalendarSyncService;
 import com.smarttask.manager.presentation.controllers.components.modalDialog.DateTimePopupController;
@@ -275,6 +276,7 @@ public class AddTaskController implements Initializable {
 
         try {
             PriorityLevel priority = mapPriority(selectedPriority);
+            TaskStatus status = mapStatus(selectedStatus);
             boolean isRecurring = selectedReccurring != null;
             RecurrenceType recurrence = mapRecurrence(selectedReccurring);
 
@@ -283,6 +285,7 @@ public class AddTaskController implements Initializable {
                     finalDescription,
                     selectedCategory,
                     priority,
+                    status,
                     taskDeadline,
                     isRecurring,
                     recurrence,
@@ -310,6 +313,7 @@ public class AddTaskController implements Initializable {
                         finalDescription,
                         selectedCategory,
                         priority,
+                        status,
                         taskDeadline,
                         isRecurring, // boolean
                         recurrence,
@@ -424,6 +428,17 @@ public class AddTaskController implements Initializable {
             case "MEDIUM", "MOYENNE" -> PriorityLevel.URGENT_NOT_IMPORTANT;
             case "LOW", "BASSE" -> PriorityLevel.NOT_URGENT_NOT_IMPORTANT;
             default -> PriorityLevel.NOT_URGENT_NOT_IMPORTANT;
+        };
+    }
+    private TaskStatus mapStatus(String statusName) {
+        if (statusName == null) return TaskStatus.TODO;
+
+        return switch (statusName.toUpperCase()) {
+            case "ARCHIVED" -> TaskStatus.ARCHIVED;
+            case "DONE" -> TaskStatus.DONE;
+            case "DOING" -> TaskStatus.DOING;
+            case "TODO" -> TaskStatus.TODO;
+            default -> TaskStatus.TODO;
         };
     }
 

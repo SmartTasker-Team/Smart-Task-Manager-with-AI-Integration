@@ -2,6 +2,7 @@ package com.smarttask.manager.application.dto;
 
 import com.smarttask.manager.domain.model.PriorityLevel;
 import com.smarttask.manager.domain.model.RecurrenceType;
+import com.smarttask.manager.domain.model.TaskStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public record TaskDTO(
         String title, String description, String category,
-        PriorityLevel priority, LocalDateTime dueDate,
+        PriorityLevel priority, TaskStatus status, LocalDateTime dueDate,
         boolean isRecurring, RecurrenceType recurrenceType,
         String ownerId, String projectId
 ) {}

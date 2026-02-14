@@ -42,3 +42,4 @@ build/
 ### login keys ###
 tokens/
 src/main/resources/credentials.json
+vosk-model/

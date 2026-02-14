@@ -16,7 +16,7 @@ public class TaskUseCase {
     public String create(TaskDTO dto) {
         Task task = new Task(UUID.randomUUID().toString(), dto.title(), dto.ownerId(), LocalDateTime.now());
         task.updateDetails(dto.title(), dto.description(), dto.category(),
-                dto.priority(), dto.dueDate(), dto.isRecurring(),
+                dto.priority(), dto.status(), dto.dueDate(), dto.isRecurring(),
                 dto.recurrenceType(), dto.projectId());
         repository.save(task);
         return task.getIdTask();
@@ -25,7 +25,7 @@ public class TaskUseCase {
     public void update(String id, TaskDTO dto) {
         Task task = repository.findById(id).orElseThrow(() -> new DomainException("Task not found."));
         task.updateDetails(dto.title(), dto.description(), dto.category(),
-                dto.priority(), dto.dueDate(), dto.isRecurring(),
+                dto.priority(), dto.status(), dto.dueDate(), dto.isRecurring(),
                 dto.recurrenceType(), dto.projectId());
 
         if (!repository.update(task)) {
