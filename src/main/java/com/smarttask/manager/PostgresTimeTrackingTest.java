@@ -25,7 +25,7 @@ public class PostgresTimeTrackingTest {
             String taskId = UUID.randomUUID().toString();
 
             System.out.println("--- Step 1: Creating User and Task ---");
-            userRepo.save(new User(userId, "TimeTester", "time@test.com", "Secure123"));
+            userRepo.save(new User(userId, "TimeTester", "time@test.com", "HASHED_Secure123"));
             taskRepo.save(new Task(taskId, "Work on Architecture", userId, LocalDateTime.now()));
 
             // 4. Step 2: Start Timer

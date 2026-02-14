@@ -24,7 +24,7 @@ public class PostgresTaskCreationTest {
             String userId = UUID.randomUUID().toString();
             String projectId = UUID.randomUUID().toString();
 
-            userRepo.save(new User(userId, "DeepTester", "exhaustive_" + UUID.randomUUID().toString().substring(0,4) + "@test.com", "Admin123!"));
+            userRepo.save(new User(userId, "DeepTester", "exhaustive_" + UUID.randomUUID().toString().substring(0,4) + "@test.com", "HASHED_Admin123!"));
             projectRepo.save(new Project(projectId, "Main Project Pipeline", userId, null));
             System.out.println("[OK] Dependencies created (User & Project)");
 

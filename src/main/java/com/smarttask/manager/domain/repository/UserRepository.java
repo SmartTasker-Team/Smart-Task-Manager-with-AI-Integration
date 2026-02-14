@@ -1,7 +1,7 @@
 package com.smarttask.manager.domain.repository;
-import com.smarttask.manager.domain.model.User;
 
 import java.util.Optional;
+import com.smarttask.manager.domain.model.User;
 
 /**
  * Interface defining the contract for User persistence and retrieval.

@@ -1,7 +1,7 @@
 package com.smarttask.manager.infrastructure.persistence;
 
-import com.smarttask.manager.domain.model.User;
 import com.smarttask.manager.domain.repository.UserRepository;
+import com.smarttask.manager.domain.model.User;
 import java.sql.*;
 import java.util.Optional;
 

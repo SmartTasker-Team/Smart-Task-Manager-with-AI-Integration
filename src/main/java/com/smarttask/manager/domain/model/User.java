@@ -16,21 +16,24 @@ public class User {
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
 
-    /**
-     * Constructor for creating a NEW User.
-     */
+    private static final String GOOGLE_PLACEHOLDER = "GOOGLE_AUTH_USER";
+
     public User(String idUser, String username, String email, String passwordHash) {
         this.idUser = Objects.requireNonNull(idUser);
         this.createdAt = LocalDateTime.now();
         this.versionNumber = 1;
 
-        // Business Rule Validations
         validateUsername(username);
         validateEmail(email);
 
         this.username = username;
         this.email = email;
-        this.passwordHash = Objects.requireNonNull(passwordHash);
+        // Use the placeholder if password is null
+        this.passwordHash = (passwordHash == null) ? GOOGLE_PLACEHOLDER : passwordHash;
+    }
+
+    public static User createGoogleUser(String idUser, String username, String email) {
+        return new User(idUser, username, email, GOOGLE_PLACEHOLDER);
     }
 
     // --- BUSINESS LOGIC ---
@@ -45,6 +48,10 @@ public class User {
             this.email = newEmail;
             this.versionNumber++;
         }
+    }
+
+    public boolean isGoogleUser() {
+        return GOOGLE_PLACEHOLDER.equals(this.passwordHash);
     }
 
     public void changePassword(String newPasswordHash) {

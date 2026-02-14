@@ -12,6 +12,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfo;
+import com.smarttask.manager.application.usecase.auth.GoogleAuthUseCase;
 
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -22,6 +23,8 @@ public class GoogleAuthService {
 
     private static final String CREDENTIALS_FILE_PATH = "src/main/resources/credentials.json";
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
+
+    private GoogleAuthUseCase googleAuthUseCase;
 
     private static final List<String> LOGIN_SCOPES = Arrays.asList(
             "https://www.googleapis.com/auth/userinfo.profile",
@@ -34,6 +37,16 @@ public class GoogleAuthService {
             CalendarScopes.CALENDAR
     );
 
+    public GoogleAuthService() {}
+
+    /**
+     * Optional: Set the GoogleAuthUseCase for handling user creation/retrieval.
+     * If not set, only authentication will work.
+     */
+    public void setGoogleAuthUseCase(GoogleAuthUseCase useCase) {
+        this.googleAuthUseCase = useCase;
+    }
+
     public Userinfo login() {
         return authenticate(LOGIN_SCOPES);
     }
@@ -41,6 +54,27 @@ public class GoogleAuthService {
     public boolean connectCalendar() {
         Userinfo user = authenticate(CALENDAR_SCOPES);
         return user != null;
+    }
+
+    public String registerOrLoginGoogleUser(Userinfo userinfo) {
+        if (googleAuthUseCase == null) {
+            System.err.println("ERROR: GoogleAuthUseCase not set. Cannot register Google user.");
+            return null;
+        }
+
+        try {
+            String userId = googleAuthUseCase.registerOrLoginGoogleUser(
+                userinfo.getId(),
+                userinfo.getName(),
+                userinfo.getEmail()
+            );
+            System.out.println("Google user registered/logged in: " + userId);
+            return userId;
+        } catch (Exception e) {
+            System.err.println("Error registering Google user: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Calendar getCalendarClient() {

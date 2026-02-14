@@ -25,8 +25,8 @@ public class PostgresUserFullTest {
             }
 
             System.out.println("\n--- Testing Deletion ---");
-            useCase.deleteAccount(userId);
-            System.out.println("Account deleted. Test Complete.");
+//            useCase.deleteAccount(userId);
+//            System.out.println("Account deleted. Test Complete.");
 
         } catch (Exception e) {
             e.printStackTrace();

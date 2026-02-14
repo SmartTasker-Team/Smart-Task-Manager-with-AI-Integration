@@ -4,9 +4,9 @@ import com.smarttask.manager.application.dto.ProjectDTO;
 import com.smarttask.manager.application.usecase.project.ProjectUseCase;
 import com.smarttask.manager.application.usecase.team.TeamUseCase;
 import com.smarttask.manager.domain.model.User;
+import com.smarttask.manager.domain.model.Project;
 import com.smarttask.manager.infrastructure.persistence.*;
 import java.sql.Connection;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -24,7 +24,7 @@ public class PostgresProjectFullTest {
 
             // 1. Création du propriétaire
             String userId = UUID.randomUUID().toString();
-            User owner = new User(userId, "Manager", "manager@task.com", "Secure123");
+            User owner = new User(userId, "Manager", "manager@task.com", "HASHED_Secure123");
             userRepo.save(owner);
 
             // 2. CRÉATION DE L'ÉQUIPE VIA LE USE CASE

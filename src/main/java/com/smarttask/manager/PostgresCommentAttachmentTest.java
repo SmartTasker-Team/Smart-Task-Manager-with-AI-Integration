@@ -20,7 +20,7 @@ public class PostgresCommentAttachmentTest {
 
             // 2. Setup Prerequisites (User and Task)
             String userId = UUID.randomUUID().toString();
-            userRepo.save(new User(userId, "Tester", "test2@attach.com", "Secure123"));
+            userRepo.save(new User(userId, "Tester", "test2@attach.com", "HASHED_Secure123"));
 
             String taskId = UUID.randomUUID().toString();
             taskRepo.save(new Task(taskId, "Task with attachments", userId, LocalDateTime.now()));
