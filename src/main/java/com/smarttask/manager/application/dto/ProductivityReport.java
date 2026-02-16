@@ -20,6 +20,18 @@ public class ProductivityReport {
         this.suggestion = suggestion;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public String getSuggestion() {
+        return suggestion;
+    }
+
     @Override
     public String toString() {
         return String.format("Score: %d | Summary: %s | Suggestion: %s", score, summary, suggestion);
