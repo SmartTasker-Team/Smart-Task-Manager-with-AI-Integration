@@ -13,7 +13,7 @@ public class OnboardingStep1Controller {
 
     @FXML
     private void onContinue() {
-        Parent next = viewFactory.loadOnboardingStep2();
+        Parent next = viewFactory.loadOnboardingStep3();
         sceneManager.setRootWithFade(next);
     }
 }

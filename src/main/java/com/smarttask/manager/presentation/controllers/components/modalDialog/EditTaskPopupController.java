@@ -12,7 +12,6 @@ import com.smarttask.manager.infrastructure.external.ai.NLPParserImpl;
 import com.smarttask.manager.infrastructure.external.calendar.CalendarSyncService;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
-import com.smarttask.manager.infrastructure.session.UserSession;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,9 +35,6 @@ import java.util.ResourceBundle;
 
 public class EditTaskPopupController implements Initializable {
 
-    // =========================================================================
-    // 1. FXML UI ELEMENTS
-    // =========================================================================
     @FXML private TextField titleField;
     @FXML private TextField descField;
     @FXML private Button btnDate;
@@ -48,31 +44,21 @@ public class EditTaskPopupController implements Initializable {
     @FXML private Button btnMic;
     @FXML private Button btnCancel;
 
-    // =========================================================================
-    // 2. STATE VARIABLES
-    // =========================================================================
     private String taskIdToUpdate;
-    private String currentUserId; // To keep ownership correct
+    private String currentUserId;
     private LocalDateTime taskDeadline;
     private String selectedPriority = "Low";
     private String selectedStatus = "Todo";
     private String selectedReccurring = null;
     private String selectedCategory = "General";
 
-    // =========================================================================
-    // 3. BACKEND SERVICES
-    // =========================================================================
     private NLPParserImpl aiParser;
     private final CaptureVoiceCommandUseCase voiceUseCase = new CaptureVoiceCommandUseCase();
     private TaskUseCase taskUseCase;
     private final CalendarSyncService calendarService = new CalendarSyncService();
 
-    // =========================================================================
-    // 4. INITIALIZATION
-    // =========================================================================
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // AI Initialization
         try {
             this.aiParser = new NLPParserImpl();
         } catch (Exception e) {
@@ -80,7 +66,6 @@ public class EditTaskPopupController implements Initializable {
             this.aiParser = null;
         }
 
-        // Database & Use Case Initialization
         try {
             var connection = DatabaseConnection.getConnection();
             var repository = new PostgresTaskRepository(connection);
@@ -90,21 +75,16 @@ public class EditTaskPopupController implements Initializable {
         }
     }
 
-    // =========================================================================
-    // 5. PUBLIC METHOD TO SET TASK DATA
-    // =========================================================================
     public void setTask(Task task) {
         this.taskIdToUpdate = task.getIdTask();
         this.currentUserId = task.getOwnerId();
         this.selectedCategory = task.getCategory();
 
-        // 1. Pre-fill Fields
         titleField.setText(task.getTitle());
         if (task.getDescription() != null) {
             descField.setText(task.getDescription());
         }
 
-        // 2. Pre-fill Date
         if (task.getDueDate() != null) {
             this.taskDeadline = task.getDueDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE d MMM, HH:mm");
@@ -112,25 +92,20 @@ public class EditTaskPopupController implements Initializable {
             applyButtonStyle(btnDate, "#0D89FF");
         }
 
-        // 3. Pre-fill Priority
         if (task.getPriority() != null) {
-            updatePriorityUI(capitalize(task.getPriority().name()));
+            updatePriorityUI(getPriorityLabel(task.getPriority()));
         }
 
-        // 4. Pre-fill Status
         if (task.getStatus() != null) {
             updateStatusUI(capitalize(task.getStatus().name()));
         }
 
-        // 5. Pre-fill Recurring
         if (task.isRecurring() && task.getRecurrenceType() != null) {
             updateRecurringUI(capitalize(task.getRecurrenceType().name()));
         }
     }
 
-    // =========================================================================
-    // 6. POPUP HANDLERS (Identical to AddTaskController)
-    // =========================================================================
+
     @FXML
     private void onOpenDatePick(ActionEvent event) {
         try {
@@ -190,9 +165,6 @@ public class EditTaskPopupController implements Initializable {
         } catch (IOException e) { e.printStackTrace(); }
     }
 
-    // =========================================================================
-    // 7. AI & VOICE HANDLERS
-    // =========================================================================
     @FXML
     public void onSmartAdd() {
         if (this.aiParser == null) return;
@@ -235,9 +207,6 @@ public class EditTaskPopupController implements Initializable {
         }).start();
     }
 
-    // =========================================================================
-    // 8. UPDATE TASK HANDLER (Main Logic)
-    // =========================================================================
     @FXML
     public void onSaveTask(ActionEvent event) {
         if (taskUseCase == null || taskIdToUpdate == null) {
@@ -255,13 +224,11 @@ public class EditTaskPopupController implements Initializable {
         }
 
         try {
-            // Map Enums
             PriorityLevel priority = mapPriority(selectedPriority);
             TaskStatus status = mapStatus(selectedStatus);
             boolean isRecurring = selectedReccurring != null;
             RecurrenceType recurrence = mapRecurrence(selectedReccurring);
 
-            // Create UPDATE DTO
             TaskDTO updateDto = new TaskDTO(
                     title,
                     finalDescription,
@@ -269,29 +236,27 @@ public class EditTaskPopupController implements Initializable {
                     priority,
                     status,
                     taskDeadline,
+                    null,
                     isRecurring,
                     recurrence,
-                    currentUserId, // Keep original owner
+                    currentUserId,
                     null
             );
 
-            // 1. Perform Update
             taskUseCase.update(taskIdToUpdate, updateDto);
             System.out.println("✅ Task Updated Successfully: " + taskIdToUpdate);
 
-            // 2. Sync to Google Calendar
             if (taskDeadline != null) {
                 Task taskForSync = new Task(taskIdToUpdate, title, currentUserId, LocalDateTime.now());
                 taskForSync.updateDetails(
                         title, finalDescription, selectedCategory, priority, status,
-                        taskDeadline, isRecurring, recurrence, null
+                        taskDeadline,null, isRecurring, recurrence, null
                 );
                 taskForSync.setStatus(status);
 
                 new Thread(() -> calendarService.syncTask(taskForSync)).start();
             }
 
-            // 3. Close Popup
             closeDialog();
 
         } catch (Exception e) {
@@ -312,9 +277,6 @@ public class EditTaskPopupController implements Initializable {
         }
     }
 
-    // =========================================================================
-    // 9. HELPERS
-    // =========================================================================
     private void updatePriorityUI(String name) {
         this.selectedPriority = name;
         btnPriority.setText(name);
@@ -368,13 +330,22 @@ public class EditTaskPopupController implements Initializable {
 
     private String capitalize(String str) {
         if (str == null || str.isEmpty()) return str;
-        // Fix for "URGENT_IMPORTANT" -> "Urgent important" if needed, or simple cap
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase().replace("_", " ");
+    }
+
+    private String getPriorityLabel(PriorityLevel priority) {
+        if (priority == null) return "Low";
+
+        return switch (priority) {
+            case URGENT_IMPORTANT -> "Urgent";
+            case NOT_URGENT_IMPORTANT -> "High";
+            case URGENT_NOT_IMPORTANT -> "Medium";
+            case NOT_URGENT_NOT_IMPORTANT -> "Low";
+        };
     }
 
     private PriorityLevel mapPriority(String priorityName) {
         if (priorityName == null) return PriorityLevel.NOT_URGENT_NOT_IMPORTANT;
-        // Basic mapping logic matching AddTask
         return switch (priorityName.toUpperCase()) {
             case "URGENT" -> PriorityLevel.URGENT_IMPORTANT;
             case "HIGH", "ÉLEVÉE" -> PriorityLevel.NOT_URGENT_IMPORTANT;

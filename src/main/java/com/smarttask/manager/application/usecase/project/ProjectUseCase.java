@@ -4,7 +4,10 @@ import com.smarttask.manager.application.dto.ProjectDTO;
 import com.smarttask.manager.domain.model.Project;
 import com.smarttask.manager.domain.repository.ProjectRepository;
 import com.smarttask.manager.domain.exception.DomainException;
+
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ProjectUseCase {
     private final ProjectRepository repository;
@@ -34,5 +37,20 @@ public class ProjectUseCase {
         if (!repository.update(project)) {
             throw new DomainException("CONFLICT: Project details were modified by another user.");
         }
+    }
+    // 👇 NEW METHOD: Get Personal Projects (Team ID is NULL)
+    public List<Project> getPersonalProjects(String userId) {
+        List<Project> allProjects = repository.findByOwner(userId);
+        return allProjects.stream()
+                .filter(p -> p.getTeamId() == null || p.getTeamId().isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    // 👇 NEW METHOD: Get Team Projects (Team ID is NOT NULL)
+    public List<Project> getTeamProjects(String userId) {
+        List<Project> allProjects = repository.findByOwner(userId);
+        return allProjects.stream()
+                .filter(p -> p.getTeamId() != null && !p.getTeamId().isEmpty())
+                .collect(Collectors.toList());
     }
 }

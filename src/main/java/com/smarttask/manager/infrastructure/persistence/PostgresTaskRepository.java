@@ -109,6 +109,7 @@ public class PostgresTaskRepository implements TaskRepository {
                 PriorityLevel.valueOf(rs.getString("priority")),
                 TaskStatus.valueOf(rs.getString("status")),
                 rs.getTimestamp("due_date") != null ? rs.getTimestamp("due_date").toLocalDateTime() : null,
+                rs.getTimestamp("completed_at") != null ? rs.getTimestamp("completed_at").toLocalDateTime() : null,
                 rs.getBoolean("is_recurring"),
                 rs.getString("recurrence_type") != null ? RecurrenceType.valueOf(rs.getString("recurrence_type")) : null,
                 rs.getString("project_id")

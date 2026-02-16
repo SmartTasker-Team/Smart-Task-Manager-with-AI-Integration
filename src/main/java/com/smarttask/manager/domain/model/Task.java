@@ -88,7 +88,7 @@ public class Task {
      * Updates details and increments version for synchronization logic.
      */
     public void updateDetails(String title, String description, String category,
-                              PriorityLevel priority, TaskStatus status, LocalDateTime dueDate,
+                              PriorityLevel priority, TaskStatus status,  LocalDateTime dueDate, LocalDateTime  completedAt,
                               boolean isRecurring, RecurrenceType recurrenceType, String projectId) {
         this.title = title;
         this.description = description;
@@ -96,6 +96,7 @@ public class Task {
         this.priority = priority;
         this.status = status;
         this.dueDate = dueDate;
+        this.completedAt = completedAt;
         this.isRecurring = isRecurring;
         this.recurrenceType = recurrenceType;
         this.projectId = projectId;

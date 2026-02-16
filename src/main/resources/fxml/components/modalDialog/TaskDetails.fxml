@@ -47,11 +47,11 @@
             <VBox alignment="CENTER_LEFT" spacing="20">
                 <VBox styleClass="task-details" spacing="10">
                     <Label text="Task" styleClass="task-detail-label"/>
-                    <Label text="Emmener les enfants to GitHub" styleClass="task-title-detail"/>
+                    <Label fx:id="lblTitle" text="Task Title" styleClass="task-title-detail"/>
                 </VBox>
                 <VBox styleClass="task-details" spacing="10">
                     <Label text="Description" styleClass="task-detail-label"/>
-                    <Label text="No Description" styleClass="task-desc-detail"/>
+                    <Label fx:id="lblDescription" text="Description" styleClass="task-desc-detail"/>
                 </VBox>
             </VBox>
             <HBox alignment="CENTER_LEFT" spacing="15">
@@ -66,7 +66,7 @@
                                 scaleX="0.7" scaleY="0.7"
                                 strokeLineCap="ROUND"
                                 strokeLineJoin="ROUND"/>
-                        <Label text="Fev 5, 7 AM" styleClass="task-detail-item-date"/>
+                        <Label fx:id="lblDate" text="No Date" styleClass="task-detail-item-date"/>
                     </HBox>
                 </VBox>
                 <VBox styleClass="task-details" spacing="10" HBox.hgrow="ALWAYS" maxWidth="Infinity">
@@ -80,7 +80,7 @@
                                 scaleX="0.7" scaleY="0.7"
                                 strokeLineCap="ROUND"
                                 strokeLineJoin="ROUND"/>
-                        <Label text="High" styleClass="task-detail-item-priorite"/>
+                        <Label fx:id="lblPriority" text="Priority" styleClass="task-detail-item-priorite"/>
                     </HBox>
                 </VBox>
                 <VBox styleClass="task-details" spacing="10" HBox.hgrow="ALWAYS" maxWidth="Infinity">
@@ -94,7 +94,7 @@
                                 scaleX="0.65" scaleY="0.65"
                                 strokeLineCap="ROUND"
                                 strokeLineJoin="ROUND"/>
-                        <Label text="Done" styleClass="task-detail-item-status"/>
+                        <Label fx:id="lblStatus" text="Status" styleClass="task-detail-item-status"/>
                     </HBox>
                 </VBox>
             </HBox>

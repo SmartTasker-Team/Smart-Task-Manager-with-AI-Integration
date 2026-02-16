@@ -15,7 +15,7 @@
             </padding>
             <HBox spacing="8">
                 <VBox prefWidth="1000">
-                    <TextField fx:id="titleField" promptText="Nom de la tâche" text="Emmener les enfants to GitHub"
+                    <TextField fx:id="titleField" promptText="Nom de la tâche"
                                styleClass="editor-input-title"/>
                     <TextField fx:id="descField" promptText="Description" styleClass="editor-input-desc"/>
                 </VBox>

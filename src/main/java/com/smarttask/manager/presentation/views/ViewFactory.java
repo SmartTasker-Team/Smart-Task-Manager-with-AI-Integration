@@ -50,9 +50,6 @@ public class ViewFactory {
     public Parent loadOnboardingStep1() {
         return load("/fxml/onboarding/onboarding_step1.fxml", "/styles/Onboarding1.css");
     }
-    public Parent loadOnboardingStep2() {
-        return load("/fxml/onboarding/onboarding_step2.fxml", "/styles/Onboarding2.css");
-    }
     public Parent loadOnboardingStep3() {
         return load("/fxml/onboarding/onboarding_step3.fxml", "/styles/Onboarding3.css");
     }
@@ -73,6 +70,12 @@ public class ViewFactory {
     }
     public Parent getAnalyticsView() {
         return load("/fxml/pages/Analytics.fxml", null);
+    }
+    public Parent getDoneTasksView() {
+        return load("/fxml/pages/DoneTasks.fxml", null);
+    }
+    public Parent getCalenderView() {
+        return load("/fxml/pages/CalenderView.fxml", null);
     }
 
     private Parent load(String fxml, String css) {

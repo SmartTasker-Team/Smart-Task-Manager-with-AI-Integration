@@ -27,12 +27,10 @@ public class AuthController implements Initializable {
 
     private LoginUseCase loginUseCase;
 
-    // 1. Instantiate your ViewFactory
     private final ViewFactory viewFactory = new ViewFactory();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // --- WIRE UP THE BACKEND ---
         try {
             Connection conn = DatabaseConnection.getConnection();
             UserRepository userRepo = new PostgresUserRepository(conn);
@@ -59,14 +57,11 @@ public class AuthController implements Initializable {
             return;
         }
 
-        // Run login in a background thread
         new Thread(() -> {
             try {
-                // A. Execute Login Flow
                 User domainUser = loginUseCase.execute();
 
                 if (domainUser != null) {
-                    // B. Store in Session
                     UserDTO userDTO = new UserDTO(
                             domainUser.getIdUser(),
                             domainUser.getEmail(),
@@ -75,7 +70,6 @@ public class AuthController implements Initializable {
                     UserSession.getInstance().login(userDTO);
                     System.out.println("✅ User " + userDTO.username() + " logged in!");
 
-                    // C. NAVIGATE TO ONBOARDING (Run on UI Thread)
                     Platform.runLater(this::onContinue);
 
                 } else {
@@ -88,17 +82,12 @@ public class AuthController implements Initializable {
             }
         }).start();
     }
-
-    // This is your navigation logic
     @FXML
     private void onContinue() {
         System.out.println("🚀 Navigating to Onboarding Step 1...");
 
         try {
-            // Load the view using your factory
             Parent onboardingStep1 = viewFactory.loadOnboardingStep1();
-
-            // Use your SceneManager for the fade transition
             SceneManager.getInstance().setRootWithFade(onboardingStep1);
 
         } catch (Exception e) {

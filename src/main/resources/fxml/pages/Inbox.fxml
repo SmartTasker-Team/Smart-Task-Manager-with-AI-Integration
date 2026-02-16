@@ -25,8 +25,8 @@
             </Button>
         </HBox>
         <VBox styleClass="task-list-container">
-            <fx:include source="../components/TaskList.fxml" />
-            <fx:include source="../components/AddTask.fxml" />
+            <fx:include fx:id="taskListSection" source="../components/TaskList.fxml" />
+            <fx:include fx:id="addTaskSection" source="../components/AddTask.fxml" />
         </VBox>
     </VBox>
 </ScrollPane>
