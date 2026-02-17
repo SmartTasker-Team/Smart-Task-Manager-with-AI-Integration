@@ -105,7 +105,19 @@ public class PostgresProjectRepository implements ProjectRepository {
 
     @Override
     public List<Project> findByOwner(String ownerId) {
-        // Implementation similar to findByTeam
-        return new ArrayList<>();
+        List<Project> projects = new ArrayList<>();
+        String sql = "SELECT * FROM projects WHERE owner_id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, ownerId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                projects.add(mapResultSetToProject(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching projects by owner", e);
+        }
+
+        return projects;
     }
 }

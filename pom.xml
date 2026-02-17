@@ -155,8 +155,10 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.smarttask.manager/com.smarttask.manager.presentation.MainApp</mainClass>                            <options>
+                            <mainClass>com.smarttask.manager/com.smarttask.manager.presentation.MainApp</mainClass>
+                            <options>
                                 <option>--enable-native-access=javafx.graphics</option>
+                                <option>--enable-native-access=ALL-UNNAMED</option>
                             </options>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

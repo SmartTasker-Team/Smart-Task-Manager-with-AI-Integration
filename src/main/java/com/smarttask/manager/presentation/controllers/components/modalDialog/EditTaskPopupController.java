@@ -40,16 +40,22 @@ public class EditTaskPopupController implements Initializable {
     @FXML private Button btnDate;
     @FXML private Button btnPriority;
     @FXML private Button btnStatus;
-    @FXML private Button btnReccurring;
+    @FXML private Button btnRecurring;
     @FXML private Button btnMic;
     @FXML private Button btnCancel;
+
+    private Runnable refreshCallback;
+
+    public void setOnTaskAdded(Runnable callback) {
+        this.refreshCallback = callback;
+    }
 
     private String taskIdToUpdate;
     private String currentUserId;
     private LocalDateTime taskDeadline;
     private String selectedPriority = "Low";
     private String selectedStatus = "Todo";
-    private String selectedReccurring = null;
+    private String selectedRecurring = null;
     private String selectedCategory = "General";
 
     private NLPParserImpl aiParser;
@@ -66,13 +72,6 @@ public class EditTaskPopupController implements Initializable {
             this.aiParser = null;
         }
 
-        try {
-            var connection = DatabaseConnection.getConnection();
-            var repository = new PostgresTaskRepository(connection);
-            this.taskUseCase = new TaskUseCase(repository);
-        } catch (Exception e) {
-            System.err.println("⚠️ Database Connection Failed: " + e.getMessage());
-        }
     }
 
     public void setTask(Task task) {
@@ -123,7 +122,9 @@ public class EditTaskPopupController implements Initializable {
                 applyButtonStyle(btnDate, "#0D89FF");
             });
             showPopupUnderNode(popup, (Node) event.getSource());
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            System.err.println("Error Opening Date Picker: ");
+        }
     }
 
     @FXML
@@ -136,7 +137,9 @@ public class EditTaskPopupController implements Initializable {
             controller.setParentPopup(popup);
             controller.setOnSelect(this::updatePriorityUI);
             showPopupUnderNode(popup, (Node) event.getSource());
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            System.err.println("Error Opening Priority: ");
+        }
     }
 
     @FXML
@@ -149,11 +152,13 @@ public class EditTaskPopupController implements Initializable {
             controller.setParentPopup(popup);
             controller.setOnSelect(this::updateStatusUI);
             showPopupUnderNode(popup, (Node) event.getSource());
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            System.err.println("Error Opening Status: ");
+        }
     }
 
     @FXML
-    private void onOpenReccurring(ActionEvent event) {
+    private void onOpenRecurring(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/components/modalDialog/RecurringTaskPopup.fxml"));
             VBox popupContent = loader.load();
@@ -162,7 +167,9 @@ public class EditTaskPopupController implements Initializable {
             controller.setParentPopup(popup);
             controller.setOnSelect(this::updateRecurringUI);
             showPopupUnderNode(popup, (Node) event.getSource());
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            System.err.println("Error Opening Recurring: ");
+        }
     }
 
     @FXML
@@ -209,60 +216,73 @@ public class EditTaskPopupController implements Initializable {
 
     @FXML
     public void onSaveTask(ActionEvent event) {
-        if (taskUseCase == null || taskIdToUpdate == null) {
-            showAlert("Erreur", "Impossible de mettre à jour la tâche.");
-            return;
-        }
-
+        String currentUserId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
         String title = titleField.getText();
         String rawDesc = descField.getText();
         String finalDescription = (rawDesc == null || rawDesc.trim().isEmpty()) ? null : rawDesc;
 
         if (title == null || title.trim().isEmpty()) {
-            showAlert("Erreur", "Le titre est obligatoire.");
+            showAlert("Erreur", "Veuillez entrer un titre pour la tâche.");
             return;
         }
 
-        try {
-            PriorityLevel priority = mapPriority(selectedPriority);
-            TaskStatus status = mapStatus(selectedStatus);
-            boolean isRecurring = selectedReccurring != null;
-            RecurrenceType recurrence = mapRecurrence(selectedReccurring);
+        PriorityLevel priority = mapPriority(selectedPriority);
+        TaskStatus status = mapStatus(selectedStatus);
+        boolean isRecurring = selectedRecurring != null;
+        RecurrenceType recurrence = mapRecurrence(selectedRecurring);
 
-            TaskDTO updateDto = new TaskDTO(
-                    title,
-                    finalDescription,
-                    selectedCategory,
-                    priority,
-                    status,
-                    taskDeadline,
-                    null,
-                    isRecurring,
-                    recurrence,
-                    currentUserId,
-                    null
-            );
+        TaskDTO newTaskDto = new TaskDTO(
+                title,
+                finalDescription,
+                selectedCategory,
+                priority,
+                status,
+                taskDeadline,
+                null,
+                isRecurring,
+                recurrence,
+                currentUserId,
+                null
+        );
 
-            taskUseCase.update(taskIdToUpdate, updateDto);
-            System.out.println("✅ Task Updated Successfully: " + taskIdToUpdate);
+        new Thread(() -> {
+            try {
+                if (this.taskUseCase == null) {
+                    var connection = DatabaseConnection.getConnection();
+                    var repository = new PostgresTaskRepository(connection);
+                    this.taskUseCase = new TaskUseCase(repository);
+                }
 
-            if (taskDeadline != null) {
-                Task taskForSync = new Task(taskIdToUpdate, title, currentUserId, LocalDateTime.now());
-                taskForSync.updateDetails(
-                        title, finalDescription, selectedCategory, priority, status,
-                        taskDeadline,null, isRecurring, recurrence, null
-                );
-                taskForSync.setStatus(status);
+                String newTaskId = taskUseCase.create(newTaskDto);
+                System.out.println("✅ Task successfully saved! DB ID: " + newTaskId);
 
-                new Thread(() -> calendarService.syncTask(taskForSync)).start();
+                if (taskDeadline != null) {
+                    System.out.println("🔄 Syncing to Google Calendar...");
+                    try {
+                        Task taskForSync = new Task(newTaskId, title, currentUserId, LocalDateTime.now());
+                        taskForSync.updateDetails(
+                                title, finalDescription, selectedCategory, priority, status,
+                                taskDeadline, null, isRecurring, recurrence, null
+                        );
+                        calendarService.syncTask(taskForSync);
+                        System.out.println("✅ Google Calendar Sync Complete!");
+                    } catch (Exception e) {
+                        System.err.println("❌ Google Sync Failed: " + e.getMessage());
+                    }
+                }
+
+                Platform.runLater(() -> {
+                    if (refreshCallback != null) {
+                        refreshCallback.run();
+                    }
+                    resetForm();
+                });
+
+            } catch (Exception e) {
+                // En cas d'erreur, on affiche l'alerte sur le Thread UI
+                Platform.runLater(() -> showAlert("Erreur", "Impossible de sauvegarder : " + e.getMessage()));
             }
-
-            closeDialog();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Erreur Update", e.getMessage());
-        }
+        }).start();
     }
 
     @FXML
@@ -290,9 +310,9 @@ public class EditTaskPopupController implements Initializable {
     }
 
     private void updateRecurringUI(String name) {
-        this.selectedReccurring = name;
-        btnReccurring.setText(name);
-        applyButtonStyle(btnReccurring, "#0D89FF");
+        this.selectedRecurring = name;
+        btnRecurring.setText(name);
+        applyButtonStyle(btnRecurring, "#0D89FF");
     }
 
     private void applyButtonStyle(Button button, String hexColor) {
@@ -348,8 +368,8 @@ public class EditTaskPopupController implements Initializable {
         if (priorityName == null) return PriorityLevel.NOT_URGENT_NOT_IMPORTANT;
         return switch (priorityName.toUpperCase()) {
             case "URGENT" -> PriorityLevel.URGENT_IMPORTANT;
-            case "HIGH", "ÉLEVÉE" -> PriorityLevel.NOT_URGENT_IMPORTANT;
-            case "MEDIUM", "MOYENNE" -> PriorityLevel.URGENT_NOT_IMPORTANT;
+            case "HIGH" -> PriorityLevel.NOT_URGENT_IMPORTANT;
+            case "MEDIUM" -> PriorityLevel.URGENT_NOT_IMPORTANT;
             default -> PriorityLevel.NOT_URGENT_NOT_IMPORTANT;
         };
     }
@@ -366,10 +386,10 @@ public class EditTaskPopupController implements Initializable {
     private RecurrenceType mapRecurrence(String recurringName) {
         if (recurringName == null) return null;
         return switch (recurringName.toUpperCase()) {
-            case "DAILY", "QUOTIDIEN" -> RecurrenceType.DAILY;
-            case "WEEKLY", "HEBDOMADAIRE" -> RecurrenceType.WEEKLY;
-            case "MONTHLY", "MENSUEL" -> RecurrenceType.MONTHLY;
-            case "YEARLY", "ANNUEL" -> RecurrenceType.YEARLY;
+            case "DAILY" -> RecurrenceType.DAILY;
+            case "WEEKLY" -> RecurrenceType.WEEKLY;
+            case "MONTHLY" -> RecurrenceType.MONTHLY;
+            case "YEARLY"-> RecurrenceType.YEARLY;
             default -> null;
         };
     }
@@ -379,5 +399,16 @@ public class EditTaskPopupController implements Initializable {
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private void resetForm() {
+        titleField.setText(""); titleField.setPromptText("Nom de la tâche");
+        descField.setText(""); descField.setPromptText("Description");
+        taskDeadline = null; selectedPriority = "Low"; selectedStatus = "Todo"; selectedRecurring = null; selectedCategory = "General";
+        resetButtonStyle(btnDate, "Date"); resetButtonStyle(btnPriority, "Priorité"); resetButtonStyle(btnStatus, "Status"); resetButtonStyle(btnRecurring, "Recurring");
+    }
+    private void resetButtonStyle(Button button, String defaultText) {
+        button.setText(defaultText); button.setStyle("");
+        if (button.getGraphic() instanceof SVGPath icon) { icon.setStroke(Color.web("#939595")); icon.setFill(Color.TRANSPARENT); }
     }
 }

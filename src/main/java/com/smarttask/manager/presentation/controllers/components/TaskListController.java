@@ -5,7 +5,7 @@ import com.smarttask.manager.domain.model.PriorityLevel;
 import com.smarttask.manager.domain.model.Task;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
-import com.smarttask.manager.infrastructure.session.UserSession;
+import javafx.application.Platform;
 import com.smarttask.manager.presentation.controllers.components.modalDialog.EditTaskPopupController;
 import com.smarttask.manager.domain.model.TaskStatus;
 import com.smarttask.manager.application.dto.TaskDTO;
@@ -34,11 +34,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class TaskListController implements Initializable{
 
-    @FXML private VBox openTaskDetails;
     @FXML private VBox taskListContainer;
     private TaskUseCase taskUseCase;
     private Runnable customRefreshHandler;
@@ -46,15 +44,7 @@ public class TaskListController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            var connection = DatabaseConnection.getConnection();
-            var repository = new PostgresTaskRepository(connection);
-            this.taskUseCase = new TaskUseCase(repository);
-
-            loadTasks();
-        } catch (Exception e) {
-            System.err.println("Error initializing TaskList: " + e.getMessage());
-        }
+        loadTasks();
     }
 
     private void openTaskDetails(Task task) {
@@ -64,7 +54,6 @@ public class TaskListController implements Initializable{
 
              TaskDetailsController controller = loader.getController();
              controller.setTask(task);
-
 
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
@@ -88,11 +77,10 @@ public class TaskListController implements Initializable{
             loadTasks();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error Opening Task Details: ");
         }
     }
 
-    @FXML private Button openEditTask;
 
     private void openEditTask(Task task) {
         try {
@@ -124,7 +112,7 @@ public class TaskListController implements Initializable{
             loadTasks();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error Opening Edit Task: ");
         }
     }
 
@@ -138,35 +126,30 @@ public class TaskListController implements Initializable{
             return;
         }
 
-        if (taskUseCase == null || taskListContainer == null) return;
+        new Thread(() -> {
+            try {
+                if (this.taskUseCase == null) {
+                    var connection = DatabaseConnection.getConnection();
+                    var repository = new PostgresTaskRepository(connection);
+                    this.taskUseCase = new TaskUseCase(repository);
+                }
 
-        String currentUserId;
-        if (UserSession.getInstance().getUser() != null) {
-            currentUserId = UserSession.getInstance().getUser().id();
-        } else {
-            System.err.println("❌ TaskList Error: No user logged in.");
-            return;
-        }
+                String currentUserId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+                List<Task> allTasks = taskUseCase.getTasksByOwner(currentUserId);
 
-        List<Task> allTasks = taskUseCase.getTasksByOwner(currentUserId);
+                List<Task> activeTasks = allTasks.stream()
+                        .filter(task -> task.getStatus() != TaskStatus.DONE)
+                        .toList();
 
-        List<Task> activeTasks = allTasks.stream()
-                .filter(task -> task.getStatus() != TaskStatus.DONE)
-                .collect(Collectors.toList());
+                Platform.runLater(() -> {
+                    displayTasks(activeTasks);
+                });
 
-        taskListContainer.getChildren().clear();
-
-        for (Task task : activeTasks) {
-            VBox taskRow = createTaskRow(task);
-
-            Region divider = new Region();
-            divider.setPrefHeight(1);
-            divider.setMinHeight(1);
-            divider.setMaxHeight(1);
-            divider.getStyleClass().add("divider");
-
-            taskListContainer.getChildren().addAll(taskRow, divider);
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Erreur chargement tâches : " + e.getMessage());
+            }
+        }).start();
     }
 
     public void displayTasks(List<Task> tasksToDisplay) {
@@ -192,7 +175,7 @@ public class TaskListController implements Initializable{
         rowBox.getStyleClass().add("task-row");
 
         rowBox.setOnMouseClicked(e -> {
-            if (!(e.getTarget() instanceof RadioButton) && ((Node)e.getTarget()).getParent() instanceof RadioButton == false) {
+            if (!(e.getTarget() instanceof RadioButton) && !(((Node) e.getTarget()).getParent() instanceof RadioButton)) {
                 openTaskDetails(task);
             }
         });
@@ -208,9 +191,7 @@ public class TaskListController implements Initializable{
             radioButton.setSelected(true);
         }
 
-        radioButton.setOnAction(e -> {
-            toggleTaskCompletion(task, radioButton.isSelected());
-        });
+        radioButton.setOnAction(_ -> toggleTaskCompletion(task, radioButton.isSelected()));
 
         VBox textVBox = new VBox(3);
 
@@ -253,10 +234,10 @@ public class TaskListController implements Initializable{
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         Button editBtn = createIconButton("M12 20h9 M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z", 0.75);
-        editBtn.setOnAction(e -> openEditTask(task));
+        editBtn.setOnAction(_ -> openEditTask(task));
 
         Button deleteBtn = createIconButton("m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0", 0.85);
-        deleteBtn.setOnAction(e -> deleteTask(task));
+        deleteBtn.setOnAction(_ -> deleteTask(task));
 
         hbox.getChildren().addAll(radioButton, textVBox, spacer, editBtn, deleteBtn);
         rowBox.getChildren().add(hbox);
@@ -331,7 +312,6 @@ public class TaskListController implements Initializable{
             loadTasks();
 
         } catch (Exception e) {
-            e.printStackTrace();
             System.err.println("Erreur lors de la mise à jour du statut : " + e.getMessage());
         }
     }
@@ -345,7 +325,6 @@ public class TaskListController implements Initializable{
 
         } catch (Exception e) {
             System.err.println("Error deleting task: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

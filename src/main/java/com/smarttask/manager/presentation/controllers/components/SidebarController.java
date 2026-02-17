@@ -1,13 +1,22 @@
 package com.smarttask.manager.presentation.controllers.components;
 
+import com.smarttask.manager.application.usecase.project.ProjectUseCase;
+import com.smarttask.manager.domain.model.Project;
+import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
+import com.smarttask.manager.infrastructure.persistence.PostgresProjectRepository;
 import com.smarttask.manager.models.Model;
+import com.smarttask.manager.presentation.controllers.components.modalDialog.AddProjectController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -33,7 +42,6 @@ public class SidebarController implements Initializable {
     @FXML private HBox doneTasksItem;
     @FXML private HBox calendarItem;
 
-
     @FXML private Button notificationBtn;
 
     @FXML private VBox projectsContent;
@@ -50,6 +58,7 @@ public class SidebarController implements Initializable {
     private static final String ICON_COLLAPSED = "M4.5 15.75l7.5-7.5 7.5 7.5";
 
     private List<Region> allNavItems;
+    private ProjectUseCase projectUseCase;
 
     @Override @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,7 +68,80 @@ public class SidebarController implements Initializable {
 
         setActivePage("Inbox");
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Inbox");
+
+        new Thread(() -> {
+            loadProjects();
+        }).start();
     }
+
+    public void loadProjects() {
+        new Thread(() -> {
+            try {
+                if (this.projectUseCase == null) {
+                    var connection = DatabaseConnection.getConnection();
+                    var repo = new PostgresProjectRepository(connection);
+                    this.projectUseCase = new ProjectUseCase(repo);
+                }
+
+                String userId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+
+                List<Project> personalProjects = projectUseCase.getPersonalProjects(userId);
+                List<Project> teamProjects = projectUseCase.getTeamProjects(userId);
+
+                Platform.runLater(() -> {
+                    updateProjectLists(personalProjects, teamProjects);
+                });
+
+            } catch (Exception e) {
+                System.err.println("Error loading projects: " + e.getMessage());
+            }
+        }).start();
+    }
+
+    private void updateProjectLists(List<Project> personalProjects, List<Project> teamProjects) {
+        if (projectsContent != null) {
+            projectsContent.getChildren().clear();
+            for (Project p : personalProjects) {
+                HBox item = createProjectItem(p, "#0D89FF");
+                projectsContent.getChildren().add(item);
+            }
+        }
+
+        if (teamContent != null) {
+            teamContent.getChildren().clear();
+            for (Project p : teamProjects) {
+                HBox item = createProjectItem(p, "red");
+                teamContent.getChildren().add(item);
+            }
+        }
+    }
+    private HBox createProjectItem(Project project, String colorHash) {
+        HBox hbox = new HBox(12);
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.getStyleClass().add("nav-item");
+
+        Label iconLabel = new Label("#");
+        iconLabel.setStyle("-fx-text-fill: " + colorHash + "; -fx-font-size:16px; -fx-font-weight: bold;");
+
+        Label nameLabel = new Label(project.getName());
+        nameLabel.getStyleClass().add("nav-label");
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Label countLabel = new Label("0");
+        countLabel.getStyleClass().add("badge-count");
+        countLabel.setVisible(false);
+
+        hbox.getChildren().addAll(iconLabel, nameLabel, spacer, countLabel);
+
+        hbox.setOnMouseClicked(e -> {
+            System.out.println("Selected Project: " + project.getName());
+        });
+
+        return hbox;
+    }
+
     @FXML
     private void onToggleProjects() {
         isProjectsExpanded = !isProjectsExpanded;
@@ -165,6 +247,13 @@ public class SidebarController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/components/modalDialog/AddProjectDialog.fxml"));
             Parent root = loader.load();
 
+            AddProjectController controller = loader.getController();
+
+            controller.setOnProjectAdded(() -> {
+                System.out.println("🔄 Nouveau projet détecté, rafraîchissement de la Sidebar...");
+                this.loadProjects();
+            });
+
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
 
@@ -186,7 +275,7 @@ public class SidebarController implements Initializable {
             stage.showAndWait();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error Opening Add Project Dialog: ");
         }
     }
 
@@ -216,7 +305,7 @@ public class SidebarController implements Initializable {
             stage.showAndWait();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error OpeningAdd Team Project Dialog: ");
         }
     }
 
@@ -246,7 +335,7 @@ public class SidebarController implements Initializable {
             stage.showAndWait();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error Opening Add Team Dialog: ");
         }
     }
 

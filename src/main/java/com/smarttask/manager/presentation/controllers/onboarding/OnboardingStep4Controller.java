@@ -8,8 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class OnboardingStep4Controller {
-
+    private final SceneManager sceneManager = SceneManager.getInstance();
     private final ViewFactory viewFactory = new ViewFactory();
+
 
     @FXML private HBox googleCard;
     @FXML private Button passerBtn;
@@ -42,21 +43,9 @@ public class OnboardingStep4Controller {
 
     @FXML
     private void onFinish() {
-        System.out.println("⏩ Skipping Calendar connection...");
-        goToDashboard();
+        System.out.println("🚀 Navigating to Onboarding Step 4...");
+        Parent dashboard = viewFactory.dashboardView();
+        sceneManager.setRoot(dashboard);
     }
 
-    private void goToDashboard() {
-        try {
-            Parent dashboard = viewFactory.dashboardView();
-            SceneManager.getInstance().setRootWithFade(dashboard);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void resetConnectButton() {
-        connecterBtn.setDisable(false);
-        connecterBtn.setText("Connecter");
-    }
 }

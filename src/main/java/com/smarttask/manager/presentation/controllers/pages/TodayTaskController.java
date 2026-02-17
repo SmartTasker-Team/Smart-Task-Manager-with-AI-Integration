@@ -5,9 +5,9 @@ import com.smarttask.manager.domain.model.Task;
 import com.smarttask.manager.domain.model.TaskStatus;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
-import com.smarttask.manager.infrastructure.session.UserSession;
 import com.smarttask.manager.presentation.controllers.components.AddTaskController;
 import com.smarttask.manager.presentation.controllers.components.TaskListController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
@@ -39,32 +39,19 @@ public class TodayTaskController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            var connection = DatabaseConnection.getConnection();
-            var repository = new PostgresTaskRepository(connection);
-            this.taskUseCase = new TaskUseCase(repository);
-        } catch (Exception e) {
-            System.err.println("❌ Database Connection Failed in TodayView: " + e.getMessage());
-        }
-
         updateState();
         updateDateHeader();
-        refreshPage();
 
-        if (lateTaskListController != null) {
-            lateTaskListController.setRefreshHandler(this::refreshPage);
-        }
-
-        if (todayTaskListController != null) {
-            todayTaskListController.setRefreshHandler(this::refreshPage);
-        }
-
+        if (lateTaskListController != null) lateTaskListController.setRefreshHandler(this::refreshPage);
+        if (todayTaskListController != null) todayTaskListController.setRefreshHandler(this::refreshPage);
         if (addTaskSectionController != null) {
             addTaskSectionController.setOnTaskAdded(() -> {
                 System.out.println("🔄 New Task Added -> Refreshing Today View...");
                 refreshPage();
             });
         }
+
+        refreshPage();
     }
     private void updateDateHeader() {
         if (dateHeaderLabel == null) return;
@@ -90,45 +77,50 @@ public class TodayTaskController implements Initializable {
     }
 
     private void refreshPage() {
-        if (taskUseCase == null) return;
+        new Thread(() -> {
+            try {
+                if (this.taskUseCase == null) {
+                    var connection = DatabaseConnection.getConnection();
+                    var repository = new PostgresTaskRepository(connection);
+                    this.taskUseCase = new TaskUseCase(repository);
+                }
 
-        if (UserSession.getInstance().getUser() == null) {
-            System.err.println("⚠️ No user logged in.");
-            return;
-        }
-        String userId = UserSession.getInstance().getUser().id();
+                String userId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+                List<Task> allTasks = taskUseCase.getTasksByOwner(userId);
 
-        List<Task> allTasks = taskUseCase.getTasksByOwner(userId);
+                LocalDate todayDate = LocalDate.now();
 
-        LocalDate todayDate = LocalDate.now();
+                List<Task> lateTasks = allTasks.stream()
+                        .filter(t -> t.getStatus() != TaskStatus.DONE && t.getStatus() != TaskStatus.ARCHIVED)
+                        .filter(t -> t.getDueDate() != null)
+                        .filter(t -> t.getDueDate().toLocalDate().isBefore(todayDate))
+                        .sorted(Comparator.comparing(Task::getDueDate))
+                        .collect(Collectors.toList());
 
-        List<Task> lateTasks = allTasks.stream()
-                .filter(t -> t.getStatus() != TaskStatus.DONE && t.getStatus() != TaskStatus.ARCHIVED)
-                .filter(t -> t.getDueDate() != null)
-                .filter(t -> t.getDueDate().toLocalDate().isBefore(todayDate))
-                .sorted(Comparator.comparing(Task::getDueDate))
-                .collect(Collectors.toList());
+                List<Task> todayTasks = allTasks.stream()
+                        .filter(t -> t.getStatus() != TaskStatus.DONE && t.getStatus() != TaskStatus.ARCHIVED)
+                        .filter(t -> t.getDueDate() != null && t.getDueDate().toLocalDate().isEqual(todayDate))
+                        .sorted(Comparator.comparing(Task::getPriority))
+                        .collect(Collectors.toList());
 
-        List<Task> todayTasks = allTasks.stream()
-                .filter(t -> t.getStatus() != TaskStatus.DONE && t.getStatus() != TaskStatus.ARCHIVED)
-                .filter(t -> t.getDueDate() != null && t.getDueDate().toLocalDate().isEqual(todayDate))
-                .sorted(Comparator.comparing(Task::getPriority))
-                .collect(Collectors.toList());
+                Platform.runLater(() -> {
+                    if (lateTaskListController != null) {
+                        lateTaskListController.displayTasks(lateTasks);
+                        if (lateTasks.isEmpty() && isExpanded) {
+                            isExpanded = false;
+                            updateState();
+                        }
+                    }
+                    if (todayTaskListController != null) {
+                        todayTaskListController.displayTasks(todayTasks);
+                    }
+                });
 
-        if (lateTaskListController != null) {
-            lateTaskListController.displayTasks(lateTasks);
-
-            if (lateTasks.isEmpty() && isExpanded) {
-                isExpanded = false;
-                updateState();
-            } else if (!lateTasks.isEmpty() && !isExpanded) {
-                // Keep user preference, or auto-expand if tasks appear
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("❌ Error loading Today Tasks: " + e.getMessage());
             }
-        }
-
-        if (todayTaskListController != null) {
-            todayTaskListController.displayTasks(todayTasks);
-        }
+        }).start();
     }
 
 

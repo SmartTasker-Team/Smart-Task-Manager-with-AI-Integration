@@ -5,8 +5,8 @@ import com.smarttask.manager.domain.model.Task;
 import com.smarttask.manager.domain.model.TaskStatus;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
-import com.smarttask.manager.infrastructure.session.UserSession;
 import com.smarttask.manager.presentation.controllers.components.TaskListController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -35,62 +35,71 @@ public class CalenderController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            var connection = DatabaseConnection.getConnection();
-            var repository = new PostgresTaskRepository(connection);
-            this.taskUseCase = new TaskUseCase(repository);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         loadCalendarData();
     }
 
     private void loadCalendarData() {
-        if (UserSession.getInstance().getUser() == null) return;
-        String userId = UserSession.getInstance().getUser().id();
+        new Thread(() -> {
+            try {
+                if (this.taskUseCase == null) {
+                    var connection = DatabaseConnection.getConnection();
+                    var repository = new PostgresTaskRepository(connection);
+                    this.taskUseCase = new TaskUseCase(repository);
+                }
 
-        mainListContainer.getChildren().clear();
+                String userId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+                List<Task> allTasks = taskUseCase.getTasksByOwner(userId);
 
-        List<Task> allTasks = taskUseCase.getTasksByOwner(userId);
+                List<Task> activeTasks = allTasks.stream()
+                        .filter(t -> t.getStatus() != TaskStatus.DONE)
+                        .filter(t -> t.getStatus() != TaskStatus.ARCHIVED)
+                        .filter(t -> t.getDueDate() != null)
+                        .collect(Collectors.toList());
 
-        List<Task> activeTasks = allTasks.stream()
-                .filter(t -> t.getStatus() != TaskStatus.DONE)
-                .filter(t -> t.getStatus() != TaskStatus.ARCHIVED)
-                .filter(t -> t.getDueDate() != null)
-                .collect(Collectors.toList());
+                LocalDate startDateCalculation = LocalDate.now();
+                if (!activeTasks.isEmpty()) {
+                    startDateCalculation = activeTasks.stream()
+                            .map(t -> t.getDueDate().toLocalDate())
+                            .min(LocalDate::compareTo)
+                            .orElse(LocalDate.now());
+                }
 
-        LocalDate startDate = LocalDate.now();
+                LocalDate finalStartDate = startDateCalculation;
+                LocalDate finalEndDate = YearMonth.from(finalStartDate).plusMonths(1).atEndOfMonth();
 
-        if (!activeTasks.isEmpty()) {
-            startDate = activeTasks.stream()
-                    .map(t -> t.getDueDate().toLocalDate())
-                    .min(LocalDate::compareTo)
-                    .orElse(LocalDate.now());
-        }
+                DateTimeFormatter titleFmt = DateTimeFormatter.ofPattern("MMMM", Locale.FRENCH);
+                String startMonth = finalStartDate.format(titleFmt);
+                String endMonth = finalEndDate.format(titleFmt);
+                String year = finalStartDate.format(DateTimeFormatter.ofPattern("yyyy"));
 
-        LocalDate endDate = YearMonth.from(startDate).plusMonths(1).atEndOfMonth();
+                String titleText = startMonth.equals(endMonth)
+                        ? startMonth + " " + year
+                        : startMonth + " - " + endMonth + " " + year;
 
-        DateTimeFormatter titleFmt = DateTimeFormatter.ofPattern("MMMM", Locale.FRENCH);
-        String startMonth = startDate.format(titleFmt);
-        String endMonth = endDate.format(titleFmt);
-        String year = startDate.format(DateTimeFormatter.ofPattern("yyyy"));
+                Platform.runLater(() -> {
+                    if (pageTitle != null) {
+                        pageTitle.setText(titleText.substring(0, 1).toUpperCase() + titleText.substring(1));
+                    }
 
-        String title = startMonth.equals(endMonth)
-                ? startMonth + " " + year
-                : startMonth + " - " + endMonth + " " + year;
+                    if (mainListContainer != null) {
+                        mainListContainer.getChildren().clear();
 
-        pageTitle.setText(title.substring(0, 1).toUpperCase() + title.substring(1));
+                        for (LocalDate date = finalStartDate; !date.isAfter(finalEndDate); date = date.plusDays(1)) {
+                            LocalDate loopDate = date;
+                            List<Task> tasksForDay = activeTasks.stream()
+                                    .filter(t -> t.getDueDate().toLocalDate().isEqual(loopDate))
+                                    .collect(Collectors.toList());
 
-        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-            LocalDate loopDate = date;
+                            createDaySection(date, tasksForDay);
+                        }
+                    }
+                });
 
-            List<Task> tasksForDay = activeTasks.stream()
-                    .filter(t -> t.getDueDate().toLocalDate().isEqual(loopDate))
-                    .collect(Collectors.toList());
-
-            createDaySection(date, tasksForDay);
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("❌ Erreur chargement Calendrier : " + e.getMessage());
+            }
+        }).start();
     }
 
     private void createDaySection(LocalDate date, List<Task> tasks) {
@@ -145,7 +154,6 @@ public class CalenderController implements Initializable {
             mainListContainer.getChildren().add(dayContainer);
 
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Impossible de charger TaskList.fxml pour la date : " + date);
         }
     }

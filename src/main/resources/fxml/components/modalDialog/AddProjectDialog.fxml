@@ -25,6 +25,10 @@
             <TextField fx:id="nameField" promptText="Ex: Refonte du site web..."/>
         </VBox>
         <VBox spacing="5">
+            <Label text="Description" styleClass="field-label"/>
+            <TextField fx:id="descField" promptText="Ex: Description..."/>
+        </VBox>
+        <VBox spacing="5">
             <Label text="Espace" styleClass="field-label"/>
             <HBox styleClass="static-field-container" alignment="CENTER_LEFT" spacing="10">
                 <Label text="Mes projets" style="-fx-text-fill: #333; -fx-font-size: 14px;"/>
@@ -41,8 +45,8 @@
         </VBox>
         <Region prefHeight="1" maxHeight="1" minHeight="1" styleClass="divider"/>
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button text="Annuler" fx:id="btnCancel" onAction="#handleCancel" styleClass="btn-secondary"/>
-            <Button text="Ajouter un projet" fx:id="btnAdd" onAction="#handleAdd" styleClass="btn-primary"/>
+            <Button text="Annuler" fx:id="cancelBtn" onAction="#handleCancel" styleClass="btn-secondary"/>
+            <Button text="Ajouter un projet" fx:id="addBtn" onAction="#handleAdd" styleClass="btn-primary"/>
         </HBox>
     </VBox>
 </VBox>

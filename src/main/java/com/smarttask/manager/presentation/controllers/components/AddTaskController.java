@@ -17,7 +17,6 @@ import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
 import javafx.scene.control.Alert;
 import com.smarttask.manager.domain.model.Task;
-import com.smarttask.manager.infrastructure.session.UserSession;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -45,7 +44,7 @@ public class AddTaskController implements Initializable {
     @FXML private Button btnDate;
     @FXML private Button btnPriority;
     @FXML private Button btnStatus;
-    @FXML private Button btnReccurring;
+    @FXML private Button btnRecurring;
     @FXML private Button btnMic;
 
     private Runnable refreshCallback;
@@ -57,7 +56,7 @@ public class AddTaskController implements Initializable {
     private LocalDateTime taskDeadline;
     private String selectedPriority = "Low";
     private String selectedStatus = "Todo";
-    private String selectedReccurring = null;
+    private String selectedRecurring = null;
     private String selectedCategory = "General";
 
     private NLPParserImpl aiParser;
@@ -68,7 +67,6 @@ public class AddTaskController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // AI Initialization
         try {
             this.aiParser = new NLPParserImpl();
         } catch (Exception e) {
@@ -105,7 +103,8 @@ public class AddTaskController implements Initializable {
 
             showPopupUnderNode(popup, (Node) event.getSource());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error Opening Date Picker: ");
+
         }
     }
 
@@ -123,7 +122,8 @@ public class AddTaskController implements Initializable {
 
             showPopupUnderNode(popup, (Node) event.getSource());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error Opening Priority: ");
+
         }
     }
 
@@ -141,12 +141,13 @@ public class AddTaskController implements Initializable {
 
             showPopupUnderNode(popup, (Node) event.getSource());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error Opening Status: ");
+
         }
     }
 
     @FXML
-    private void onOpenReccurring(ActionEvent event) {
+    private void onOpenRecurring(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/components/modalDialog/RecurringTaskPopup.fxml"));
             VBox popupContent = loader.load();
@@ -159,7 +160,8 @@ public class AddTaskController implements Initializable {
 
             showPopupUnderNode(popup, (Node) event.getSource());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error Opening Recurring: ");
+
         }
     }
 
@@ -238,13 +240,7 @@ public class AddTaskController implements Initializable {
             return;
         }
 
-        String currentUserId;
-        if (UserSession.getInstance().getUser() != null) {
-            currentUserId = UserSession.getInstance().getUser().id();
-        } else {
-            showAlert("Erreur d'authentification", "Aucun utilisateur connecté !");
-            return;
-        }
+        String currentUserId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
 
         String title = titleField.getText();
         String rawDesc = descField.getText();
@@ -258,8 +254,8 @@ public class AddTaskController implements Initializable {
         try {
             PriorityLevel priority = mapPriority(selectedPriority);
             TaskStatus status = mapStatus(selectedStatus);
-            boolean isRecurring = selectedReccurring != null;
-            RecurrenceType recurrence = mapRecurrence(selectedReccurring);
+            boolean isRecurring = selectedRecurring != null;
+            RecurrenceType recurrence = mapRecurrence(selectedRecurring);
 
             TaskDTO newTaskDto = new TaskDTO(
                     title,
@@ -318,7 +314,6 @@ public class AddTaskController implements Initializable {
             resetForm();
 
         } catch (Exception e) {
-            e.printStackTrace();
             showAlert("Erreur", "Impossible de sauvegarder : " + e.getMessage());
         }
     }
@@ -350,8 +345,8 @@ public class AddTaskController implements Initializable {
     }
 
     private void updateRecurringUI(String recurringName) {
-        this.selectedReccurring = recurringName;
-        btnReccurring.setText(recurringName);
+        this.selectedRecurring = recurringName;
+        btnRecurring.setText(recurringName);
         String colorHex = switch (recurringName) {
             case "Daily"   -> "#25b84c";
             case "Weekly"  -> "#0D89FF";
@@ -359,7 +354,7 @@ public class AddTaskController implements Initializable {
             case "Yearly"  -> "#db4c3f";
             default        -> "#939595";
         };
-        applyButtonStyle(btnReccurring, colorHex);
+        applyButtonStyle(btnRecurring, colorHex);
     }
 
     private void applyButtonStyle(Button button, String hexColor) {
@@ -403,9 +398,9 @@ public class AddTaskController implements Initializable {
 
         return switch (priorityName.toUpperCase()) {
             case "URGENT" -> PriorityLevel.URGENT_IMPORTANT;
-            case "HIGH", "ÉLEVÉE" -> PriorityLevel.NOT_URGENT_IMPORTANT;
-            case "MEDIUM", "MOYENNE" -> PriorityLevel.URGENT_NOT_IMPORTANT;
-            case "LOW", "BASSE" -> PriorityLevel.NOT_URGENT_NOT_IMPORTANT;
+            case "HIGH" -> PriorityLevel.NOT_URGENT_IMPORTANT;
+            case "MEDIUM" -> PriorityLevel.URGENT_NOT_IMPORTANT;
+            case "LOW" -> PriorityLevel.NOT_URGENT_NOT_IMPORTANT;
             default -> PriorityLevel.NOT_URGENT_NOT_IMPORTANT;
         };
     }
@@ -450,13 +445,13 @@ public class AddTaskController implements Initializable {
         taskDeadline = null;
         selectedPriority = "Low";
         selectedStatus = "Todo";
-        selectedReccurring = null;
+        selectedRecurring = null;
         selectedCategory = "General";
 
         resetButtonStyle(btnDate, "Date");
         resetButtonStyle(btnPriority, "Priorité");
         resetButtonStyle(btnStatus, "Status");
-        resetButtonStyle(btnReccurring, "Recurring");
+        resetButtonStyle(btnRecurring, "Recurring");
     }
 
     private void resetButtonStyle(Button button, String defaultText) {

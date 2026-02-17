@@ -38,7 +38,6 @@ public class ProjectUseCase {
             throw new DomainException("CONFLICT: Project details were modified by another user.");
         }
     }
-    // 👇 NEW METHOD: Get Personal Projects (Team ID is NULL)
     public List<Project> getPersonalProjects(String userId) {
         List<Project> allProjects = repository.findByOwner(userId);
         return allProjects.stream()
@@ -46,7 +45,6 @@ public class ProjectUseCase {
                 .collect(Collectors.toList());
     }
 
-    // 👇 NEW METHOD: Get Team Projects (Team ID is NOT NULL)
     public List<Project> getTeamProjects(String userId) {
         List<Project> allProjects = repository.findByOwner(userId);
         return allProjects.stream()

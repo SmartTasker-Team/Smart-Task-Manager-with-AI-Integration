@@ -19,7 +19,6 @@ public class ProductivityReport {
         this.summary = summary;
         this.suggestion = suggestion;
     }
-
     public int getScore() {
         return score;
     }

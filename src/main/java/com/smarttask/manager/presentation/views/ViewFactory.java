@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ViewFactory {
-
     private final StringProperty clientSelectedMenuItem;
 
     public ViewFactory() {
@@ -40,7 +39,6 @@ public class ViewFactory {
 
         } catch (IOException e) {
             System.err.println("Could not load LoginView.fxml. Check the file path!");
-            e.printStackTrace();
         }
     }
 
@@ -49,6 +47,9 @@ public class ViewFactory {
     }
     public Parent loadOnboardingStep1() {
         return load("/fxml/onboarding/onboarding_step1.fxml", "/styles/Onboarding1.css");
+    }
+    public Parent loadOnboardingStep2() {
+        return load("/fxml/onboarding/onboarding_step2.fxml", "/styles/Onboarding2.css");
     }
     public Parent loadOnboardingStep3() {
         return load("/fxml/onboarding/onboarding_step3.fxml", "/styles/Onboarding3.css");

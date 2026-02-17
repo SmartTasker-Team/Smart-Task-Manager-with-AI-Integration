@@ -12,10 +12,6 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
         stage.getIcons().addAll(
-                new Image(getClass().getResourceAsStream("/Images/logo_icon.png")),
-                new Image(getClass().getResourceAsStream("/Images/logo_icon.png")),
-                new Image(getClass().getResourceAsStream("/Images/logo_icon.png")),
-                new Image(getClass().getResourceAsStream("/Images/logo_icon.png")),
                 new Image(getClass().getResourceAsStream("/Images/logo_icon.png"))
         );
 
@@ -45,7 +41,7 @@ public class MainApp extends Application {
 
             intro.setOnFinished(() -> {
                 Parent welcome = Model.getInstance().getViewFactory().loadWelcomeRoot();
-                manager.setRootWithFade(welcome);
+                manager.setRoot(welcome);
             });
 
             manager.setRoot(introRoot);

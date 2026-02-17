@@ -13,7 +13,8 @@ public class OnboardingStep2Controller {
 
     @FXML
     private void onNext() {
+        System.out.println("🚀 Navigating to Onboarding Step 3...");
         Parent next = viewFactory.loadOnboardingStep3();
-        sceneManager.setRootWithFade(next);
+        sceneManager.setRoot(next);
     }
 }

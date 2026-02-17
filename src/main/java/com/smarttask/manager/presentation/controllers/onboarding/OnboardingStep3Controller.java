@@ -36,11 +36,12 @@ public class OnboardingStep3Controller {
 
     @FXML
     private void onNext() {
+        System.out.println("🚀 Navigating to Onboarding Step 4...");
         if (!selectedOption.isEmpty()) {
             System.out.println("Selected method: " + selectedOption);
         }
 
         Parent next = viewFactory.loadOnboardingStep4();
-        sceneManager.setRootWithFade(next);
+        sceneManager.setRoot(next);
     }
 }

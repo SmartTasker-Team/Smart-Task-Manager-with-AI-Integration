@@ -23,18 +23,18 @@ public class PostgresProjectFullTest {
             ProjectUseCase projectUseCase = new ProjectUseCase(projectRepo);
 
             // 1. Création du propriétaire
-            String userId = "114148943823363952988";
+//            String userId = "114148943823363952988";
 //            User owner = new User(userId, "Manager", "manager@task.com", "HASHED_Secure123");
 //            userRepo.save(owner);
 
             // 2. CRÉATION DE L'ÉQUIPE VIA LE USE CASE
             // C'est ici que team_members sera rempli !
             System.out.println("--- Création de l'équipe via Use Case ---");
-            String teamId = teamUseCase.createTeam("Alpha Team", userId);
+            String teamId = teamUseCase.createTeam("Alpha Team", "685f976d-ef7d-4209-bea2-0ec5ffea7571");
             System.out.println("Équipe créée et membre ajouté.");
 
             // 3. Création du projet
-            ProjectDTO dto = new ProjectDTO("Logiciel IA", "Description", userId, teamId);
+            ProjectDTO dto = new ProjectDTO("Logiciel IA", "Description", "685f976d-ef7d-4209-bea2-0ec5ffea7571", teamId);
             String projectId = projectUseCase.createProject(dto);
 
             System.out.println("Projet créé avec succès !");

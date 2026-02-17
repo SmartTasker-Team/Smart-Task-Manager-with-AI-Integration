@@ -152,7 +152,7 @@
             <Label text="Connexion" styleClass="title"/>
             <Label text="Cliquez ci-dessous pour vous connecter en toute sécurité. Nous vous ramènerons ici ensuite." wrapText="true" styleClass="description"/>
             <VBox minHeight="10" />
-            <Button text="Continuer dans votre navigateur" onAction="#onGoogleLogin" styleClass="primary-button"/>
+            <Button text="Continuer dans votre navigateur" onAction="#onContinue" styleClass="primary-button"/>
             <HBox spacing="5" alignment="CENTER_LEFT">
                 <Label text="Vous n’êtes pas inscrit ?" styleClass="link-text"/>
                 <Label text="Inscription" styleClass="link"/>
@@ -160,9 +160,7 @@
         </VBox>
         <VBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
             <ImageView fitWidth="500" preserveRatio="true">
-                <image>
-                    <Image url="@../Images/illustration.png"/>
-                </image>
+                <Image url="@../Images/illustration.png"/>
             </ImageView>
         </VBox>
     </HBox>
