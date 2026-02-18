@@ -38,6 +38,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 public class SidebarController implements Initializable {
     @FXML private VBox expandedSidebar;
@@ -65,6 +66,11 @@ public class SidebarController implements Initializable {
     private static final String ICON_EXPANDED  = "m19.5 8.25-7.5 7.5-7.5-7.5";
     private static final String ICON_COLLAPSED = "M4.5 15.75l7.5-7.5 7.5 7.5";
 
+    // 👇 NEW USER PROFILE FIELDS
+    @FXML private Label userNameLabel;
+    @FXML private Label userEmailLabel;
+    @FXML private Text userInitial;
+
     private List<Region> allNavItems;
     private ProjectUseCase projectUseCase;
     private TeamUseCase teamUseCase;
@@ -77,20 +83,36 @@ public class SidebarController implements Initializable {
 
         setActivePage("Inbox");
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Inbox");
-
+        loadUserProfile();
         new Thread(this::loadData).start();
     }
 
+    private void loadUserProfile() {
+        if (UserSession.getInstance().getUser() != null) {
+            var user = UserSession.getInstance().getUser();
+
+            if (userNameLabel != null) {
+                userNameLabel.setText(user.username());
+            }
+
+            if (userEmailLabel != null) {
+                userEmailLabel.setText(user.email());
+            }
+
+            if (userInitial != null && user.username() != null && !user.username().isEmpty()) {
+                userInitial.setText(user.username().substring(0, 1).toUpperCase());
+            }
+        }
+    }
     public void loadData() {
         try {
-            // 1. Initialisation Lazy des UseCases
             if (this.projectUseCase == null || this.teamUseCase == null) {
                 var connection = DatabaseConnection.getConnection();
 
                 var projectRepo = new PostgresProjectRepository(connection);
                 this.projectUseCase = new ProjectUseCase(projectRepo);
 
-                var teamRepo = new PostgresTeamRepository(connection); // 👈
+                var teamRepo = new PostgresTeamRepository(connection);
                 this.teamUseCase = new TeamUseCase(teamRepo);
             }
 
@@ -101,19 +123,16 @@ public class SidebarController implements Initializable {
                 throw new RuntimeException("Utilisateur non connecté !");
             }
 
-            // 2. Fetch Data
             List<Project> personalProjects = projectUseCase.getPersonalProjects(currentUserId);
             List<Project> allTeamProjects = projectUseCase.getTeamProjects(currentUserId);
             List<Team> userTeams = teamUseCase.getTeamsForUser(currentUserId);
 
-            // 3. Update UI
             Platform.runLater(() -> {
                 updatePersonalProjects(personalProjects);
                 updateTeamsList(userTeams, allTeamProjects);
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
             System.err.println("Error loading sidebar data: " + e.getMessage());
         }
     }
@@ -132,14 +151,11 @@ public class SidebarController implements Initializable {
         teamsContainer.getChildren().clear();
 
         for (Team team : teams) {
-            // 1. Créer le Header de l'équipe (Nom + Bouton Ajout + Toggle)
             HBox teamHeader = createTeamHeader(team);
 
-            // 2. Créer le conteneur des projets de cette équipe
             VBox teamProjectsBox = new VBox();
             teamProjectsBox.getStyleClass().add("equipe-projects-list");
 
-            // 3. Filtrer les projets pour CETTE équipe
             List<Project> projectsForThisTeam = allTeamProjects.stream()
                     .filter(p -> p.getTeamId() != null && p.getTeamId().equals(team.getId()))
                     .collect(Collectors.toList());
@@ -163,7 +179,6 @@ public class SidebarController implements Initializable {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // Bouton "+"
         Button addProjectBtn = new Button();
         addProjectBtn.getStyleClass().add("icon-button-transparent");
 
@@ -351,7 +366,6 @@ public class SidebarController implements Initializable {
 
             AddTeamProjectController controller = loader.getController();
 
-            // ✅ 1. On passe l'ID de l'équipe cliquée au contrôleur
             controller.setTeamId(teamId);
 
             controller.setOnProjectAdded(() -> {
@@ -362,7 +376,6 @@ public class SidebarController implements Initializable {
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
 
-            // ✅ 2. CORRECTION DU CRASH : On utilise 'teamsContainer' au lieu du bouton supprimé
             if (teamsContainer.getScene() != null) {
                 Stage ownerStage = (Stage) teamsContainer.getScene().getWindow();
                 stage.initOwner(ownerStage);
@@ -397,7 +410,7 @@ public class SidebarController implements Initializable {
 
             controller.setOnTeamAdded(() -> {
                 System.out.println("🔄 Nouvelle équipe détectée, rafraîchissement...");
-                this.loadData(); // Recharger équipes et projets
+                this.loadData();
             });
 
             Stage stage = new Stage();

@@ -276,8 +276,8 @@
                     <Text text="A" style="-fx-font-weight:bold; -fx-fill: #FDFDFD;"/>
                 </StackPane>
                 <VBox spacing="2">
-                    <Label text="elmakaouiachraf" styleClass="user-name"/>
-                    <Label text="elmakaouiachraf@gmail.com" styleClass="user-status"/>
+                    <Label fx:id="userNameLabel" text="Loading..." styleClass="user-name"/>
+                    <Label fx:id="userEmailLabel" text="Loading..." styleClass="user-status"/>
                 </VBox>
                 <Region HBox.hgrow="ALWAYS"/>
                 <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
