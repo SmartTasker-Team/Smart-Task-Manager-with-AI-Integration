@@ -2,6 +2,7 @@ package com.smarttask.manager.presentation.controllers.pages;
 
 import com.smarttask.manager.application.dto.ProductivityReport;
 import com.smarttask.manager.application.usecase.analytics.GenerateProductivityReportUseCase;
+import com.smarttask.manager.infrastructure.session.UserSession;
 import com.smarttask.manager.presentation.controllers.components.AddTaskController;
 import com.smarttask.manager.presentation.controllers.components.TaskListController;
 import com.smarttask.manager.presentation.controllers.components.modalDialog.AddProjectController;
@@ -31,6 +32,10 @@ public class InboxController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        if (taskListSectionController != null) {
+            taskListSectionController.loadTasks();
+        }
+
         if (addTaskSectionController != null && taskListSectionController != null) {
 
             addTaskSectionController.setOnTaskAdded(() -> {
@@ -52,7 +57,14 @@ public class InboxController implements Initializable {
             GenerateProductivityReportUseCase useCase = new GenerateProductivityReportUseCase();
 
             // TODO: Replace "current-user-id" with the actual logged-in user's ID
-            ProductivityReport report = useCase.execute("685f976d-ef7d-4209-bea2-0ec5ffea7571");
+            String currentUserId = null;
+            if (UserSession.getInstance().getUser() != null) {
+                currentUserId = UserSession.getInstance().getUser().id();
+            } else {
+                throw new RuntimeException("Utilisateur non connecté !");
+            }
+
+            ProductivityReport report = useCase.execute(currentUserId);
 
             controller.setReportData(report);
 

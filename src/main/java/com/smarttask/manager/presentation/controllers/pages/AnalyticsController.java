@@ -2,6 +2,7 @@ package com.smarttask.manager.presentation.controllers.pages;
 
 import com.smarttask.manager.application.dto.AnalyticsSummary;
 import com.smarttask.manager.application.usecase.analytics.GetAnalyticsDataUseCase;
+import com.smarttask.manager.infrastructure.session.UserSession;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,7 +34,12 @@ public class AnalyticsController {
                 this.analyticsService = new GetAnalyticsDataUseCase();
             }
 
-            String currentUserId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+            String currentUserId = null;
+            if (UserSession.getInstance().getUser() != null) {
+                currentUserId = UserSession.getInstance().getUser().id();
+            } else {
+                throw new RuntimeException("Utilisateur non connecté !");
+            }
 
             final AnalyticsSummary summary = analyticsService.execute(currentUserId);
 

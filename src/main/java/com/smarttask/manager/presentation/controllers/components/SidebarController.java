@@ -4,8 +4,14 @@ import com.smarttask.manager.application.usecase.project.ProjectUseCase;
 import com.smarttask.manager.domain.model.Project;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresProjectRepository;
+import com.smarttask.manager.infrastructure.persistence.PostgresTeamRepository;
+import com.smarttask.manager.infrastructure.session.UserSession;
 import com.smarttask.manager.models.Model;
 import com.smarttask.manager.presentation.controllers.components.modalDialog.AddProjectController;
+import com.smarttask.manager.presentation.controllers.components.modalDialog.AddTeamController;
+import com.smarttask.manager.presentation.controllers.components.modalDialog.AddTeamProjectController;
+import com.smarttask.manager.application.usecase.team.TeamUseCase;
+import com.smarttask.manager.domain.model.Team;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +35,8 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import javafx.scene.input.MouseEvent;
 
 public class SidebarController implements Initializable {
@@ -48,17 +56,18 @@ public class SidebarController implements Initializable {
     @FXML private SVGPath projectsIcon;
     private boolean isProjectsExpanded = true;
 
+    @FXML private VBox teamsContainer;
     @FXML private VBox teamContent;
     @FXML private SVGPath teamIcon;
     private boolean isTeamExpanded = true;
     @FXML private Button projectModalBtn;
-    @FXML private Button teamProjectModalBtn;
     @FXML private HBox addTeamBox;
     private static final String ICON_EXPANDED  = "m19.5 8.25-7.5 7.5-7.5-7.5";
     private static final String ICON_COLLAPSED = "M4.5 15.75l7.5-7.5 7.5 7.5";
 
     private List<Region> allNavItems;
     private ProjectUseCase projectUseCase;
+    private TeamUseCase teamUseCase;
 
     @Override @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,51 +78,109 @@ public class SidebarController implements Initializable {
         setActivePage("Inbox");
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Inbox");
 
-        new Thread(() -> {
-            loadProjects();
-        }).start();
+        new Thread(this::loadData).start();
     }
 
-    public void loadProjects() {
-        new Thread(() -> {
-            try {
-                if (this.projectUseCase == null) {
-                    var connection = DatabaseConnection.getConnection();
-                    var repo = new PostgresProjectRepository(connection);
-                    this.projectUseCase = new ProjectUseCase(repo);
-                }
+    public void loadData() {
+        try {
+            // 1. Initialisation Lazy des UseCases
+            if (this.projectUseCase == null || this.teamUseCase == null) {
+                var connection = DatabaseConnection.getConnection();
 
-                String userId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+                var projectRepo = new PostgresProjectRepository(connection);
+                this.projectUseCase = new ProjectUseCase(projectRepo);
 
-                List<Project> personalProjects = projectUseCase.getPersonalProjects(userId);
-                List<Project> teamProjects = projectUseCase.getTeamProjects(userId);
-
-                Platform.runLater(() -> {
-                    updateProjectLists(personalProjects, teamProjects);
-                });
-
-            } catch (Exception e) {
-                System.err.println("Error loading projects: " + e.getMessage());
+                var teamRepo = new PostgresTeamRepository(connection); // 👈
+                this.teamUseCase = new TeamUseCase(teamRepo);
             }
-        }).start();
+
+            String currentUserId = null;
+            if (UserSession.getInstance().getUser() != null) {
+                currentUserId = UserSession.getInstance().getUser().id();
+            } else {
+                throw new RuntimeException("Utilisateur non connecté !");
+            }
+
+            // 2. Fetch Data
+            List<Project> personalProjects = projectUseCase.getPersonalProjects(currentUserId);
+            List<Project> allTeamProjects = projectUseCase.getTeamProjects(currentUserId);
+            List<Team> userTeams = teamUseCase.getTeamsForUser(currentUserId);
+
+            // 3. Update UI
+            Platform.runLater(() -> {
+                updatePersonalProjects(personalProjects);
+                updateTeamsList(userTeams, allTeamProjects);
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error loading sidebar data: " + e.getMessage());
+        }
     }
 
-    private void updateProjectLists(List<Project> personalProjects, List<Project> teamProjects) {
+    private void updatePersonalProjects(List<Project> projects) {
         if (projectsContent != null) {
             projectsContent.getChildren().clear();
-            for (Project p : personalProjects) {
-                HBox item = createProjectItem(p, "#0D89FF");
-                projectsContent.getChildren().add(item);
+            for (Project p : projects) {
+                projectsContent.getChildren().add(createProjectItem(p, "#0D89FF"));
             }
         }
+    }
 
-        if (teamContent != null) {
-            teamContent.getChildren().clear();
-            for (Project p : teamProjects) {
-                HBox item = createProjectItem(p, "red");
-                teamContent.getChildren().add(item);
+    private void updateTeamsList(List<Team> teams, List<Project> allTeamProjects) {
+        if (teamsContainer == null) return;
+        teamsContainer.getChildren().clear();
+
+        for (Team team : teams) {
+            // 1. Créer le Header de l'équipe (Nom + Bouton Ajout + Toggle)
+            HBox teamHeader = createTeamHeader(team);
+
+            // 2. Créer le conteneur des projets de cette équipe
+            VBox teamProjectsBox = new VBox();
+            teamProjectsBox.getStyleClass().add("equipe-projects-list");
+
+            // 3. Filtrer les projets pour CETTE équipe
+            List<Project> projectsForThisTeam = allTeamProjects.stream()
+                    .filter(p -> p.getTeamId() != null && p.getTeamId().equals(team.getId()))
+                    .collect(Collectors.toList());
+
+            for (Project p : projectsForThisTeam) {
+                teamProjectsBox.getChildren().add(createProjectItem(p, "red"));
             }
+
+            teamsContainer.getChildren().add(teamHeader);
+            teamsContainer.getChildren().add(teamProjectsBox);
         }
+    }
+    private HBox createTeamHeader(Team team) {
+        HBox header = new HBox(10);
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.getStyleClass().add("equipe-header");
+
+        Label nameLabel = new Label(team.getName());
+        nameLabel.getStyleClass().add("section-title");
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        // Bouton "+"
+        Button addProjectBtn = new Button();
+        addProjectBtn.getStyleClass().add("icon-button-transparent");
+
+        SVGPath plusIcon = new SVGPath();
+        plusIcon.setContent("M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z");
+        plusIcon.setFill(Color.TRANSPARENT);
+        plusIcon.setStroke(Color.web("#939595"));
+        plusIcon.setStrokeWidth(1.75);
+        plusIcon.setScaleX(0.7);
+        plusIcon.setScaleY(0.7);
+
+        addProjectBtn.setGraphic(plusIcon);
+
+        addProjectBtn.setOnAction(e -> openAddTeamProjectDialog(team.getId()));
+
+        header.getChildren().addAll(nameLabel, spacer, addProjectBtn);
+        return header;
     }
     private HBox createProjectItem(Project project, String colorHash) {
         HBox hbox = new HBox(12);
@@ -129,14 +196,11 @@ public class SidebarController implements Initializable {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Label countLabel = new Label("0");
-        countLabel.getStyleClass().add("badge-count");
-        countLabel.setVisible(false);
-
-        hbox.getChildren().addAll(iconLabel, nameLabel, spacer, countLabel);
+        hbox.getChildren().addAll(iconLabel, nameLabel, spacer);
 
         hbox.setOnMouseClicked(e -> {
-            System.out.println("Selected Project: " + project.getName());
+            System.out.println("Open Project: " + project.getName());
+            // TODO: Naviguer vers la vue projet
         });
 
         return hbox;
@@ -251,7 +315,7 @@ public class SidebarController implements Initializable {
 
             controller.setOnProjectAdded(() -> {
                 System.out.println("🔄 Nouveau projet détecté, rafraîchissement de la Sidebar...");
-                this.loadProjects();
+                this.loadData();
             });
 
             Stage stage = new Stage();
@@ -280,23 +344,36 @@ public class SidebarController implements Initializable {
     }
 
     @FXML
-    private void openAddTeamProjectDialog() {
+    private void openAddTeamProjectDialog(String teamId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/components/modalDialog/AddTeamProjectDialog.fxml"));
             Parent root = loader.load();
 
+            AddTeamProjectController controller = loader.getController();
+
+            // ✅ 1. On passe l'ID de l'équipe cliquée au contrôleur
+            controller.setTeamId(teamId);
+
+            controller.setOnProjectAdded(() -> {
+                System.out.println("🔄 Nouveau projet d'équipe ajouté, rafraîchissement...");
+                this.loadData();
+            });
+
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
 
-            Stage ownerStage = (Stage) teamProjectModalBtn.getScene().getWindow();
-            stage.initOwner(ownerStage);
+            // ✅ 2. CORRECTION DU CRASH : On utilise 'teamsContainer' au lieu du bouton supprimé
+            if (teamsContainer.getScene() != null) {
+                Stage ownerStage = (Stage) teamsContainer.getScene().getWindow();
+                stage.initOwner(ownerStage);
+
+                stage.setX(ownerStage.getX());
+                stage.setY(ownerStage.getY());
+                stage.setWidth(ownerStage.getWidth());
+                stage.setHeight(ownerStage.getHeight());
+            }
 
             stage.initModality(Modality.WINDOW_MODAL);
-
-            stage.setX(ownerStage.getX());
-            stage.setY(ownerStage.getY());
-            stage.setWidth(ownerStage.getWidth());
-            stage.setHeight(ownerStage.getHeight());
 
             Scene scene = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
@@ -305,7 +382,8 @@ public class SidebarController implements Initializable {
             stage.showAndWait();
 
         } catch (IOException e) {
-            System.err.println("Error OpeningAdd Team Project Dialog: ");
+            System.err.println("Error Opening Add Team Project Dialog: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -314,6 +392,13 @@ public class SidebarController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/components/modalDialog/AddTeamDialog.fxml"));
             Parent root = loader.load();
+
+            AddTeamController controller = loader.getController();
+
+            controller.setOnTeamAdded(() -> {
+                System.out.println("🔄 Nouvelle équipe détectée, rafraîchissement...");
+                this.loadData(); // Recharger équipes et projets
+            });
 
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);

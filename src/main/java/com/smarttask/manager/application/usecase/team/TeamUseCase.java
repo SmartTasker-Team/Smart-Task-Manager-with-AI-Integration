@@ -4,6 +4,7 @@ import com.smarttask.manager.domain.model.Team;
 import com.smarttask.manager.domain.repository.TeamRepository;
 import com.smarttask.manager.domain.exception.DomainException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class TeamUseCase {
@@ -28,5 +29,9 @@ public class TeamUseCase {
         } else {
             throw new DomainException("Conflict: Team state updated by someone else.");
         }
+    }
+
+    public List<Team> getTeamsForUser(String userId) {
+        return repository.findTeamsByMember(userId);
     }
 }

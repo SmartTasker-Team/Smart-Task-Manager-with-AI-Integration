@@ -5,6 +5,7 @@ import com.smarttask.manager.domain.model.PriorityLevel;
 import com.smarttask.manager.domain.model.Task;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
+import com.smarttask.manager.infrastructure.session.UserSession;
 import javafx.application.Platform;
 import com.smarttask.manager.presentation.controllers.components.modalDialog.EditTaskPopupController;
 import com.smarttask.manager.domain.model.TaskStatus;
@@ -44,7 +45,19 @@ public class TaskListController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadTasks();
+//        loadTasks();
+    }
+    private void ensureUseCaseInitialized() {
+        if (this.taskUseCase == null) {
+            try {
+                var connection = DatabaseConnection.getConnection();
+                var repository = new PostgresTaskRepository(connection);
+                this.taskUseCase = new TaskUseCase(repository);
+            } catch (Exception e) {
+                System.err.println("❌ Erreur critique : Impossible d'initier la connexion BDD dans TaskList.");
+                e.printStackTrace();
+            }
+        }
     }
 
     private void openTaskDetails(Task task) {
@@ -128,13 +141,20 @@ public class TaskListController implements Initializable{
 
         new Thread(() -> {
             try {
+                ensureUseCaseInitialized();
+
                 if (this.taskUseCase == null) {
                     var connection = DatabaseConnection.getConnection();
                     var repository = new PostgresTaskRepository(connection);
                     this.taskUseCase = new TaskUseCase(repository);
                 }
 
-                String currentUserId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+                String currentUserId = null;
+                if (UserSession.getInstance().getUser() != null) {
+                    currentUserId = UserSession.getInstance().getUser().id();
+                } else {
+                    throw new RuntimeException("Utilisateur non connecté !");
+                }
                 List<Task> allTasks = taskUseCase.getTasksByOwner(currentUserId);
 
                 List<Task> activeTasks = allTasks.stream()
@@ -146,7 +166,6 @@ public class TaskListController implements Initializable{
                 });
 
             } catch (Exception e) {
-                e.printStackTrace();
                 System.err.println("Erreur chargement tâches : " + e.getMessage());
             }
         }).start();
@@ -289,42 +308,67 @@ public class TaskListController implements Initializable{
     }
 
     private void toggleTaskCompletion(Task task, boolean isSelected) {
-        try {
-            TaskStatus newStatus = isSelected ? TaskStatus.DONE : TaskStatus.TODO;
-            LocalDateTime newCompletedAt = isSelected ? LocalDateTime.now() : null;
+        new Thread(() -> {
+            ensureUseCaseInitialized();
 
-            TaskDTO updateDto = new TaskDTO(
-                    task.getTitle(),
-                    task.getDescription(),
-                    task.getCategory(),
-                    task.getPriority(),
-                    newStatus,
-                    task.getDueDate(),
-                    newCompletedAt,
-                    task.isRecurring(),
-                    task.getRecurrenceType(),
-                    task.getOwnerId(),
-                    task.getProjectId()
-            );
+            if (taskUseCase == null) return;
 
-            taskUseCase.update(task.getIdTask(), updateDto);
+            try {
+                TaskStatus newStatus = isSelected ? TaskStatus.DONE : TaskStatus.TODO;
+                LocalDateTime newCompletedAt = isSelected ? LocalDateTime.now() : null;
 
-            loadTasks();
+                TaskDTO updateDto = new TaskDTO(
+                        task.getTitle(),
+                        task.getDescription(),
+                        task.getCategory(),
+                        task.getPriority(),
+                        newStatus,
+                        task.getDueDate(),
+                        newCompletedAt,
+                        task.isRecurring(),
+                        task.getRecurrenceType(),
+                        task.getOwnerId(),
+                        task.getProjectId()
+                );
 
-        } catch (Exception e) {
-            System.err.println("Erreur lors de la mise à jour du statut : " + e.getMessage());
-        }
+                taskUseCase.update(task.getIdTask(), updateDto);
+                System.out.println("✅ Task Updated: " + newStatus);
+
+                Platform.runLater(() -> {
+                    if (customRefreshHandler != null) {
+                        customRefreshHandler.run();
+                    } else {
+                        loadTasks();
+                    }
+                });
+
+            } catch (Exception e) {
+                System.err.println("Erreur update status : " + e.getMessage());
+            }
+        }).start();
     }
 
     private void deleteTask(Task task) {
-        try {
-            taskUseCase.delete(task.getIdTask());
-            System.out.println("🗑️ Task deleted: " + task.getTitle());
+        new Thread(() -> {
+            ensureUseCaseInitialized(); // ✅ Sécurité
 
-            loadTasks();
+            if (taskUseCase == null) return;
 
-        } catch (Exception e) {
-            System.err.println("Error deleting task: " + e.getMessage());
-        }
+            try {
+                taskUseCase.delete(task.getIdTask());
+                System.out.println("🗑️ Task deleted: " + task.getTitle());
+
+                Platform.runLater(() -> {
+                    if (customRefreshHandler != null) {
+                        customRefreshHandler.run();
+                    } else {
+                        loadTasks();
+                    }
+                });
+
+            } catch (Exception e) {
+                System.err.println("Error deleting task: " + e.getMessage());
+            }
+        }).start();
     }
 }

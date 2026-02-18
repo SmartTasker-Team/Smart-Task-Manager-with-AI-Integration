@@ -4,6 +4,7 @@ import com.smarttask.manager.application.dto.ProjectDTO;
 import com.smarttask.manager.application.usecase.project.ProjectUseCase;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresProjectRepository;
+import com.smarttask.manager.infrastructure.session.UserSession;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -50,7 +51,12 @@ public class AddProjectController {
                     this.projectUseCase = new ProjectUseCase(repo);
                 }
 
-                String userId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+                String userId = null;
+                if (UserSession.getInstance().getUser() != null) {
+                    userId = UserSession.getInstance().getUser().id();
+                } else {
+                    throw new RuntimeException("Utilisateur non connecté !");
+                }
 
                 ProjectDTO newProject = new ProjectDTO(
                         name,

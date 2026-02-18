@@ -27,7 +27,6 @@ public class DateTimePopupController {
             hourBox.getItems().add(String.format("%02d", i));
         }
 
-
         for (int i = 0; i < 60; i++) {
             minuteBox.getItems().add(String.format("%02d", i));
         }

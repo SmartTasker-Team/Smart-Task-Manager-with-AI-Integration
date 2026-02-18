@@ -5,6 +5,7 @@ import com.smarttask.manager.application.usecase.voice.CaptureVoiceCommandUseCas
 import com.smarttask.manager.domain.model.TaskStatus;
 import com.smarttask.manager.infrastructure.external.ai.NLPParserImpl;
 import com.smarttask.manager.infrastructure.external.calendar.CalendarSyncService;
+import com.smarttask.manager.infrastructure.session.UserSession;
 import com.smarttask.manager.presentation.controllers.components.modalDialog.DateTimePopupController;
 import com.smarttask.manager.presentation.controllers.components.modalDialog.PriorityPopupController;
 import com.smarttask.manager.presentation.controllers.components.modalDialog.ReccurringTaskPopupController;
@@ -240,7 +241,12 @@ public class AddTaskController implements Initializable {
             return;
         }
 
-        String currentUserId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
+        String currentUserId = null;
+        if (UserSession.getInstance().getUser() != null) {
+            currentUserId = UserSession.getInstance().getUser().id();
+        } else {
+            throw new RuntimeException("Utilisateur non connecté !");
+        }
 
         String title = titleField.getText();
         String rawDesc = descField.getText();

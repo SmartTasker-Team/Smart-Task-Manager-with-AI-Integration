@@ -254,48 +254,8 @@
                 <Label text="15" styleClass="badge-count"/>
             </HBox>
         </VBox>
-        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="equipe-header">
-            <Label text="Task IQ" styleClass="section-title"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button fx:id="teamProjectModalBtn" onAction="#openAddTeamProjectDialog" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
-                <graphic>
-                    <SVGPath
-                            content="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
-                            fill="transparent"
-                            stroke="#939595"
-                            strokeWidth="1.75"
-                            scaleX="0.7" scaleY="0.7"
-                            strokeLineCap="ROUND"
-                            strokeLineJoin="ROUND"/>
-                </graphic>
-            </Button>
-            <Button onAction="#onToggleTeam" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
-                <graphic>
-                    <SVGPath
-                            fx:id="teamIcon"
-                            content="m19.5 8.25-7.5 7.5-7.5-7.5"
-                            fill="transparent"
-                            stroke="#939595"
-                            strokeWidth="1.75"
-                            scaleX="0.7" scaleY="0.7"
-                            strokeLineCap="ROUND"
-                            strokeLineJoin="ROUND"/>
-                </graphic>
-            </Button>
-        </HBox>
-        <VBox fx:id="teamContent" styleClass="equipe-projects-list">
-            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
-                <Label text="#" style="-fx-text-fill: #0D89FF; -fx-font-size:16px;"/>
-                <Label text="Smart task manager" styleClass="nav-label"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Label text="15" styleClass="badge-count"/>
-            </HBox>
-            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">
-                <Label text="#" style="-fx-text-fill: red; -fx-font-size:16px;"/>
-                <Label text="Smart task manager" styleClass="nav-label"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Label text="15" styleClass="badge-count"/>
-            </HBox>
+        <VBox fx:id="teamsContainer" spacing="5" VBox.vgrow="NEVER">
+
         </VBox>
         <Region VBox.vgrow="ALWAYS"/>
         <HBox fx:id="addTeamBox" onMouseClicked="#openAddTeamDialog" spacing="12" alignment="CENTER_LEFT" styleClass="nav-item">

@@ -12,6 +12,7 @@ import com.smarttask.manager.infrastructure.external.ai.NLPParserImpl;
 import com.smarttask.manager.infrastructure.external.calendar.CalendarSyncService;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
+import com.smarttask.manager.infrastructure.session.UserSession;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -216,7 +217,6 @@ public class EditTaskPopupController implements Initializable {
 
     @FXML
     public void onSaveTask(ActionEvent event) {
-        String currentUserId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
         String title = titleField.getText();
         String rawDesc = descField.getText();
         String finalDescription = (rawDesc == null || rawDesc.trim().isEmpty()) ? null : rawDesc;
@@ -231,7 +231,7 @@ public class EditTaskPopupController implements Initializable {
         boolean isRecurring = selectedRecurring != null;
         RecurrenceType recurrence = mapRecurrence(selectedRecurring);
 
-        TaskDTO newTaskDto = new TaskDTO(
+        TaskDTO taskDto = new TaskDTO(
                 title,
                 finalDescription,
                 selectedCategory,
@@ -241,7 +241,7 @@ public class EditTaskPopupController implements Initializable {
                 null,
                 isRecurring,
                 recurrence,
-                currentUserId,
+                this.currentUserId,
                 null
         );
 
@@ -253,19 +253,23 @@ public class EditTaskPopupController implements Initializable {
                     this.taskUseCase = new TaskUseCase(repository);
                 }
 
-                String newTaskId = taskUseCase.create(newTaskDto);
-                System.out.println("✅ Task successfully saved! DB ID: " + newTaskId);
+                if (taskIdToUpdate != null) {
+                    // ✅ UPDATE MODE
+                    taskUseCase.update(taskIdToUpdate, taskDto);
+                    System.out.println("✅ Task Updated: " + taskIdToUpdate);
+                } else {
+                    String newId = taskUseCase.create(taskDto);
+                    System.out.println("✅ New Task Created (Unexpected in Edit): " + newId);
+                }
 
-                if (taskDeadline != null) {
-                    System.out.println("🔄 Syncing to Google Calendar...");
+                if (taskDeadline != null && taskIdToUpdate != null) {
                     try {
-                        Task taskForSync = new Task(newTaskId, title, currentUserId, LocalDateTime.now());
+                        Task taskForSync = new Task(taskIdToUpdate, title, currentUserId, LocalDateTime.now());
                         taskForSync.updateDetails(
                                 title, finalDescription, selectedCategory, priority, status,
                                 taskDeadline, null, isRecurring, recurrence, null
                         );
                         calendarService.syncTask(taskForSync);
-                        System.out.println("✅ Google Calendar Sync Complete!");
                     } catch (Exception e) {
                         System.err.println("❌ Google Sync Failed: " + e.getMessage());
                     }
@@ -275,12 +279,11 @@ public class EditTaskPopupController implements Initializable {
                     if (refreshCallback != null) {
                         refreshCallback.run();
                     }
-                    resetForm();
+                    closeDialog();
                 });
 
             } catch (Exception e) {
-                // En cas d'erreur, on affiche l'alerte sur le Thread UI
-                Platform.runLater(() -> showAlert("Erreur", "Impossible de sauvegarder : " + e.getMessage()));
+                Platform.runLater(() -> showAlert("Erreur", "Impossible de mettre à jour : " + e.getMessage()));
             }
         }).start();
     }

@@ -5,6 +5,7 @@ import com.smarttask.manager.domain.model.Task;
 import com.smarttask.manager.domain.model.TaskStatus;
 import com.smarttask.manager.infrastructure.persistence.DatabaseConnection;
 import com.smarttask.manager.infrastructure.persistence.PostgresTaskRepository;
+import com.smarttask.manager.infrastructure.session.UserSession;
 import com.smarttask.manager.presentation.controllers.components.TaskListController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -39,8 +40,13 @@ public class DoneTaskController implements Initializable {
                     this.taskUseCase = new TaskUseCase(repository);
                 }
 
-                String userId = "685f976d-ef7d-4209-bea2-0ec5ffea7571";
-                List<Task> allTasks = taskUseCase.getTasksByOwner(userId);
+                String currentUserId = null;
+                if (UserSession.getInstance().getUser() != null) {
+                    currentUserId = UserSession.getInstance().getUser().id();
+                } else {
+                    throw new RuntimeException("Utilisateur non connecté !");
+                }
+                List<Task> allTasks = taskUseCase.getTasksByOwner(currentUserId);
 
                 List<Task> completedTasks = allTasks.stream()
                         .filter(t -> t.getStatus() == TaskStatus.DONE)

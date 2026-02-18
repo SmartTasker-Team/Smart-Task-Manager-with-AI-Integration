@@ -3,6 +3,9 @@ package com.smarttask.manager.infrastructure.persistence;
 import com.smarttask.manager.domain.model.Team;
 import com.smarttask.manager.domain.repository.TeamRepository;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PostgresTeamRepository implements TeamRepository {
@@ -63,4 +66,40 @@ public class PostgresTeamRepository implements TeamRepository {
 
     @Override
     public void removeMemberFromTeam(String teamId, String userId) { /* SQL Delete */ }
+
+
+    @Override
+    public List<Team> findTeamsByMember(String userId) {
+        List<Team> teams = new ArrayList<>();
+        // Jointure pour trouver les équipes où l'user est membre (ou owner)
+        String sql = """
+            SELECT t.* FROM teams t
+            JOIN team_members tm ON t.id = tm.team_id
+            WHERE tm.user_id = ?
+        """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                teams.add(mapResultSetToTeam(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching user teams: " + e.getMessage());
+        }
+        return teams;
+    }
+    private Team mapResultSetToTeam(ResultSet rs) throws SQLException {
+        Timestamp ts = rs.getTimestamp("created_at");
+        LocalDateTime created = ts != null ? ts.toLocalDateTime() : LocalDateTime.now();
+
+        Team t = new Team(
+                rs.getString("id"),
+                rs.getString("name"),
+                rs.getString("owner_id"),
+                created
+        );
+        t.loadVersion(rs.getLong("version_number"));
+        return t;
+    }
 }

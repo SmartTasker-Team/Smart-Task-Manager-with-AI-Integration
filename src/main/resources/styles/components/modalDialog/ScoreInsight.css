@@ -1,4 +1,19 @@
-/* Base Container */
+*{
+    -fx-font-family: 'Outfit';
+}
+.icon-button-transparent {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5;
+}
+.icon-button-transparent:hover{
+    -fx-background-color: #0D89FF;
+}
+.icon-button-transparent:hover SVGPath {
+    -fx-stroke: white;
+}
 .scoreInsight-container {
     -fx-background-color: white;
     -fx-background-radius: 16;
@@ -19,20 +34,18 @@
 }
 
 .header-icon-svg {
-    -fx-fill: #4f46e5; /* Indigo */
+    -fx-fill: #0D89FF; /* Indigo */
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
 
 .title-label {
-    -fx-font-family: "Inter", "Segoe UI", sans-serif;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #1f2937;
 }
 
 .subtitle-label {
-    -fx-font-family: "Inter", "Segoe UI", sans-serif;
     -fx-font-size: 12px;
     -fx-text-fill: #6b7280;
 }
@@ -65,7 +78,7 @@
 
 .score-circle-progress {
     -fx-fill: transparent;
-    -fx-stroke: #4f46e5; /* Default Indigo, changed by controller */
+    -fx-stroke: #0D89FF; /* Default Indigo, changed by controller */
     -fx-stroke-width: 8;
     -fx-stroke-linecap: round;
     -fx-rotate: -90;
@@ -110,7 +123,6 @@
 }
 
 .content-text {
-    -fx-font-family: "Segoe UI", sans-serif;
     -fx-font-size: 14px;
     -fx-fill: #374151;
     -fx-line-spacing: 4;
