@@ -1,0 +1,80 @@
+/* --- 1. CARD CONTAINERS --- */
+.chart-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 15, 0, 0, 4);
+    -fx-padding: 20px;
+    -fx-border-color: #f0f0f0;
+    -fx-border-radius: 12px;
+}
+
+.chart-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 10px 0;
+}
+
+/* --- 2. GLOBAL CHART CLEANUP --- */
+/* Remove ugly grey background from plots */
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+/* Remove vertical grid lines for a cleaner look */
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+/* Make horizontal grid lines soft and dashed */
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e8e8e8;
+    -fx-stroke-dash-array: 4 4;
+}
+/* Clean up axis borders */
+.axis:bottom, .axis:left {
+    -fx-border-color: transparent;
+}
+.axis:bottom .axis-tick-mark, .axis:left .axis-tick-mark {
+    -fx-stroke: transparent;
+}
+
+/* --- 3. LINE CHART STYLING (Blue Trend) --- */
+.chart-series-line {
+    -fx-stroke: #0D89FF; /* Your main blue */
+    -fx-stroke-width: 3px;
+}
+/* The dots on the line */
+.chart-line-symbol {
+    -fx-background-color: #0D89FF, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 4px;
+}
+
+/* --- 4. BAR CHART STYLING --- */
+.default-color0.chart-bar {
+    -fx-bar-fill: #0D89FF; /* Main blue */
+    /* Trick to round the top corners of bars */
+    -fx-background-radius: 6px 6px 0 0;
+}
+
+/* --- 5. PIE CHART STYLING --- */
+/* Custom colors for slices to match your Priority/Status colors */
+.default-color0.chart-pie { -fx-pie-color: #db4c3f; } /* To do / Red */
+.default-color1.chart-pie { -fx-pie-color: #eb8909; } /* In Progress / Orange */
+.default-color2.chart-pie { -fx-pie-color: #25b84c; } /* Done / Green */
+
+/* Clean up Pie Chart Legend */
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 0 0 0;
+}
+.chart-legend-item {
+    -fx-text-fill: #555555;
+}
+.chart-content .chart-xaxis-tick-label {
+    -fx-text-fill: #888888;
+    -fx-font-size: 10px;
+    /* Ajuste la position du texte rotatif */
+    -fx-translate-y: 5px;
+    -fx-translate-x: -10px;
+}

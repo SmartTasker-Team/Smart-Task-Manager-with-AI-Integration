@@ -1,0 +1,29 @@
+*{
+    -fx-font-family: 'Outfit';
+}
+.reccurring-task-popup{
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #eee;
+    -fx-min-width: 200px;
+}
+.reccurring-task-level-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #212529;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+.reccurring-task-level-btn:hover {
+    -fx-background-color: #0D89FF;
+    -fx-text-fill: white;
+}
+.reccurring-task-level-btn:hover {
+    -fx-background-color: #0D89FF;
+}
+.reccurring-task-level-btn:hover SVGPath {
+    -fx-stroke: white;
+}

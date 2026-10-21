@@ -1,11 +1,87 @@
 package com.smarttask.manager.domain.model;
 
-/**
- * Entity representing a team member in the system.
- * <p>
- * Identities users within the local network context to enable task sharing and
- * conflict resolution.
- * </p>
- */
+import com.smarttask.manager.domain.exception.DomainException;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.regex.Pattern;
+
 public class User {
+    private final String idUser; // Identity is immutable
+    private final LocalDateTime createdAt;
+
+    private String username;
+    private String email;
+    private String passwordHash;
+    private long versionNumber;
+
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+
+    private static final String GOOGLE_PLACEHOLDER = "GOOGLE_AUTH_USER";
+
+    public User(String idUser, String username, String email, String passwordHash) {
+        this.idUser = Objects.requireNonNull(idUser);
+        this.createdAt = LocalDateTime.now();
+        this.versionNumber = 1;
+
+        validateUsername(username);
+        validateEmail(email);
+
+        this.username = username;
+        this.email = email;
+        // Use the placeholder if password is null
+        this.passwordHash = (passwordHash == null) ? GOOGLE_PLACEHOLDER : passwordHash;
+    }
+
+    public static User createGoogleUser(String idUser, String username, String email) {
+        return new User(idUser, username, email, GOOGLE_PLACEHOLDER);
+    }
+
+    // --- BUSINESS LOGIC ---
+
+    public void updateProfile(String newUsername, String newEmail) {
+        validateUsername(newUsername);
+        validateEmail(newEmail);
+
+        // Only increment version if data actually changes
+        if (!this.username.equals(newUsername) || !this.email.equals(newEmail)) {
+            this.username = newUsername;
+            this.email = newEmail;
+            this.versionNumber++;
+        }
+    }
+
+    public boolean isGoogleUser() {
+        return GOOGLE_PLACEHOLDER.equals(this.passwordHash);
+    }
+
+    public void changePassword(String newPasswordHash) {
+        if (newPasswordHash == null || newPasswordHash.isBlank()) {
+            throw new DomainException("Password hash cannot be empty.");
+        }
+        this.passwordHash = newPasswordHash;
+        this.versionNumber++;
+    }
+
+    private void validateEmail(String email) {
+        if (email == null || !EMAIL_PATTERN.matcher(email).matches()) {
+            throw new DomainException("Invalid email format.");
+        }
+    }
+
+    private void validateUsername(String username) {
+        if (username == null || username.length() < 3) {
+            throw new DomainException("Username must be at least 3 characters.");
+        }
+    }
+
+    // --- INFRASTRUCTURE HOOKS ---
+    public void loadVersion(long version) { this.versionNumber = version; }
+
+    // --- GETTERS ---
+    public String getIdUser() { return idUser; }
+    public String getUsername() { return username; }
+    public String getEmail() { return email; }
+    public String getPasswordHash() { return passwordHash; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public long getVersionNumber() { return versionNumber; }
 }

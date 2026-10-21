@@ -1,5 +1,8 @@
 package com.smarttask.manager.domain.repository;
 
+import java.util.Optional;
+import com.smarttask.manager.domain.model.User;
+
 /**
  * Interface defining the contract for User persistence and retrieval.
  * <p>
@@ -7,4 +10,9 @@ package com.smarttask.manager.domain.repository;
  * </p>
  */
 public interface UserRepository {
+    void save(User user);
+    boolean update(User user); // Returns false if version conflict
+    void delete(String idUser);
+    Optional<User> findById(String idUser);
+    Optional<User> findByEmail(String email);
 }

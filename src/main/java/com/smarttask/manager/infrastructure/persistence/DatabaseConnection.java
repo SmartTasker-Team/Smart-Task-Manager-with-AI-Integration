@@ -1,10 +1,29 @@
 package com.smarttask.manager.infrastructure.persistence;
 
-/**
- * Manages the connection to the Local PostgreSQL server.
- * <p>
- * Handles the configuration and lifecycle of the JDBC connection used by the repositories.
- * </p>
- */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class DatabaseConnection {
+
+    private static Connection instance;
+
+    private DatabaseConnection() {}
+
+    public static synchronized Connection getConnection() {
+        try {
+            if (instance == null || instance.isClosed()) {
+                String url = "jdbc:postgresql://localhost:5432/smarttask";
+                String user = "postgres";
+                String password = "123";
+
+                instance = DriverManager.getConnection(url, user, password);
+                System.out.println("✅ New Database Connection Established.");
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Database Connection Failed: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return instance;
+    }
 }

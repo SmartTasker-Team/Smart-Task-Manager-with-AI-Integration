@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/Inbox.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.pages.InboxController">
+    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+        <padding><Insets top="35" right="100" bottom="35" left="100"/></padding>
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label text="Boîte de réception" styleClass="page-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="reportInsightBtn" onAction="#openProductivityInsights" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M19.5 14.25 V11.625 A3.375 3.375 0 0 0 16.125 8.25 H14.625 A1.125 1.125 0 0 1 13.5 7.125 V5.625 A3.375 3.375 0 0 0 10.125 2.25 H8.25 M9 16.5 V17.25 M12 13.5 V16.5 M15 12 V17.25 M10.5 2.25 H5.625 A1.125 1.125 0 0 0 4.5 3.375 V20.625 A1.125 1.125 0 0 0 5.625 21.75 H18.375 A1.125 1.125 0 0 0 19.5 20.625 V11.25 A9 9 0 0 0 10.5 2.25 Z"
+                            fill="transparent"
+                            stroke="#212529"
+                            strokeWidth="1.75"
+                            scaleX="0.9" scaleY="0.9"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+        <VBox styleClass="task-list-container">
+            <fx:include fx:id="taskListSection" source="../components/TaskList.fxml" />
+            <fx:include fx:id="addTaskSection" source="../components/AddTask.fxml" />
+        </VBox>
+    </VBox>
+</ScrollPane>

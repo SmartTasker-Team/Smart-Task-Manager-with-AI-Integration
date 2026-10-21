@@ -16,6 +16,8 @@ package com.smarttask.manager.application.dto;
  * </ul>
  */
 
-
-public class RegisterRequestDTO {
-}
+public record RegisterRequestDTO(
+        String username,
+        String email,
+        String password
+) {}

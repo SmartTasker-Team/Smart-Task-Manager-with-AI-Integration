@@ -1,5 +1,8 @@
 package com.smarttask.manager.application.usecase.task;
 
+import com.smarttask.manager.application.dto.AiInsightResult;
+import com.smarttask.manager.infrastructure.external.ai.NLPParserImpl;
+
 /**
  * Use Case that leverages AI to interpret user input.
  * <p>
@@ -8,4 +11,25 @@ package com.smarttask.manager.application.usecase.task;
  * </p>
  */
 public class ParseNaturalLanguageTaskUseCase {
+
+    private final NLPParserImpl nlpParser;
+
+    public ParseNaturalLanguageTaskUseCase() {
+        this.nlpParser = new NLPParserImpl();
+    }
+
+    public AiInsightResult execute(String rawInput) {
+        // 1. Basic Validation (Business Logic)
+        if (rawInput == null || rawInput.trim().isEmpty()) {
+            return null;
+        }
+
+        AiInsightResult result = nlpParser.parseNaturalLanguage(rawInput);
+
+        if (result != null && result.priority == null) {
+            result.priority = "MEDIUM";
+        }
+
+        return result;
+    }
 }

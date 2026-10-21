@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane styleClass="clean-scroll" stylesheets="@../../styles/pages/TodayTasks.css" fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.pages.CalenderController">
+    <VBox HBox.hgrow="ALWAYS" styleClass="main-content">
+        <padding>
+            <Insets top="35" right="100" bottom="35" left="100"/>
+        </padding>
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label fx:id="pageTitle" text="Calendrier" styleClass="page-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <VBox styleClass="task-list-container" fx:id="mainListContainer" spacing="10">
+
+        </VBox>
+    </VBox>
+</ScrollPane>

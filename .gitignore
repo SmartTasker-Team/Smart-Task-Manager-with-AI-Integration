@@ -38,3 +38,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### login keys ###
+tokens/
+src/main/resources/credentials.json
+vosk-model/

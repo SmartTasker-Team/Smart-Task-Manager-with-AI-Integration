@@ -1,0 +1,118 @@
+*{
+    -fx-font-family: 'Outfit';
+}
+.add-task{
+    -fx-padding: 15 0;
+    -fx-cursor: hand;
+}
+.add-task-label {
+    -fx-text-fill: #202020;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 0 10;
+}
+.add-task:hover .add-task-label {
+    -fx-text-fill: #0D89FF;
+}
+.task-row-editing {
+    -fx-padding: 15 0;
+}
+.editor-container {
+    -fx-border-color: #ddd;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: white;
+    -fx-margin: 50 0 0 0;
+}
+.editor-input-title {
+    -fx-background-color: transparent;
+    -fx-font-size: 15px;
+    -fx-text-fill: #495057;
+    -fx-font-weight: 600;
+    -fx-padding: 5 0;
+}
+.editor-input-desc {
+    -fx-background-color: transparent;
+    -fx-font-size: 13px;
+    -fx-padding: 7.5 0 20 0;
+    -fx-text-fill: #495057;
+}
+.editor-input-desc .scroll-pane {
+    -fx-background-color: transparent;
+}
+.editor-input-desc .viewport {
+    -fx-background-color: transparent;
+}
+.editor-input-desc .content {
+    -fx-background-color: transparent;
+}
+.icon-button-transparent {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5;
+}
+.icon-button-transparent:hover{
+    -fx-background-color: #0D89FF;
+}
+.icon-button-transparent:hover SVGPath {
+    -fx-stroke: white;
+}
+.editor-toolbar {
+    -fx-padding: 5 0 20 0;
+}
+.editor-action {
+    -fx-padding: 15 0 0 0;
+}
+.editor-tool-btn {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-text-fill: #495057;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+.editor-tool-btn:hover {
+    -fx-background-color: #0D89FF4D;
+}
+.editor-combo {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-padding: 5 8;
+    -fx-text-fill: #495057;
+    -fx-font-weight: 600;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+.editor-combo:hover{
+    -fx-background-color: #0D89FF4D;
+}
+.btn-cancel {
+    -fx-background-color: #0D89FF4D;
+    -fx-text-fill: #495057;
+    -fx-font-weight: 600;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 14;
+    -fx-font-size: 13px;
+}
+.btn-add {
+    -fx-background-color: #0D89FF;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 14;
+    -fx-font-size: 13px;
+}
+.btn-add:hover {
+    -fx-background-color: #1787F2;
+}
+.editor-divider {
+    -fx-background-color: linear-gradient(
+        to right,
+        transparent,
+        #ddd,
+        transparent
+    );
+}

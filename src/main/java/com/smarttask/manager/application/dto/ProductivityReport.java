@@ -8,4 +8,31 @@ package com.smarttask.manager.application.dto;
  * </p>
  */
 public class ProductivityReport {
+    public int score;
+    public String summary;
+    public String suggestion;
+
+    public ProductivityReport() {}
+
+    public ProductivityReport(int score, String summary, String suggestion) {
+        this.score = score;
+        this.summary = summary;
+        this.suggestion = suggestion;
+    }
+    public int getScore() {
+        return score;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public String getSuggestion() {
+        return suggestion;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Score: %d | Summary: %s | Suggestion: %s", score, summary, suggestion);
+    }
 }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.smarttask.manager.presentation.controllers.components.modalDialog.ScoreInsightController"
+      spacing="0" alignment="CENTER" fillWidth="false"
+      stylesheets="@../../../styles/components/modalDialog/ScoreInsight.css"
+      style="-fx-background-color: #00000082;">
+
+    <VBox styleClass="scoreInsight-container" prefWidth="650.0">
+        <HBox alignment="CENTER_LEFT" styleClass="modal-header">
+            <padding><Insets top="20" right="20" bottom="15" left="25"/></padding>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Productivity Audit" styleClass="title-label"/>
+                    <Label text="AI-Powered Analysis" styleClass="subtitle-label"/>
+                </VBox>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnCancel" onAction="#handleCancel" styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+                <graphic>
+                    <SVGPath
+                            content="M6 18 L18 6 M6 6 L18 18"
+                            fill="transparent"
+                            stroke="#939595"
+                            strokeWidth="1.75"
+                            scaleX="0.9" scaleY="0.9"
+                            strokeLineCap="ROUND"
+                            strokeLineJoin="ROUND"/>
+                </graphic>
+            </Button>
+        </HBox>
+        <VBox spacing="25">
+            <padding><Insets top="10" right="25" bottom="30" left="25"/></padding>
+            <HBox spacing="30" alignment="CENTER_LEFT" styleClass="score-hero-card">
+                <StackPane>
+                    <Circle fx:id="scoreBackground" radius="45" styleClass="score-circle-bg"/>
+                    <Circle fx:id="scoreProgress" radius="45" styleClass="score-circle-progress" strokeDashArray="283" strokeDashOffset="0"/>
+                    <VBox alignment="CENTER" spacing="-5">
+                        <Label fx:id="lblScoreValue" text="85" styleClass="score-value"/>
+                        <Label text="/100" styleClass="score-total"/>
+                    </VBox>
+                </StackPane>
+                <VBox alignment="CENTER_LEFT" spacing="5">
+                    <Label fx:id="lblScoreTitle" text="Excellent Work!" styleClass="score-text-title"/>
+                    <Label text="Your productivity is analyzed based on task completion and history." styleClass="score-text-desc" wrapText="true"/>
+                </VBox>
+            </HBox>
+            <VBox spacing="10">
+                <Label text="INSIGHTS" styleClass="section-header"/>
+                <VBox styleClass="content-card">
+                    <TextFlow>
+                        <Text fx:id="txtAnalysis" styleClass="content-text" text="Loading insights..."/>
+                    </TextFlow>
+                </VBox>
+            </VBox>
+            <VBox spacing="10">
+                <Label text="RECOMMENDATION" styleClass="section-header"/>
+                <HBox styleClass="suggestion-card" spacing="15" alignment="TOP_LEFT">
+                    <SVGPath content="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" styleClass="suggestion-icon"/>
+                    <VBox spacing="5">
+                        <Label text="AI Tip" styleClass="suggestion-title"/>
+                        <Label fx:id="lblSuggestion" wrapText="true" styleClass="suggestion-text" text="..."/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+    </VBox>
+</VBox>

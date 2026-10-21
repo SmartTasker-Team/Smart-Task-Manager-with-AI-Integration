@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<VBox styleClass="comment-box-container" spacing="10" stylesheets="@../../../styles/components/modalDialog/AddComment.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.components.modalDialog.AddCommentController">
+    <TextArea fx:id="nameField" promptText="Commenter" wrapText="true" styleClass="comment-input-area" prefRowCount="3"/>
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button styleClass="icon-button-transparent" prefWidth="30" prefHeight="30" maxWidth="30" maxHeight="30" minWidth="30" minHeight="30">
+            <graphic>
+                <SVGPath
+                    content="M14 2 H6 A2 2 0 0 0 4 4 V20 A2 2 0 0 0 6 22 H18 A2 2 0 0 0 20 20 V8 Z M14 2 V8 H20 M12 18 V12 M9 15 H15"
+                    fill="transparent"
+                    stroke="#939595"
+                    strokeWidth="1.75"
+                    scaleX="0.8" scaleY="0.8"
+                    strokeLineCap="ROUND"
+                    strokeLineJoin="ROUND"/>
+            </graphic>
+        </Button>
+        <Region HBox.hgrow="ALWAYS"/>
+        <HBox spacing="8">
+            <Button text="Annuler" styleClass="btn-cancel" />
+            <Button text="Commenter" styleClass="btn-submit" />
+        </HBox>
+    </HBox>
+</VBox>

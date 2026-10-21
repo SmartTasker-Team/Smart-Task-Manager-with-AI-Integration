@@ -23,5 +23,21 @@ package com.smarttask.manager.application.dto;
  */
 
 
-public class AuthResultDTO {
+public record AuthResultDTO(
+        boolean success,
+        String message,
+        UserDTO authenticatedUser,
+        String token
+) {
+    //Méthode utilitaire pour créer un résultat de succès.
+
+    public static AuthResultDTO success(UserDTO user, String token) {
+        return new AuthResultDTO(true, "Authentification réussie", user, token);
+    }
+
+    //Méthode utilitaire pour créer un résultat d'échec.
+
+    public static AuthResultDTO failure(String errorMessage) {
+        return new AuthResultDTO(false, errorMessage, null, null);
+    }
 }

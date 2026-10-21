@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox stylesheets="@../../styles/components/AddSubTask.css" styleClass="add-task-container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.smarttask.manager.presentation.controllers.components.AddSubTaskController">
+    <VBox HBox.hgrow="ALWAYS" styleClass="add-task" fx:id="addSubTaskContainer" onMouseClicked="#onShowEditor">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <StackPane>
+                <Circle radius="10" fill="#0D89FF"/>
+                <SVGPath content="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="white" scaleX="0.85" scaleY="0.85"/>
+            </StackPane>
+            <Label text="Add Sub Task" styleClass="add-task-label" />
+        </HBox>
+    </VBox>
+    <VBox styleClass="task-row-editing" fx:id="subTaskEditorContainer">
+        <fx:include source="../components/AddTask.fxml" />
+    </VBox>
+</VBox>
